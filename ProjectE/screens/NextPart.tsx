@@ -39,9 +39,9 @@ export default function NextPart() {
         </TouchableOpacity>
 
         {/* DEELETE FOR PRODUCTION */}
-        <TouchableOpacity onPress={() => navigation.navigate('RegisterTesting')} >
+        {/* <TouchableOpacity onPress={() => navigation.navigate('RegisterTesting')} >
         <Text> TESTING REGISTER COMPONENT</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
 
 </View>

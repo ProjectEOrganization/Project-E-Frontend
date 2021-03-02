@@ -46,14 +46,14 @@ export default function BottomTabNavigator() {
         }}
       />
 
-<BottomTab.Screen
+{/* <BottomTab.Screen
         name="RegisterTesting"
         component={RegisterTestingNavigator}
         options={{
           
           tabBarVisible: false,
         }}
-      />
+      /> */}
     </BottomTab.Navigator>
   );
 }
@@ -107,14 +107,14 @@ function NextPartNavigator() {
   )
 }
 
-const RegisterTestingStack = createStackNavigator()
+// const RegisterTestingStack = createStackNavigator()
 
-function RegisterTestingNavigator() {
-  return (
-    <RegisterTestingStack.Navigator>
-      <RegisterTestingStack.Screen name="RegisterTesting" component={RegisterTesting} options={{ headerShown: false}} />
-    </RegisterTestingStack.Navigator>
-  )
-}
+// function RegisterTestingNavigator() {
+//   return (
+//     <RegisterTestingStack.Navigator>
+//       <RegisterTestingStack.Screen name="RegisterTesting" component={RegisterTesting} options={{ headerShown: false}} />
+//     </RegisterTestingStack.Navigator>
+//   )
+// }
 
 

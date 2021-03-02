@@ -67,7 +67,7 @@ export default function RegisterTesting() {
         
       {/* <SvgComponent1 /> */}
       <View style={{backgroundColor: 'rgba(52, 52, 52, 0.0)', marginTop: 50}}>
-      <FriendRequestReceivedAlert />
+      {/* <FriendRequestReceivedAlert /> */}
       </View>
 
       {/* <Image style={{marginTop: 40 ,height: 138, width: 138, transform: [{ rotate: '25deg'}]}} source={require('../assets/images/peace-sign-emoji-by-google.png')}/> */}
