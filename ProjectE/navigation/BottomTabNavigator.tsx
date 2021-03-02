@@ -7,6 +7,8 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
+import NextPart from '../screens/NextPart';
+import RegisterTesting from '../screens/RegisterTesting';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -23,6 +25,7 @@ export default function BottomTabNavigator() {
         component={TabOneNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+        
         }}
       />
       <BottomTab.Screen
@@ -30,11 +33,31 @@ export default function BottomTabNavigator() {
         component={TabTwoNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarVisible: false,
+        }}
+      />
+
+<BottomTab.Screen
+        name="NextPart"
+        component={NextPartNavigator}
+        options={{
+          
+          tabBarVisible: false,
+        }}
+      />
+
+<BottomTab.Screen
+        name="RegisterTesting"
+        component={RegisterTestingNavigator}
+        options={{
+          
+          tabBarVisible: false,
         }}
       />
     </BottomTab.Navigator>
   );
 }
+
 
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
@@ -66,8 +89,32 @@ function TabTwoNavigator() {
       <TabTwoStack.Screen
         name="TabTwoScreen"
         component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+        // options={{ headerTitle: 'Tab Two Title' }}
+        options={{ headerShown: false}}
       />
     </TabTwoStack.Navigator>
   );
+
 }
+
+const NextPartStack = createStackNavigator()
+
+function NextPartNavigator() {
+  return (
+    <NextPartStack.Navigator>
+      <NextPartStack.Screen name="NextPart" component={NextPart} options={{ headerShown: false}} />
+    </NextPartStack.Navigator>
+  )
+}
+
+const RegisterTestingStack = createStackNavigator()
+
+function RegisterTestingNavigator() {
+  return (
+    <RegisterTestingStack.Navigator>
+      <RegisterTestingStack.Screen name="RegisterTesting" component={RegisterTesting} options={{ headerShown: false}} />
+    </RegisterTestingStack.Navigator>
+  )
+}
+
+

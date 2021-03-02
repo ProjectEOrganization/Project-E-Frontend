@@ -2,10 +2,11 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
+import Login from '../components/Auth/Login';
 import { Text, View } from '../components/Themed';
+import { Image, TouchableOpacity } from 'react-native';
 import { useFonts } from 'expo-font';
-import SvgComponent from '../assets/svgComponent.js';
-import SvgComponent1 from '../assets/svgComponent1.js';
+import BackArrowSvgComponent from '../assets/backArrowSvgComponent.js';
 import Navigation from '../navigation';
 
 import { useNavigation } from '@react-navigation/native';
@@ -15,7 +16,7 @@ import TabOneScreen from './TabOneScreen';
 
 
 
-export default function TabTwoScreen( ) {
+export default function NextPart() {
   let [fontsLoaded] = useFonts({
     'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
     'Inter-Bold': require('../assets/fonts/Inter/Inter-Bold.ttf'),
@@ -29,30 +30,49 @@ export default function TabTwoScreen( ) {
     return <View />;
   } else {
   return (
+      
     <View style={styles.container}>
+        <View style={{width: 300, backgroundColor: 'rgba(52, 52, 52, 0.0)', }}>
+        {/* onPress={() => navigation.navigate('TabTwoScreen')} */}
+        <TouchableOpacity onPress={() => navigation.navigate('TabTwoScreen')} >
+        <BackArrowSvgComponent />
+        </TouchableOpacity>
+
+        {/* DEELETE FOR PRODUCTION */}
+        <TouchableOpacity onPress={() => navigation.navigate('RegisterTesting')} >
+        <Text> TESTING REGISTER COMPONENT</Text>
+        </TouchableOpacity>
+
+
+</View>
+        
       <Text style={styles.title1}>Welcome to</Text>
       <Text style={styles.title2}>Rapid</Text>
-      <SvgComponent />
+      {/* Login Component  */}
       {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
       {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
-      <View style={styles.container2}>
+      {/* <View style={styles.container2}>
       <Text style={styles.title3}>
         Chat with random people and create 
         everlasting friendships, 
         <Text style={{fontWeight: 'bold'}}> click below </Text>
        
         </Text >  
-      </View>
+      </View> */}
         
-      <SvgComponent1 />
+      {/* <SvgComponent1 /> */}
+      <View style={{backgroundColor: 'rgba(52, 52, 52, 0.0)', marginTop: 50}}>
+      <Login />
+      </View>
 
-      <View style={styles.container3}>
+      <Image style={{marginTop: 40 ,height: 138, width: 138, transform: [{ rotate: '25deg'}]}} source={require('../assets/images/peace-sign-emoji-by-google.png')}/>
+      {/* <View style={styles.container3}>
       <Text style={styles.title4}>
         Already have an account?
-        <Text onPress={() => navigation.navigate('NextPart')} style={{fontFamily: 'Inter-SemiBold', color: '#4B00FF'}}> Log in </Text>
+        <Text onPress={() => navigation.navigate(TabOneScreen)} style={{fontFamily: 'Inter-SemiBold', color: '#4B00FF'}}> Log in </Text>
        
         </Text >  
-      </View>
+      </View> */}
 
 
    
@@ -109,7 +129,7 @@ const styles = StyleSheet.create({
     paddingTop: '2%'
   },
   title3: { //chat with random people
-    fontSize: 17,
+    fontSize: 18,
     fontFamily: 'Inter-Regular',
     color: '#636E7E',
     lineHeight: 24
