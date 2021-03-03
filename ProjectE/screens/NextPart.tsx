@@ -25,7 +25,7 @@ export default function NextPart() {
   });
 
   const navigation = useNavigation();
-
+ 
   if (!fontsLoaded) {
     return <View />;
   } else {
@@ -34,7 +34,7 @@ export default function NextPart() {
     <View style={styles.container}>
         <View style={{width: 300, backgroundColor: 'rgba(52, 52, 52, 0.0)', }}>
         {/* onPress={() => navigation.navigate('TabTwoScreen')} */}
-        <TouchableOpacity onPress={() => navigation.navigate('TabTwoScreen')} >
+        <TouchableOpacity onPress={() => navigation.navigate('TabTwo')} >
         <BackArrowSvgComponent />
         </TouchableOpacity>
 

@@ -9,7 +9,7 @@ import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import NextPart from '../screens/NextPart';
 import RegisterTesting from '../screens/RegisterTesting';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import { BottomTabParamList, TabOneParamList, TabTwoParamList, NextPartParamList } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -97,12 +97,12 @@ function TabTwoNavigator() {
 
 }
 
-const NextPartStack = createStackNavigator()
+const NextPartStack = createStackNavigator<NextPartParamList>()
 
 function NextPartNavigator() {
   return (
     <NextPartStack.Navigator>
-      <NextPartStack.Screen name="NextPart" component={NextPart} options={{ headerShown: false}} />
+      <NextPartStack.Screen name="NextPartScreen" component={NextPart} options={{ headerShown: false}} />
     </NextPartStack.Navigator>
   )
 }
