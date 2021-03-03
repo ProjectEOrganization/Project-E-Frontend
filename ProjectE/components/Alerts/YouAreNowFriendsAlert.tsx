@@ -17,15 +17,15 @@ export default function YouAreNowFriendsAlert({ path }: { path: string }) {
         'Inter-ExtraBold': require('../../assets/fonts/Inter/Inter-ExtraBold.ttf'),
       });
 
-      if (!fontsLoaded) {
+    if (!fontsLoaded) {
         return <View />;
     } else {
-  return (
-    <View style={styles.overallContainer}>
+        return (
+          <View style={styles.overallContainer}>
      
      
     <LoginSvgComponent />
-<View style={{ width: 260, paddingTop: 30, alignItems: 'center'}}>
+      <View style={{ width: 260, paddingTop: 30, alignItems: 'center'}}>
         <Text style={styles.firstText}>
           YOU ARE NOW FRIENDS
         </Text>
