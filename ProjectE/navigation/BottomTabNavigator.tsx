@@ -43,6 +43,15 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <TabBarIcon name="settings-sharp" color={color} />,
         }}
       />
+
+ {/* <BottomTab.Screen
+        name="RegisterTesting"
+        component={RegisterTestingNavigator}
+        options={{
+          
+          tabBarVisible: false,
+        }}
+      />  */}
     </BottomTab.Navigator>
   );
 }

@@ -10,12 +10,8 @@ import BackArrowSvgComponent from '../assets/backArrowSvgComponent.js';
 import Navigation from '../navigation';
 
 import { useNavigation } from '@react-navigation/native';
-import TabOneScreen from './TabOneScreen';
-import FriendRequestSentAlert from '../components/Alerts/FriendRequestSentAlert';
-import YouAreNowFriendsAlert from '../components/Alerts/YouAreNowFriendsAlert';
-import RejectedAlert from '../components/Alerts/RejectedAlert';
-import SkipConfirmationAlert from '../components/Alerts/SkipConfirmationAlert';
-import FriendRequestReceivedAlert from '../components/Alerts/FriendRequestReceivedAlert';
+import FriendsPageSwitch from '../components/FriendsPageSwitch'
+
 
 // import * as yourModuleName from 'module-name';
 
@@ -37,11 +33,15 @@ export default function RegisterTesting() {
   return (
       
     <View style={styles.container}>
-        <View style={{width: 300, backgroundColor: 'rgba(52, 52, 52, 0.0)', }}>
+        
+       <FriendsPageSwitch />
+
+      
+        {/* <View style={{width: 300, backgroundColor: 'rgba(52, 52, 52, 0.0)', }}> */}
         {/* onPress={() => navigation.navigate('TabTwoScreen')} */}
-        <TouchableOpacity onPress={() => navigation.navigate('TabTwoScreen')} >
+        {/* <TouchableOpacity onPress={() => navigation.navigate('TabTwoScreen')} >
         <BackArrowSvgComponent />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         {/* DEELETE FOR PRODUCTION */}
         {/* <TouchableOpacity onPress={() => navigation.navigate('TabTwoScreen')} >
@@ -49,10 +49,10 @@ export default function RegisterTesting() {
         </TouchableOpacity> */}
 
         
-</View>
+{/* </View> */}
         
-      <Text style={styles.title1}>YouAreNowFriendsAlert</Text>
-      <Text style={styles.title2}>TESTING YouAreNowFriendsAlert</Text>
+      <Text style={styles.title1}>Switch</Text>
+      <Text style={styles.title2}>TESTING Switch</Text>
       {/* Login Component  */}
       {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
       {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
@@ -90,9 +90,9 @@ const styles = StyleSheet.create({
   container: { // overall container
     flex: 1,
     alignItems: 'center',
-    paddingTop: '22%',
     
-    backgroundColor: '#F5F7F9'
+    
+    backgroundColor: '#F1F6FC'
   },
   container2: { //text part
     flex: 1,
@@ -119,7 +119,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: 'Inter-Medium',
     color: '#414750',
-    letterSpacing: 1.5
+    letterSpacing: 1.5,
+    marginTop: 200
   },
   title2: { //Rapid
     fontSize: 30,
