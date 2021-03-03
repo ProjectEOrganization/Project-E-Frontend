@@ -46,14 +46,14 @@ export default function BottomTabNavigator() {
         }}
       />
 
-{/* <BottomTab.Screen
+ {/* <BottomTab.Screen
         name="RegisterTesting"
         component={RegisterTestingNavigator}
         options={{
           
           tabBarVisible: false,
         }}
-      /> */}
+      />  */}
     </BottomTab.Navigator>
   );
 }
