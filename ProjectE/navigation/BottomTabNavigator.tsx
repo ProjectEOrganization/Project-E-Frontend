@@ -7,7 +7,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
+import RandomChatScreen from '../screens/RandomChatScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
 import SvgComponentNav from '../assets/svgComponentNav.js';
 import { View } from '../components/Themed';
@@ -21,19 +21,22 @@ export default function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="Friends"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint, style:{height:100} }}>
+      tabBarOptions={{ activeTintColor: '#00DBD0', style:{height:90}, inactiveTintColor: '#5C626E' }}>
       <BottomTab.Screen
         name="Friends"
         component={TabOneNavigator}
         options={{
           tabBarIcon: ({ color }) => <FontAwesome name="user-friends" color={color} />,
+          
+          
         }}
       />
       <BottomTab.Screen
         name=" "
-        component={TabTwoNavigator}
+        component={RandomChatScreen}
         options={{
           tabBarIcon: ({ color }) => <Icon />,
+        
         }}
       />
       <BottomTab.Screen
@@ -59,15 +62,15 @@ export default function BottomTabNavigator() {
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
 function Icon() {
-  return <View style={{marginBottom: -35}}><SvgComponentNav /></View>
+  return <View style={{marginBottom: -25, backgroundColor: 'rgba(12,12,12,0.0)'}}><SvgComponentNav /></View>
 }
 
 function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']; color: string }) {
-  return <Ionicons size={30} style={{ marginBottom: -20 }} {...props} />;
+  return <Ionicons size={25} style={{ marginBottom: -20 }} {...props} />;
 }
 
 function FontAwesome(props: { name: React.ComponentProps<typeof FontAwesome5>['name']; color: string }) {
-  return <FontAwesome5 size={30} style={{ marginBottom: -20 }} {...props} />;
+  return <FontAwesome5 size={25} style={{ marginBottom: -20 }} {...props} />;
 }
 
 
@@ -82,6 +85,7 @@ function TabOneNavigator() {
         name="TabOneScreen"
         component={TabOneScreen}
         options={{ headerTitle: 'Tab One Title' }}
+
       />
     </TabOneStack.Navigator>
   );
@@ -92,10 +96,13 @@ const TabTwoStack = createStackNavigator<TabTwoParamList>();
 function TabTwoNavigator() {
   return (
     <TabTwoStack.Navigator>
+      
       <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+      
+        name="RandomChatScreen"
+        component={RandomChatScreen}
+        // options={{ headerTitle: 'Tab Two Title' }}
+        options={{ headerShown: false }}
       />
     </TabTwoStack.Navigator>
   );
