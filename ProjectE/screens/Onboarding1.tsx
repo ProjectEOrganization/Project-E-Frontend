@@ -49,7 +49,7 @@ export default function TabTwoScreen( ) {
       <View style={styles.container3}>
       <Text style={styles.title4}>
         Already have an account?
-        <Text onPress={() => navigation.navigate('NextPart')} style={{fontFamily: 'Inter-SemiBold', color: '#4B00FF'}}> Log in </Text>
+        <Text onPress={() => navigation.navigate('Settings')} style={{fontFamily: 'Inter-SemiBold', color: '#4B00FF'}}> Log in </Text>
        
         </Text >  
       </View>

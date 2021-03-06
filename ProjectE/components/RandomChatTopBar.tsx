@@ -8,86 +8,62 @@ import Colors from '../../constants/Colors';
 import { MonoText } from '../StyledText';
 // import { Text, View } from './Themed';
 import { useFonts } from 'expo-font';
- import { Text, View, TextInput, Image } from 'react-native'
+import { Text, View, TextInput, Image } from 'react-native';
 
 export default function RandomChatTopBar({ path }: { path: string }) {
-    let [fontsLoaded] = useFonts({
-        'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
-        'Inter-Bold': require('../assets/fonts/Inter/Inter-Bold.ttf'),
-        'Inter-Regular': require('../assets/fonts/Inter/Inter-Regular.ttf'),
-        'Inter-ExtraBold': require('../assets/fonts/Inter/Inter-ExtraBold.ttf'),
-      });
+  let [fontsLoaded] = useFonts({
+    'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
+    'Inter-Bold': require('../assets/fonts/Inter/Inter-Bold.ttf'),
+    'Inter-Regular': require('../assets/fonts/Inter/Inter-Regular.ttf'),
+    'Inter-ExtraBold': require('../assets/fonts/Inter/Inter-ExtraBold.ttf'),
+  });
 
-      if (!fontsLoaded) {
-        return <View />;
-    } else {
-  return (
-    <View style={styles.overallContainer}>
-     
-     
-   
-<View style={{ width: 320, paddingTop: 20, alignItems: 'left', flex: 1, flexDirection: 'row'}}>
-
-    <Image style={{marginTop: 40 ,height: 60, width: 60 }} source={require('../assets/images/Profile-Male-PNG.png')}/> 
-    <View style={{backgroundColor: 'white', height: 70, width: 140, marginTop: 40,marginLeft:20}}> 
-    <Text style={styles.secondText}>
-        You are chatting with
-        </Text>
-    <Text style={styles.firstText}>
-          Red Poodle
-        </Text>
-     
-    </View>
-    <View style={{backgroundColor: 'white', height: 50, width:100,marginTop: 50, justifyContent: 'center',marginLeft:10}}>
-    <TouchableOpacity style={styles.loginButton} >
-        <RandomChatTopBarSvgComponent />
-          <Text style={styles.loginText} >
-            Let's be Friends
-          </Text>
-          
-        </TouchableOpacity>
-
-</View>
-       
-    </View>
-
-
-
-    <View>
-    
-
-        
-
-        {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
-       
-
-
-
+  if (!fontsLoaded) {
+    return <View />;
+  } else {
+    return (
+      <View style={styles.topBar}>
+        <Image
+          style={{ height: 60, width: 60 }}
+          source={require('../assets/images/Profile-Male-PNG.png')}
+        />
+        <View style={styles.userNameText}>
+          <Text style={styles.secondText}>You are chatting with</Text>
+          <Text style={styles.firstText}>Red Poodle</Text>
         </View>
-
-        {/* <View
-          style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
-          >
-          <MonoText>{path}</MonoText>
-        </View> */}
-
-        {/* <Text
-          style={styles.getStartedText}
-          >
-          Change any of the text, save the file, and your app will automatically update.
-        </Text>
+        <View>
+          <TouchableOpacity style={styles.loginButton}>
+            <RandomChatTopBarSvgComponent />
+            <Text style={styles.loginText}>Let's be Friends</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
-      <View style={styles.helpContainer}>
-        <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-          <Text style={styles.helpLinkText} >
-            Tap here if your app doesn't automatically update after making changes
-          </Text>
-        </TouchableOpacity> */}
-    
-    </View>
-  );
-}
+      // <View>
+      //   {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
+      // </View>
+
+      // {/* <View
+      //   style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
+      //   >
+      //   <MonoText>{path}</MonoText>
+      // </View> */}
+
+      //   {/* <Text
+      //     style={styles.getStartedText}
+      //     >
+      //     Change any of the text, save the file, and your app will automatically update.
+      //   </Text>
+      // </View>
+
+      // <View style={styles.helpContainer}>
+      //   <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
+      //     <Text style={styles.helpLinkText} >
+      //       Tap here if your app doesn't automatically update after making changes
+      //     </Text>
+      //   </TouchableOpacity> */}
+    );
+  }
 }
 
 function handleHelpPress() {
@@ -97,16 +73,22 @@ function handleHelpPress() {
 }
 
 const styles = StyleSheet.create({
-  overallContainer: { //overall container
-    height: 150,
-    width: '100%',
+  topBar: {
+    paddingTop: 50,
+    paddingBottom: 20,
+    paddingHorizontal: 20,
     backgroundColor: '#fff',
     borderRadius: 30,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     alignItems: 'center',
-    shadowOffset:{ width: 0, height: 6},
+    shadowOffset: { width: 0, height: 6 },
     shadowColor: '#000000',
     shadowOpacity: 0.05,
-    
+  },
+  userNameText: {
+    marginRight: 15,
+    marginTop: 10,
   },
   firstText: {
     fontSize: 20,
@@ -117,37 +99,26 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontFamily: 'Inter-Medium',
     color: '#5D5D5D',
-    paddingTop: 15,
-    lineHeight: 23,
-    textAlign: 'left'
   },
   loginButton: {
     backgroundColor: '#4B00FF',
+    marginTop: 10,
     borderRadius: 30,
-    height: 45,
-    marginTop: 5,
-    shadowOffset:{ width: 0, height: 2},
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    shadowOffset: { width: 0, height: 2 },
     shadowColor: '#4B00FF',
     shadowOpacity: 0.27,
     justifyContent: 'center',
     alignItems: 'center',
-    width: '100%' ,
-    flex: 1,
-    flexDirection: 'row'   
-    
-    
+    flexDirection: 'row',
+    marginRight: -10,
   },
   loginText: {
     color: 'white',
     textAlign: 'center',
-    fontSize: 12,
+    fontSize: 10,
     fontFamily: 'Inter-SemiBold',
     marginLeft: 10,
-    
-    
-    
-  }
-  
-  
- 
+  },
 });
