@@ -59,7 +59,7 @@ export default function BottomTabNavigator() {
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
 function Icon() {
-  return <View style={{marginBottom: -35}}><SvgComponentNav /></View>
+  return <View style={{marginBottom: -35, backgroundColor: 'rgba(52, 52, 52, 0.0)', height: 111}}><SvgComponentNav /></View>
 }
 
 function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']; color: string }) {
