@@ -8,47 +8,28 @@ import Colors from '../../constants/Colors';
 import { MonoText } from '../StyledText';
 // import { Text, View } from './Themed';
 import { useFonts } from 'expo-font';
- import { Text, View, TextInput } from 'react-native'
+import { Text, View, TextInput } from 'react-native';
 
 export default function WhiteChatBox({ path }: { path: string }) {
-    let [fontsLoaded] = useFonts({
-        'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
-        'Inter-Bold': require('../assets/fonts/Inter/Inter-Bold.ttf'),
-        'Inter-Regular': require('../assets/fonts/Inter/Inter-Regular.ttf'),
-        'Inter-ExtraBold': require('../assets/fonts/Inter/Inter-ExtraBold.ttf'),
-      });
+  let [fontsLoaded] = useFonts({
+    'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
+    'Inter-Bold': require('../assets/fonts/Inter/Inter-Bold.ttf'),
+    'Inter-Regular': require('../assets/fonts/Inter/Inter-Regular.ttf'),
+    'Inter-ExtraBold': require('../assets/fonts/Inter/Inter-ExtraBold.ttf'),
+  });
 
-      if (!fontsLoaded) {
-        return <View />;
-    } else {
-
-       
-
-
-    
-
-  return (
+  if (!fontsLoaded) {
+    return <View />;
+  } else {
+    return (
       <View style={styles.overallContainer}>
-   
-     
-
-    
-<View style={{  paddingTop: 9, alignItems: 'left', width: 150}}>
-        <Text style={styles.firstText}>
-        Hi, how are you
+        <Text>
+          Hi, how are you? I think we should talk about unicorns or something
+          along those lines?
         </Text>
-
-       
-       
-
-       
-
-      
-    
-    </View>
-    </View>
-  );
-}
+      </View>
+    );
+  }
 }
 
 function handleHelpPress() {
@@ -58,23 +39,23 @@ function handleHelpPress() {
 }
 
 const styles = StyleSheet.create({
-  overallContainer: { //overall container
-    height: 50,
-    width: 200,
+  overallContainer: {
+    maxWidth: 300,
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    marginBottom: 15,
     borderRadius: 15,
     borderTopLeftRadius: 0,
-    alignItems: 'center',
-    shadowOffset:{ width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowColor: '#000000',
     shadowOpacity: 0.05,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   firstText: {
     fontSize: 12,
     fontFamily: 'Inter-SemiBold',
     color: '#5D5D5D',
     textAlign: 'center',
-    
   },
   secondText: {
     fontSize: 14,
@@ -82,41 +63,35 @@ const styles = StyleSheet.create({
     color: '#A9ACB0',
     paddingTop: 15,
     lineHeight: 23,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   yesButton: {
     backgroundColor: '#3CDF7C',
     borderRadius: 6,
     height: 75,
     marginTop: 35,
-    shadowOffset:{ width: 2, height: 6},
+    shadowOffset: { width: 2, height: 6 },
     shadowColor: '#3CDF7C',
     shadowOpacity: 0.27,
     justifyContent: 'center',
     width: 110,
-    marginRight: 30
- 
+    marginRight: 30,
   },
   noButton: {
     backgroundColor: '#F24646',
     borderRadius: 6,
     height: 75,
     marginTop: 35,
-    shadowOffset:{ width: 2, height: 6},
+    shadowOffset: { width: 2, height: 6 },
     shadowColor: '#F24646',
     shadowOpacity: 0.27,
     justifyContent: 'center',
-    width: 110
- 
+    width: 110,
   },
   loginText: {
     color: 'white',
     textAlign: 'center',
     fontSize: 20,
     fontFamily: 'Inter-Bold',
-    
-  }
-  
-  
- 
+  },
 });
