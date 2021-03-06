@@ -10,7 +10,15 @@ import { MonoText } from '../StyledText';
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput } from 'react-native';
 
-export default function WhiteChatBox({ path }: { path: string }) {
+export default function ChatBubble({
+  path,
+  content,
+  user,
+}: {
+  path: string;
+  content: string;
+  user: string;
+}) {
   let [fontsLoaded] = useFonts({
     'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
     'Inter-Bold': require('../assets/fonts/Inter/Inter-Bold.ttf'),
@@ -22,10 +30,17 @@ export default function WhiteChatBox({ path }: { path: string }) {
     return <View />;
   } else {
     return (
-      <View style={styles.overallContainer}>
-        <Text>
-          Hi, how are you? I think we should talk about unicorns or something
-          along those lines?
+      <View
+        style={
+          user === 'currentUser'
+            ? styles.blueChatBubble
+            : styles.whiteChatBubble
+        }
+      >
+        <Text
+          style={user === 'currentUser' ? styles.whiteText : styles.blackText}
+        >
+          {content}
         </Text>
       </View>
     );
@@ -39,7 +54,7 @@ function handleHelpPress() {
 }
 
 const styles = StyleSheet.create({
-  overallContainer: {
+  whiteChatBubble: {
     maxWidth: 300,
     paddingHorizontal: 20,
     paddingVertical: 15,
@@ -50,6 +65,25 @@ const styles = StyleSheet.create({
     shadowColor: '#000000',
     shadowOpacity: 0.05,
     backgroundColor: 'white',
+  },
+  blueChatBubble: {
+    maxWidth: 300,
+    marginLeft: 'auto',
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    marginBottom: 15,
+    borderRadius: 15,
+    borderBottomRightRadius: 0,
+    shadowOffset: { width: 0, height: 1 },
+    shadowColor: '#000000',
+    shadowOpacity: 0.05,
+    backgroundColor: '#4b00ff',
+  },
+  whiteText: {
+    color: '#ffffff',
+  },
+  blackText: {
+    color: '#5d5d5d',
   },
   firstText: {
     fontSize: 12,
