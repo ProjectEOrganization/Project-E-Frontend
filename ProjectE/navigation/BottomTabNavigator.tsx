@@ -12,6 +12,9 @@ import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
 import SvgComponentNav from '../assets/svgComponentNav.js';
 import { View } from '../components/Themed';
 import NextPart from '../screens/NextPart';
+import Settings from '../screens/Settings'
+import Onboarding1 from '../screens/Onboarding1'
+import Account from '../screens/SettingsScreens/Account'
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -41,11 +44,14 @@ export default function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Settings"
-        component={NextPart}
+        component={SettingsStackScreen}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="settings-sharp" color={color} />,
         }}
+        
       />
+
+
 
  {/* <BottomTab.Screen
         name="RegisterTesting"
@@ -76,6 +82,22 @@ function FontAwesome(props: { name: React.ComponentProps<typeof FontAwesome5>['n
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
+
+const SettingsStack = createStackNavigator();
+
+function SettingsStackScreen() {
+  return (
+    <SettingsStack.Navigator>
+      <SettingsStack.Screen name="Settings" component={Settings} options={{ headerShown: false }}/>
+      <SettingsStack.Screen name="Account" component={Account} options={{ headerShown: false }}/>
+    </SettingsStack.Navigator>
+  );
+}
+
+
+
+//Should delete this after probably.
+
 const TabOneStack = createStackNavigator<TabOneParamList>();
 
 function TabOneNavigator() {
@@ -107,3 +129,6 @@ function TabTwoNavigator() {
     </TabTwoStack.Navigator>
   );
 }
+
+
+
