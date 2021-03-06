@@ -65,7 +65,7 @@ export default function RandomChatScreen() {
 
         {/* <SvgComponent1 /> */}
         <View
-          style={{ backgroundColor: 'rgba(52, 52, 52, 0.0)', marginTop: 50 }}
+          style={{ backgroundColor: 'transparent', marginTop: 50 }}
         >
           {/* <FriendRequestReceivedAlert /> */}
         </View>

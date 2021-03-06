@@ -26,7 +26,7 @@ export default function SettingsPageSwitch({ path }: { path: string }) {
   textColor={'#250D4F'} //'#7a44cf'
   selectedColor={'#FFFFFF'}
   buttonColor={'#250D4F'}
-  borderColor={'rgba(12,12,12,0.0)'}
+  borderColor={'transparent'}
   height={50}
   textStyle={{fontSize: 12, fontFamily: 'Inter-SemiBold'}}
   selectedTextStyle={{fontSize: 12, fontFamily: 'Inter-SemiBold'}}
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   overallContainer: { //overall container
     height: 40,
     width: 200,
-    backgroundColor: 'rgba(0,0,255,0.0)',
+    backgroundColor: 'transparent',
     borderRadius: 30,
     alignItems: 'center',
     shadowOffset:{ width: 0, height: 6},

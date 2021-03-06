@@ -15,6 +15,7 @@ import NextPart from '../screens/NextPart';
 import Settings from '../screens/Settings'
 import Onboarding1 from '../screens/Onboarding1'
 import Account from '../screens/SettingsScreens/Account'
+import Notifications from '../screens/SettingsScreens/Notifications'
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -68,7 +69,7 @@ export default function BottomTabNavigator() {
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
 function Icon() {
-  return <View style={{marginBottom: -25, backgroundColor: 'rgba(12,12,12,0.0)'}}><SvgComponentNav /></View>
+  return <View style={{marginBottom: -25, backgroundColor: 'transparent'}}><SvgComponentNav /></View>
 }
 
 function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']; color: string }) {
@@ -90,6 +91,7 @@ function SettingsStackScreen() {
     <SettingsStack.Navigator>
       <SettingsStack.Screen name="Settings" component={Settings} options={{ headerShown: false }}/>
       <SettingsStack.Screen name="Account" component={Account} options={{ headerShown: false }}/>
+      <SettingsStack.Screen name="Notifications" component={Notifications} options={{ headerShown: false }}/>
     </SettingsStack.Navigator>
   );
 }

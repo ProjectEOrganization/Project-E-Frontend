@@ -32,7 +32,7 @@ export default function NextPart() {
   return (
       
     <View style={styles.container}>
-        <View style={{width: 300, backgroundColor: 'rgba(52, 52, 52, 0.0)', }}>
+        <View style={{width: 300, backgroundColor: 'transparent', }}>
         {/* onPress={() => navigation.navigate('TabTwoScreen')} */}
         <TouchableOpacity onPress={() => navigation.navigate('TabTwo')} >
         <BackArrowSvgComponent />
@@ -61,7 +61,7 @@ export default function NextPart() {
       </View> */}
         
       {/* <SvgComponent1 /> */}
-      <View style={{backgroundColor: 'rgba(52, 52, 52, 0.0)', marginTop: 50}}>
+      <View style={{backgroundColor: 'transparent', marginTop: 50}}>
       <Login />
       </View>
 

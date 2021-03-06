@@ -9,6 +9,7 @@ import { useFonts } from 'expo-font';
 
 import { useNavigation } from '@react-navigation/native';
 import BackArrowSvgComponent from '../../assets/backArrowSvgComponent.js';
+import SwitchSelector from "react-native-switch-selector";
 
 
 
@@ -16,7 +17,7 @@ import BackArrowSvgComponent from '../../assets/backArrowSvgComponent.js';
 
 
 
-export default function Account() {
+export default function Notifications() {
   let [fontsLoaded] = useFonts({
     'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
     'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
@@ -48,79 +49,31 @@ export default function Account() {
         <TouchableOpacity onPress={() => navigation.navigate('Settings')} >
         <BackArrowSvgComponent />
         </TouchableOpacity>
-      <Text style={styles.title1}>Account</Text>
+      <Text style={styles.title1}>Notifications</Text>
 
       {/* Settings text */}
       <View style={{width: '90%', height: '70%', marginTop: 80, backgroundColor: 'transparent'}}>
 
-      <Text style={styles.settingsText}>Change Password</Text>
-      <TextInput
-                    // onBlur={() => setFocused({ email: false, password: false })}
-                    // onFocus={() => setFocused({ email: false, password: true })}
-                    // onChangeText={text => setPassword(text)}
-                    autoCapitalize={"none"}
-                    autoCorrect={false}
-                    secureTextEntry={true}
-                    accessibilityElementsHidden={true}
-                    caretHidden={true}
-                    contextMenuHidden={true}
-                    placeholder="Current Password"
-                    placeholderTextColor="#85ACD6"
-                    style={{
-                        // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
-                        // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
-                        backgroundColor: '#FFFFFF',
-                        height: 48,
-                        // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
-                        borderWidth: 0,
-                        shadowOffset:{ width: 0, height: 2},
-                        shadowColor: 'black',
-                        shadowOpacity: 0.16,
-                        // height: 44,
-                        width: '70%',
-                        borderRadius: 6,
-                        fontSize: 13,
-                        paddingHorizontal: 20,
-                        textAlign: 'left',
-                        marginTop: 0
-                    }} />
-
-<TextInput
-                    // onBlur={() => setFocused({ email: false, password: false })}
-                    // onFocus={() => setFocused({ email: false, password: true })}
-                    // onChangeText={text => setPassword(text)}
-                    autoCapitalize={"none"}
-                    autoCorrect={false}
-                    secureTextEntry={true}
-                    accessibilityElementsHidden={true}
-                    caretHidden={true}
-                    contextMenuHidden={true}
-                    placeholder="New Password"
-                    placeholderTextColor="#85ACD6"
-                    style={{
-                        // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
-                        // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
-                        backgroundColor: '#FFFFFF',
-                        height: 48,
-                        // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
-                        borderWidth: 0,
-                        shadowOffset:{ width: 0, height: 2},
-                        shadowColor: 'black',
-                        shadowOpacity: 0.16,
-                        // height: 44,
-                        width: '70%',
-                        borderRadius: 6,
-                        fontSize: 13,
-                        paddingHorizontal: 20,
-                        textAlign: 'left',
-                        marginTop: 10
-                    }} />
-<TouchableOpacity style={styles.loginButton}>
-          <Text style={styles.loginText} >
-            Change
-          </Text>
-        </TouchableOpacity>
-
+      <Text style={styles.settingsText}>Notifications</Text>
+      <View style={{width: '50%',backgroundColor: 'transparent'}}>
+      <SwitchSelector
+  initial={0}
+  onPress={value => console.log(`Call onPress with value: ${value}`)}
+  textColor={'#21293A'} //'#7a44cf'
+  selectedColor={'#FFFFFF'}
+  buttonColor={'#4B00FF'}
+  borderColor={'transparent'}
+  height={50}
+  width={50}
+  textStyle={{fontSize: 12, fontFamily: 'Inter-SemiBold'}}
+  selectedTextStyle={{fontSize: 12, fontFamily: 'Inter-SemiBold'}}
+  hasPadding
+  options={[
+    { label: "On", value: "f" }, //images.feminino = require('./path_to/assets/img/feminino.png')
+    { label: "Off", value: "m" } //images.masculino = require('./path_to/assets/img/masculino.png')
+  ]}
+/>
+</View>
       </View>
 
       {/* Login Component  */}

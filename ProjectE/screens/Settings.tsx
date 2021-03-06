@@ -50,12 +50,12 @@ export default function Settings() {
       <Text style={styles.title1}>Settings</Text>
 
       {/* Settings text */}
-      <View style={{width: '90%', height: '70%', marginTop: 80, backgroundColor: 'rgba(12,12,12,0.0)'}}>
+      <View style={{width: '90%', height: '70%', marginTop: 80, backgroundColor: 'transparent'}}>
       <TouchableOpacity onPress={() => navigation.navigate('Account')}>
       <Text style={[styles.settingsText]}>Account</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
       <Text style={styles.settingsText}>Notifications</Text>
       </TouchableOpacity>
 

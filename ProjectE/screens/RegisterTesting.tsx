@@ -66,7 +66,7 @@ export default function RegisterTesting() {
       </View> */}
         
       {/* <SvgComponent1 /> */}
-      <View style={{backgroundColor: 'rgba(52, 52, 52, 0.0)', marginTop: 50}}>
+      <View style={{backgroundColor: 'transparent', marginTop: 50}}>
       {/* <FriendRequestReceivedAlert /> */}
       </View>
 
