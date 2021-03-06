@@ -14,6 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import FriendsPageSwitch from '../components/FriendsPageSwitch';
 import TopicStarter from '../components/TopicStarter';
 import ChatBox from '../components/ChatBox';
+import RandomChatBottomBar from '../components/RandomChatBottomBar'
 
 // import * as yourModuleName from 'module-name';
 
@@ -35,6 +36,7 @@ export default function RandomChatScreen() {
         <RandomChatTopBar />
         <TopicStarter />
         <ChatBox />
+        <RandomChatBottomBar />
 
         {/* <View style={{width: 300, backgroundColor: 'rgba(52, 52, 52, 0.0)', }}> */}
         {/* onPress={() => navigation.navigate('TabTwoScreen')} */}
