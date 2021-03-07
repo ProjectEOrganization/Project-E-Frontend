@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import { useFonts } from 'expo-font';
@@ -8,6 +8,7 @@ import RandomChatTopBar from '../components/RandomChatTopBar';
 
 import { useNavigation } from '@react-navigation/native';
 import ChatBubble from '../components/ChatBubble';
+import TopicStarter from '../components/TopicStarter';
 
 // import * as yourModuleName from 'module-name';
 
@@ -25,7 +26,8 @@ export default function RandomChatScreen() {
     return <View />;
   } else {
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
+        <TopicStarter />
         <ChatBubble
           content='hey, how are you? I think we should talk about unicorns or something along those lines?'
           user='opposingUser'
@@ -48,7 +50,7 @@ export default function RandomChatScreen() {
           user='opposingUser'
         />
         <ChatBubble content="lol. i'll search it up" user='currentUser' />
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -56,7 +58,7 @@ export default function RandomChatScreen() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'transparent',
-    marginVertical: 30,
-    marginHorizontal: 20,
+    marginBottom: 30,
+    paddingHorizontal: 20,
   },
 });

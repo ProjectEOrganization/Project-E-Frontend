@@ -57,6 +57,7 @@ function handleHelpPress() {
 const styles = StyleSheet.create({
   overallContainer: {
     marginTop: 80,
+    marginBottom: 25,
     marginHorizontal: 20,
     height: 30,
     borderRadius: 15,
