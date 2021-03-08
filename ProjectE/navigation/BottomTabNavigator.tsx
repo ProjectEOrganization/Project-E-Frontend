@@ -6,16 +6,18 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/TabOneScreen';
+import TabOneScreen from '../screens/FriendsScreen';
 import RandomChatScreen from '../screens/RandomChatScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
 import SvgComponentNav from '../assets/svgComponentNav.js';
 import { View } from '../components/Themed';
 import NextPart from '../screens/NextPart';
 import Settings from '../screens/Settings'
-import Onboarding1 from '../screens/Onboarding1'
+import FriendsScreen from '../screens/FriendsScreen'
 import Account from '../screens/SettingsScreens/Account'
 import Notifications from '../screens/SettingsScreens/Notifications'
+import FriendsChatScreen from '../screens/FriendsChatScreen'
+
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -28,7 +30,7 @@ export default function BottomTabNavigator() {
       tabBarOptions={{ activeTintColor: '#00DBD0', style:{height:90}, inactiveTintColor: '#5C626E' }}>
       <BottomTab.Screen
         name="Friends"
-        component={TabOneNavigator}
+        component={FriendsStackScreen}
         options={{
           tabBarIcon: ({ color }) => <FontAwesome name="user-friends" color={color} />,
           
@@ -96,6 +98,16 @@ function SettingsStackScreen() {
   );
 }
 
+const FriendsStack = createStackNavigator();
+
+function FriendsStackScreen() {
+  return (
+    <FriendsStack.Navigator>
+      <FriendsStack.Screen name="Friends" component={FriendsScreen} options={{ headerShown: false }}/>
+      <FriendsStack.Screen name="FriendsChatScreen" component={FriendsChatScreen} options={{ headerShown: false, tabBarVisible: false}}/>
+    </FriendsStack.Navigator>
+  );
+}
 
 
 //Should delete this after probably.

@@ -10,7 +10,7 @@ import BackArrowSvgComponent from '../assets/backArrowSvgComponent.js';
 import Navigation from '../navigation';
 
 import { useNavigation } from '@react-navigation/native';
-import TabOneScreen from './TabOneScreen';
+import TabOneScreen from './FriendsScreen';
 
 // import * as yourModuleName from 'module-name';
 
