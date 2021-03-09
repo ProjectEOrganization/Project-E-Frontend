@@ -5,6 +5,7 @@ import { StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
 import { Text, View } from 'react-native';
 import IndividualFriendChat from '../components/IndividualFriendChat';
+import FriendCard from '../components/FriendCard';
 
 export default function FriendsChat() {
   let [fontsLoaded] = useFonts({
@@ -18,11 +19,10 @@ export default function FriendsChat() {
     return <View />;
   } else {
     return (
-      <View>
-        <IndividualFriendChat />
-        <IndividualFriendChat />
-        <IndividualFriendChat />
-      </View>
+      <>
+        <FriendCard />
+        <FriendCard />
+      </>
     );
   }
 }
