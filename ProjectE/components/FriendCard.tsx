@@ -22,18 +22,20 @@ export default function FriendCard() {
     return <View />;
   } else {
     return (
-        <View style={styles.topBar}>
-            <View>
-                <Image
-                style={{ height: 75, width: 75 }}
-                source={require('../assets/images/Profile-Male-PNG.png')}
-                />
+        <TouchableOpacity>
+            <View style={styles.topBar}>
+                <View>
+                    <Image
+                    style={{ height: 75, width: 75 }}
+                    source={require('../assets/images/Profile-Male-PNG.png')}
+                    />
+                </View>
+                
+                <View style={styles.userNameText}>
+                    <Text style={styles.firstText}>  Red Poodle</Text>
+                </View>
             </View>
-            
-            <View style={styles.userNameText}>
-                <Text style={styles.firstText}>  Red Poodle</Text>
-            </View>
-        </View>
+        </TouchableOpacity>
     );
   }
 }

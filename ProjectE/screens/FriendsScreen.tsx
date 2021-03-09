@@ -53,7 +53,7 @@ export default function FriendsScreen() {
           <FriendsPageSwitch />
         </View>
 
-        <View style={{ marginTop: 50 }}>
+        <View style={{ backgroundColor: 'transparent', marginTop: 50 }}>
           <FriendsChat />
         </View>
 
