@@ -8,6 +8,9 @@ import { useFonts } from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 import FriendsPageSwitch from '../components/FriendsPageSwitch';
 import ThreeDotsSvg from '../assets/threeDotsSvg.js';
+import { useAuth } from '../services/auth';
+import { api } from '../services/api';
+import { useSocket } from '../services/socket';
 
 export default function FriendsScreen() {
   let username = 'David';
@@ -21,11 +24,26 @@ export default function FriendsScreen() {
 
   const navigation = useNavigation();
 
+  const auth = useAuth();
+  const socket = useSocket();
+  // Example of using firebase auth and API.
+  React.useEffect(() => {
+    (async () => {
+      // await auth.signin('email', 'password')
+      await auth.signInAnonymously();
+      console.log(auth.user.uid);
+
+      const res = await api.get('/hi');
+      console.log(res.data)
+    })()
+  }, [])
+
   if (!fontsLoaded) {
     return <View />;
   } else {
     return (
       <View style={styles.container}>
+
         <View
           style={{
             marginTop: 80,
