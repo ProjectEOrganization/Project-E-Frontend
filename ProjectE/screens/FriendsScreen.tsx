@@ -27,6 +27,7 @@ export default function FriendsScreen() {
   // Example of using firebase auth and API.
   React.useEffect(() => {
     (async () => {
+      // await auth.signin('email', 'password')
       await auth.signInAnonymously();
       console.log(auth.user.uid);
 
