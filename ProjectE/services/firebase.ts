@@ -1,9 +1,8 @@
 import firebase from 'firebase';
+import config from './config';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyA-H3h0czlXG_9THrjbmTpTnZwxsbHSAK0",
-    authDomain: "projecte-cc03f.firebaseapp.com",
-    projectId: "projecte-cc03f",
+    ...config.firebase
 };
 
 if (!firebase.apps.length) {
