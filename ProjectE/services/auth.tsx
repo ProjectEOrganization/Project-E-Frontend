@@ -1,5 +1,4 @@
 //@ts-nocheck
-
 import React, { useState, useEffect, useContext, createContext } from "react";
 import { api } from "./api";
 import { firebase } from "./firebase";

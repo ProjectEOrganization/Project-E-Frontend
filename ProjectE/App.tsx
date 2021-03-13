@@ -6,6 +6,7 @@ import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 import { ProvideAuth } from './services/auth';
+import { ProvideSocket } from './services/socket';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -16,10 +17,12 @@ export default function App() {
   } else {
     return (
       <ProvideAuth>
-        <SafeAreaProvider>
-          <Navigation colorScheme={colorScheme} />
-          <StatusBar />
-        </SafeAreaProvider>
+        <ProvideSocket>
+          <SafeAreaProvider>
+            <Navigation colorScheme={colorScheme} />
+            <StatusBar />
+          </SafeAreaProvider>
+        </ProvideSocket>
       </ProvideAuth>
     );
   }
