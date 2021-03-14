@@ -28,15 +28,15 @@ export default function BottomTabNavigator() {
     <BottomTab.Navigator
       initialRouteName="Friends"
       tabBarOptions={{ activeTintColor: '#00DBD0', style:{height:90}, inactiveTintColor: '#5C626E' }}>
+      
       <BottomTab.Screen
         name="Friends"
         component={FriendsStackScreen}
         options={{
           tabBarIcon: ({ color }) => <FontAwesome name="user-friends" color={color} />,
-          
-          
         }}
       />
+
       <BottomTab.Screen
         name=" "
         component={RandomChatScreen}
@@ -45,6 +45,7 @@ export default function BottomTabNavigator() {
         
         }}
       />
+
       <BottomTab.Screen
         name="Settings"
         component={SettingsStackScreen}
@@ -53,8 +54,6 @@ export default function BottomTabNavigator() {
         }}
         
       />
-
-
 
  {/* <BottomTab.Screen
         name="RegisterTesting"
@@ -104,7 +103,7 @@ function FriendsStackScreen() {
   return (
     <FriendsStack.Navigator>
       <FriendsStack.Screen name="Friends" component={FriendsScreen} options={{ headerShown: false }}/>
-      <FriendsStack.Screen name="FriendsChatScreen" component={FriendsChatScreen} options={{ headerShown: false, tabBarVisible: false}}/>
+      <FriendsStack.Screen name="FriendsChatScreen" component={FriendsChatScreen} options={{ headerShown: false}}/>
     </FriendsStack.Navigator>
   );
 }

@@ -1,8 +1,8 @@
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import LoginSvgComponent from '../assets/loginSvgComponent.js';
-import RandomChatTopBarSvgComponent from '../assets/randomChatTopBarSvgComponent.js';
+import LoginSvgComponent from '../../assets/loginSvgComponent.js';
+import RandomChatTopBarSvgComponent from '../../assets/randomChatTopBarSvgComponent.js';
 
 import Colors from '../../constants/Colors';
 import { MonoText } from '../StyledText';
