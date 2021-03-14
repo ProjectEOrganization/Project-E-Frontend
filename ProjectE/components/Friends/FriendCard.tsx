@@ -12,10 +12,10 @@ import { Text, View, TextInput, Image } from 'react-native';
 
 export default function FriendCard() {
   let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-ExtraBold': require('../assets/fonts/Inter/Inter-ExtraBold.ttf'),
+    'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
+    'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
+    'Inter-Regular': require('../../assets/fonts/Inter/Inter-Regular.ttf'),
+    'Inter-ExtraBold': require('../../assets/fonts/Inter/Inter-ExtraBold.ttf'),
   });
 
   if (!fontsLoaded) {
@@ -27,7 +27,7 @@ export default function FriendCard() {
                 <View>
                     <Image
                     style={{ height: 75, width: 75 }}
-                    source={require('../assets/images/Profile-Male-PNG.png')}
+                    source={require('../../assets/images/Profile-Male-PNG.png')}
                     />
                 </View>
                 

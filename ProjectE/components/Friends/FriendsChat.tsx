@@ -4,15 +4,16 @@ import { StyleSheet } from 'react-native';
 // import { Text, View } from './Themed';
 import { useFonts } from 'expo-font';
 import { Text, View } from 'react-native';
-import IndividualFriendChat from '../components/IndividualFriendChat';
-import FriendCard from '../components/FriendCard';
+import IndividualFriendChat from '../../components/Friends/IndividualFriendChat';
+import FriendCard from '../../components/Friends/FriendCard';
+import FriendsMessagesCard from '../../components/Friends/FriendsMessagesCard';
 
 export default function FriendsChat() {
   let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-ExtraBold': require('../assets/fonts/Inter/Inter-ExtraBold.ttf'),
+    'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
+    'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
+    'Inter-Regular': require('../../assets/fonts/Inter/Inter-Regular.ttf'),
+    'Inter-ExtraBold': require('../../assets/fonts/Inter/Inter-ExtraBold.ttf'),
   });
 
   if (!fontsLoaded) {
@@ -20,8 +21,7 @@ export default function FriendsChat() {
   } else {
     return (
       <>
-        <FriendCard />
-        <FriendCard />
+        <FriendsMessagesCard />
       </>
     );
   }

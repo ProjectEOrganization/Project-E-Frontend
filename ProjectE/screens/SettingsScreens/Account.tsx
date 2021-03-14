@@ -5,7 +5,7 @@ import { StyleSheet, TextInput } from 'react-native';
 import { Text, View } from '../../components/Themed';
 import { Image, TouchableOpacity } from 'react-native';
 import { useFonts } from 'expo-font';
-
+import Login from '../../components/Auth/Login';
 
 import { useNavigation } from '@react-navigation/native';
 import BackArrowSvgComponent from '../../assets/backArrowSvgComponent.js';
@@ -49,10 +49,11 @@ export default function Account() {
         <BackArrowSvgComponent />
         </TouchableOpacity>
       <Text style={styles.title1}>Account</Text>
+      <Login />
 
       {/* Settings text */}
-      <View style={{width: '90%', height: '70%', marginTop: 80, backgroundColor: 'transparent'}}>
-
+      {/* <View style={{width: '90%', height: '70%', marginTop: 80, backgroundColor: 'transparent'}}>
+        
       <Text style={styles.settingsText}>Change Password</Text>
       <TextInput
                     // onBlur={() => setFocused({ email: false, password: false })}
@@ -121,7 +122,7 @@ export default function Account() {
           </Text>
         </TouchableOpacity>
 
-      </View>
+      </View> */}
 
       {/* Login Component  */}
       {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}

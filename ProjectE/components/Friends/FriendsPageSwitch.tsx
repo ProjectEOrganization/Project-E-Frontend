@@ -8,10 +8,10 @@ import { Text, View, TextInput, Image } from 'react-native';
 
 export default function FriendsPageSwitch({ path }: { path: string }) {
   let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-ExtraBold': require('../assets/fonts/Inter/Inter-ExtraBold.ttf'),
+    'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
+    'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
+    'Inter-Regular': require('../../assets/fonts/Inter/Inter-Regular.ttf'),
+    'Inter-ExtraBold': require('../../assets/fonts/Inter/Inter-ExtraBold.ttf'),
   });
 
   if (!fontsLoaded) {

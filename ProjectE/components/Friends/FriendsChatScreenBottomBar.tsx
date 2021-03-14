@@ -1,8 +1,8 @@
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import LoginSvgComponent from '../assets/loginSvgComponent.js';
-import SendIcon from '../assets/sendIcon.js';
+import LoginSvgComponent from '../../assets/loginSvgComponent.js';
+import SendIcon from '../../assets/sendIcon.js';
 
 import Colors from '../../constants/Colors';
 import { MonoText } from '../StyledText';
@@ -12,10 +12,10 @@ import { Text, View, TextInput, Image } from 'react-native';
 
 export default function FriendsChatScreenBottomBar() {
   let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-ExtraBold': require('../assets/fonts/Inter/Inter-ExtraBold.ttf'),
+    'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
+    'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
+    'Inter-Regular': require('../../assets/fonts/Inter/Inter-Regular.ttf'),
+    'Inter-ExtraBold': require('../../assets/fonts/Inter/Inter-ExtraBold.ttf'),
   });
 
   if (!fontsLoaded) {

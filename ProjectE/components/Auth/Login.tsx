@@ -1,14 +1,19 @@
 import * as WebBrowser from 'expo-web-browser';
-import React from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import LoginSvgComponent from '../../assets/loginSvgComponent.js';
-
 import Colors from '../../constants/Colors';
 import { MonoText } from '../StyledText';
 // import { Text, View } from './Themed';
 import { useFonts } from 'expo-font';
  import { Text, View, TextInput } from 'react-native'
-
+​
+ import { useAuth } from '../../services/auth';
+import { api } from '../../services/api';
+import { useSocket } from '../../services/socket';
+​
+​
+​
 export default function Login({ path }: { path: string }) {
     let [fontsLoaded] = useFonts({
         'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
@@ -16,7 +21,29 @@ export default function Login({ path }: { path: string }) {
         'Inter-Regular': require('../../assets/fonts/Inter/Inter-Regular.ttf'),
         'Inter-ExtraBold': require('../../assets/fonts/Inter/Inter-ExtraBold.ttf'),
       });
-
+​
+      const auth = useAuth();
+      const socket = useSocket();
+      // Example of using firebase auth and API.
+      React.useEffect(() => {
+        (async () => {
+          await auth.signin(email, password).then(() => {
+            console.log(email, 'Account is found')
+          }).catch(()=> {
+            console.log(password, 'Account is not found')
+          })
+          // await auth.signInAnonymously();
+          // auth.user.uid
+          
+          // const res = await api.get('/hi');
+          // console.log(res.data)
+        })()
+      }, [])
+​
+      const [email, setEmail] = useState("")
+      const [password, setPassword] = useState("")
+​
+​
       if (!fontsLoaded) {
         return <View />;
     } else {
@@ -29,7 +56,7 @@ export default function Login({ path }: { path: string }) {
         <Text style={styles.firstText}>
           Login
         </Text>
-
+​
         {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
         <Text style={styles.secondText}>
         Login to continue chatting with your friends
@@ -37,14 +64,14 @@ export default function Login({ path }: { path: string }) {
         <TextInput
                     // onBlur={() => setFocused({ email: false, password: false })}
                     // onFocus={() => setFocused({ email: false, password: true })}
-                    // onChangeText={text => setPassword(text)}
+                    onChangeText={text => setEmail(text)}
                     autoCapitalize={"none"}
                     autoCorrect={false}
                     secureTextEntry={false}
                     accessibilityElementsHidden={true}
                     caretHidden={true}
                     contextMenuHidden={true}
-                    placeholder="Username"
+                    placeholder="Email"
                     placeholderTextColor="#85ACD6"
                     style={{
                         // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
@@ -65,11 +92,11 @@ export default function Login({ path }: { path: string }) {
                         textAlign: 'left',
                         marginTop: 35
                     }} />
-
+​
 <TextInput
                     // onBlur={() => setFocused({ email: false, password: false })}
                     // onFocus={() => setFocused({ email: false, password: true })}
-                    // onChangeText={text => setPassword(text)}
+                    onChangeText={text => setPassword(text)}
                     autoCapitalize={"none"}
                     autoCorrect={false}
                     secureTextEntry={true}
@@ -97,28 +124,28 @@ export default function Login({ path }: { path: string }) {
                         textAlign: 'left',
                         marginTop: 25
                     }} />
-
+​
 <TouchableOpacity style={styles.loginButton}>
           <Text style={styles.loginText} >
             Login
           </Text>
         </TouchableOpacity>
-
+​
         </View>
-
+​
         {/* <View
           style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
           >
           <MonoText>{path}</MonoText>
         </View> */}
-
+​
         {/* <Text
           style={styles.getStartedText}
           >
           Change any of the text, save the file, and your app will automatically update.
         </Text>
       </View>
-
+​
       <View style={styles.helpContainer}>
         <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
           <Text style={styles.helpLinkText} >
@@ -130,13 +157,13 @@ export default function Login({ path }: { path: string }) {
   );
 }
 }
-
+​
 function handleHelpPress() {
   WebBrowser.openBrowserAsync(
     'https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet'
   );
 }
-
+​
 const styles = StyleSheet.create({
   overallContainer: { //overall container
     height: 400,

@@ -7,10 +7,10 @@ import { Text, View } from 'react-native';
 
 export default function IndividualFriendChat() {
   let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-ExtraBold': require('../assets/fonts/Inter/Inter-ExtraBold.ttf'),
+    'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
+    'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
+    'Inter-Regular': require('../../assets/fonts/Inter/Inter-Regular.ttf'),
+    'Inter-ExtraBold': require('../../assets/fonts/Inter/Inter-ExtraBold.ttf'),
   });
 
   if (!fontsLoaded) {

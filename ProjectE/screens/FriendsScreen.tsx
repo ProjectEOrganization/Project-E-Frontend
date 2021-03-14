@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import FriendsChat from '../components/FriendsChat';
+import FriendsChat from '../components/Friends/FriendsChat';
 
 import { Text, View } from '../components/Themed';
 import BackArrowSvgComponent from '../assets/backArrowSvgComponent.js';
 import { useFonts } from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
-import FriendsPageSwitch from '../components/FriendsPageSwitch';
+import FriendsPageSwitch from '../components/Friends/FriendsPageSwitch';
 import ThreeDotsSvg from '../assets/threeDotsSvg.js';
 import { useAuth } from '../services/auth';
 import { api } from '../services/api';

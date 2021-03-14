@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity, Image } from 'react-native';
-import FriendsChat from '../components/FriendsChat';
+import FriendsChat from '../components/Friends/FriendsChat';
 
 import { Text, View } from '../components/Themed';
 import BackArrowSvgComponent from '../assets/backArrowSvgComponent.js'
@@ -8,8 +8,8 @@ import { useFonts } from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 import FriendsPageSwitch from '../components/FriendsPageSwitch'
 import ThreeDotsSvg from '../assets/threeDotsSvg.js'
-import FriendsChatBox from '../components/FriendsChatBox'
-import FriendsChatScreenBottomBar from '../components/FriendsChatScreenBottomBar'
+import FriendsChatBox from '../components/Friends/FriendsChatBox'
+import FriendsChatScreenBottomBar from '../components/Friends/FriendsChatScreenBottomBar'
 
 export default function FriendsChatScreen() {
   let username = "David"
