@@ -34,16 +34,15 @@ export default function FriendsScreen() {
       console.log(auth.user.uid);
 
       const res = await api.get('/hi');
-      console.log(res.data)
-    })()
-  }, [])
+      console.log(res.data);
+    })();
+  }, []);
 
   if (!fontsLoaded) {
     return <View />;
   } else {
     return (
       <View style={styles.container}>
-
         <View
           style={{
             marginTop: 80,

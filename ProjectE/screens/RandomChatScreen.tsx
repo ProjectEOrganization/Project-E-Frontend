@@ -11,7 +11,7 @@ import Navigation from '../navigation';
 import RandomChatTopBar from '../components/RandomChatTopBar';
 
 import { useNavigation } from '@react-navigation/native';
-import FriendsPageSwitch from '../components/FriendsPageSwitch';
+import FriendsPageSwitch from '../components/Friends/FriendsPageSwitch';
 import ChatBox from '../components/ChatBox';
 import RandomChatBottomBar from '../components/RandomChatBottomBar';
 

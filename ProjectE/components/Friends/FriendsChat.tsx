@@ -4,9 +4,8 @@ import { StyleSheet } from 'react-native';
 // import { Text, View } from './Themed';
 import { useFonts } from 'expo-font';
 import { Text, View } from 'react-native';
-import IndividualFriendChat from '../../components/Friends/IndividualFriendChat';
-import FriendCard from '../../components/Friends/FriendCard';
-import FriendsMessagesCard from '../../components/Friends/FriendsMessagesCard';
+import IndividualFriendChat from '../components/IndividualFriendChat';
+import FriendCard from './FriendCard';
 
 export default function FriendsChat() {
   let [fontsLoaded] = useFonts({
