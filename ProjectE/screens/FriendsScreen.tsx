@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import FriendsChat from '../components/FriendsChat';
+import FriendsChat from '../components/Friends/FriendsChat';
 
 import { Text, View } from '../components/Themed';
 import BackArrowSvgComponent from '../assets/backArrowSvgComponent.js';
 import { useFonts } from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
-import FriendsPageSwitch from '../components/FriendsPageSwitch';
+import FriendsPageSwitch from '../components/Friends/FriendsPageSwitch';
 import ThreeDotsSvg from '../assets/threeDotsSvg.js';
 import { useAuth } from '../services/auth';
 import { api } from '../services/api';
@@ -34,16 +34,15 @@ export default function FriendsScreen() {
       console.log(auth.user.uid);
 
       const res = await api.get('/hi');
-      console.log(res.data)
-    })()
-  }, [])
+      console.log(res.data);
+    })();
+  }, []);
 
   if (!fontsLoaded) {
     return <View />;
   } else {
     return (
       <View style={styles.container}>
-
         <View
           style={{
             marginTop: 80,
