@@ -16,8 +16,6 @@ export function ProvideAuth({ children }) {
     )
 }
 
-// Hook for child components to get the auth object ...
-// ... and re-render when it changes.
 export const useAuth = () => {
     return useContext(AuthContext);
 };
@@ -25,9 +23,6 @@ export const useAuth = () => {
 // Provider hook that creates auth object and handles state
 function useProvideAuth() {
     const [user, setUser] = useState<firebase.User>(null);
-
-    // Wrap any Firebase methods we want to use making sure ...
-    // ... to save the user to state.
 
     const signin = (email, password) => {
         return firebase
@@ -92,12 +87,12 @@ function useProvideAuth() {
     // ... component that utilizes this hook to re-render with the ...
     // ... latest auth object.
     useEffect(() => {
-        const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+        const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
-                api.post('/auth');
-                setUser(user);
+                const res = await api.post('/auth');
+                setUser(res.data.user);
             } else {
-                setUser(false);
+                setUser();
             }
         });
 

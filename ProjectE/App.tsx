@@ -1,12 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider } from 'react-redux';
 
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 import { ProvideAuth } from './services/auth';
 import { ProvideSocket } from './services/socket';
+import { store } from './store';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -16,14 +18,16 @@ export default function App() {
     return null;
   } else {
     return (
-      <ProvideAuth>
-        <ProvideSocket>
-          <SafeAreaProvider>
-            <Navigation colorScheme={colorScheme} />
-            <StatusBar />
-          </SafeAreaProvider>
-        </ProvideSocket>
-      </ProvideAuth>
+      <Provider store={store}>
+        <ProvideAuth>
+          <ProvideSocket>
+            <SafeAreaProvider>
+              <Navigation colorScheme={colorScheme} />
+              <StatusBar />
+            </SafeAreaProvider>
+          </ProvideSocket>
+        </ProvideAuth>
+      </Provider>
     );
   }
 }
