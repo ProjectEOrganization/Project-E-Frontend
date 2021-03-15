@@ -21,6 +21,7 @@ export default function Login({ path }: { path?: string }) {
     auth
       .signin(email, password)
       .then(() => {
+        navigation.goBack()
         console.log(
           email,
           password,
