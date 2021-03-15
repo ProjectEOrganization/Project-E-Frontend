@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { Button, StyleSheet, TouchableOpacity } from 'react-native';
 import FriendsChat from '../components/Friends/FriendsChat';
 
 import { Text, View } from '../components/Themed';
@@ -52,6 +52,14 @@ export default function FriendsScreen() {
           <ThreeDotsSvg />
         </View>
 
+        {auth.user?.uid ?
+          <Button title="Log out" onPress={auth.signout} />
+          : (
+            <>
+              <Button title="Sign in" onPress={() => navigation.navigate('LoginModal')} />
+              <Button title="Sign up" onPress={() => navigation.navigate('RegisterModal')} />
+            </>
+          )}
         <View
           style={{
             marginTop: 60,
@@ -65,7 +73,7 @@ export default function FriendsScreen() {
               color: '#21293A',
             }}
           >
-            Hello {username}!
+            Hello {auth.user?.displayName || username}!
           </Text>
           <FriendsPageSwitch />
         </View>

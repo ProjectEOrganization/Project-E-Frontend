@@ -10,7 +10,8 @@ import { Text, View, TextInput } from 'react-native';
 import { useAuth } from '../../services/auth';
 import { api } from '../../services/api';
 import { useSocket } from '../../services/socket';
-export default function Login({ path }: { path: string }) {
+import { useNavigation } from '@react-navigation/core';
+export default function Login({ path }: { path?: string }) {
   const auth = useAuth();
 
   const [email, setEmail] = useState('');
@@ -30,10 +31,9 @@ export default function Login({ path }: { path: string }) {
         console.log(email, password, 'Account is not found. NOT authenticated');
       });
   };
-
+  const navigation = useNavigation();
   return (
     <View style={styles.overallContainer}>
-      <Text>{auth.user?.displayName}</Text>
       <LoginSvgComponent />
       <View style={{ width: 260, paddingTop: 30 }}>
         <Text style={styles.firstText}>Login</Text>
