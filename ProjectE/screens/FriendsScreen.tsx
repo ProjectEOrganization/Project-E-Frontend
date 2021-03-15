@@ -30,11 +30,11 @@ export default function FriendsScreen() {
   React.useEffect(() => {
     (async () => {
       // await auth.signin('email', 'password')
-      await auth.signInAnonymously();
-      console.log(auth.user.uid);
+      // await auth.signInAnonymously();
+      // console.log(auth.user.uid);
 
-      const res = await api.get('/hi');
-      console.log(res.data);
+      // const res = await api.get('/hi');
+      // console.log(res.data);
     })();
   }, []);
 
