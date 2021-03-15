@@ -8,8 +8,10 @@ import { MonoText } from '../StyledText';
 // import { Text, View } from './Themed';
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput } from 'react-native';
+import { useNavigation } from '@react-navigation/core';
 
 export default function Register({ path }: { path: string }) {
+  const navigation = useNavigation();
   const auth = useAuth();
 
   const [email, setEmail] = useState('');
@@ -25,6 +27,7 @@ export default function Register({ path }: { path: string }) {
       console.log('rip');
     }
   };
+
 
   let [fontsLoaded] = useFonts({
     'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
@@ -131,6 +134,12 @@ export default function Register({ path }: { path: string }) {
           </Text>
 
           <Text
+            onPress={() => {
+              navigation.goBack();
+              setTimeout(() => {
+                navigation.navigate('LoginModal')
+              }, 300)
+            }}
             style={{
               fontSize: 15,
               color: '#A9ACB0',

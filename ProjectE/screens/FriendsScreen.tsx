@@ -1,7 +1,9 @@
-import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import * as React from 'react';
+import { Button, StyleSheet, TouchableOpacity } from 'react-native';
 import FriendsChat from '../components/Friends/FriendsChat';
+
 import { Text, View } from '../components/Themed';
+import BackArrowSvgComponent from '../assets/backArrowSvgComponent.js';
 import { useFonts } from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 import FriendsPageSwitch from '../components/Friends/FriendsPageSwitch';
@@ -24,13 +26,40 @@ export default function FriendsScreen() {
 
   const auth = useAuth();
   const socket = useSocket();
+  // Example of using firebase auth and API.
+  React.useEffect(() => {
+    (async () => {
+      // await auth.signin('email', 'password')
+      // await auth.signInAnonymously();
+      // console.log(auth.user.uid);
+
+      // const res = await api.get('/hi');
+      // console.log(res.data);
+    })();
+  }, []);
 
   if (!fontsLoaded) {
     return <View />;
   } else {
     return (
       <View style={styles.container}>
-        <ThreeDotsSvg />
+        <View
+          style={{
+            marginTop: 80,
+            backgroundColor: 'transparent',
+          }}
+        >
+          <ThreeDotsSvg />
+        </View>
+
+        {auth.user?.uid ?
+          <Button title="Log out" onPress={auth.signout} />
+          : (
+            <>
+              <Button title="Sign in" onPress={() => navigation.navigate('LoginModal')} />
+              <Button title="Sign up" onPress={() => navigation.navigate('RegisterModal')} />
+            </>
+          )}
 
         <View
           style={{
@@ -38,11 +67,19 @@ export default function FriendsScreen() {
             backgroundColor: 'transparent',
           }}
         >
-          <Text style={styles.h1}>Hello {username}!</Text>
+          <Text
+            style={{
+              fontFamily: 'Inter-SemiBold',
+              fontSize: 25,
+              color: '#21293A',
+            }}
+          >
+            Hello {auth.user?.displayName || username}!
+          </Text>
           <FriendsPageSwitch />
         </View>
 
-        <View style={{ backgroundColor: 'transparent', marginTop: 35 }}>
+        <View style={{ backgroundColor: 'transparent', marginTop: 50 }}>
           <FriendsChat />
         </View>
 
@@ -53,7 +90,9 @@ export default function FriendsScreen() {
         />
         <TouchableOpacity
           onPress={() => navigation.navigate('FriendsChatScreen')}
-        ></TouchableOpacity>
+        >
+          <Text>FriendsChatScreenTest</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -61,15 +100,14 @@ export default function FriendsScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 30,
-    paddingTop: 70,
+    paddingHorizontal: 35,
+    flex: 1,
     backgroundColor: '#F1F6FC',
     height: '100%',
   },
-  h1: {
-    fontFamily: 'Inter-SemiBold',
-    fontSize: 25,
-    color: '#21293A',
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   separator: {
     marginVertical: 30,
