@@ -1,5 +1,5 @@
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
-import * as Font from 'expo-font';
+import { loadAsync } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import * as React from 'react';
 
@@ -13,7 +13,7 @@ export default function useCachedResources() {
         SplashScreen.preventAutoHideAsync();
 
         // Load fonts
-        await Font.loadAsync({
+        await loadAsync({
           ...Ionicons.font,
           ...FontAwesome5.font,
           'space-mono': require('../assets/fonts/SpaceMono-Regular.ttf'),
@@ -22,7 +22,9 @@ export default function useCachedResources() {
           'Inter-Regular': require('../assets/fonts/Inter/Inter-Regular.ttf'),
           'Inter-SemiBold': require('../assets/fonts/Inter/Inter-SemiBold.ttf'),
         });
+        console.log('your fonts loaded!')
       } catch (e) {
+        alert("err")
         // We might want to provide this error information to an error reporting service
         console.warn(e);
       } finally {
