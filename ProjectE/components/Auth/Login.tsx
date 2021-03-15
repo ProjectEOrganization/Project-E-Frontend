@@ -11,9 +11,7 @@ import { useAuth } from '../../services/auth';
 import { api } from '../../services/api';
 import { useSocket } from '../../services/socket';
 export default function Login({ path }: { path: string }) {
-
   const auth = useAuth();
-
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -22,12 +20,16 @@ export default function Login({ path }: { path: string }) {
     auth
       .signin(email, password)
       .then(() => {
-        console.log(email, 'Account is found');
+        console.log(
+          email,
+          password,
+          'Account is found. You are now authenticated.'
+        );
       })
       .catch(() => {
-        console.log(password, 'Account is not found');
+        console.log(email, password, 'Account is not found. NOT authenticated');
       });
-  }
+  };
 
   return (
     <View style={styles.overallContainer}>
@@ -38,7 +40,7 @@ export default function Login({ path }: { path: string }) {
         {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
         <Text style={styles.secondText}>
           Login to continue chatting with your friends
-          </Text>
+        </Text>
         <TextInput
           // onBlur={() => setFocused({ email: false, password: false })}
           // onFocus={() => setFocused({ email: false, password: true })}
@@ -108,7 +110,6 @@ export default function Login({ path }: { path: string }) {
         <TouchableOpacity onPress={onLogin} style={styles.loginButton}>
           <Text style={styles.loginText}>Login</Text>
         </TouchableOpacity>
-
       </View>
 
       {/* <View
