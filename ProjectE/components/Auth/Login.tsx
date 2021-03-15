@@ -31,6 +31,7 @@ export default function Login({ path }: { path: string }) {
 
   return (
     <View style={styles.overallContainer}>
+      <Text>{auth.user?.displayName}</Text>
       <LoginSvgComponent />
       <View style={{ width: 260, paddingTop: 30 }}>
         <Text style={styles.firstText}>Login</Text>
