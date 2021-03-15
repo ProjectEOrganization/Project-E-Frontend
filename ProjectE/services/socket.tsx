@@ -24,7 +24,7 @@ function useProvideSocket(): Socket {
 
     useEffect(() => {
         const setup = async () => {
-            const token = await auth.user.getIdToken(true);
+            const token = await auth.user?.getIdToken(true);
 
             const socket = io(config.SOCKET_URL, {
                 transports: ["websocket"],
@@ -46,7 +46,7 @@ function useProvideSocket(): Socket {
         return () => {
             socket?.close();
         }
-    }, []);
+    }, [auth]);
 
     return socket
 }
