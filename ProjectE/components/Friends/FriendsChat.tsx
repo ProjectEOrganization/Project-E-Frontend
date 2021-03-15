@@ -1,11 +1,9 @@
-import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 // import { Text, View } from './Themed';
 import { useFonts } from 'expo-font';
 import { Text, View } from 'react-native';
 import FriendsMessagesCard from './FriendsMessagesCard';
-import FriendCard from './FriendCard';
 
 export default function FriendsChat() {
   let [fontsLoaded] = useFonts({
@@ -19,9 +17,9 @@ export default function FriendsChat() {
     return <View />;
   } else {
     return (
-      <>
+      <View>
         <FriendsMessagesCard />
-      </>
+      </View>
     );
   }
 }

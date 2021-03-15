@@ -1,9 +1,5 @@
-import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import LoginSvgComponent from '../../assets/loginSvgComponent.js';
-import RandomChatTopBarSvgComponent from '../../assets/randomChatTopBarSvgComponent.js';
-
 import Colors from '../../constants/Colors';
 import { MonoText } from '../StyledText';
 // import { Text, View } from './Themed';
@@ -25,90 +21,73 @@ export default function FriendsMessagesCard() {
     return <View />;
   } else {
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('FriendsChatScreen')}>
-        
-            <View style={styles.topBar}>
-                <View>
-                    <Image
-                    style={{ height: 65, width: 65 }}
-                    source={require('../../assets/images/Profile-Male-PNG.png')}
-                    />
-                </View>
-                
-                <View style={styles.userNameText}>
-                    <Text style={styles.firstText}>  Nick</Text>
-                    <Text style={styles.secondText}>  Remember that time i gave..</Text>
-                </View>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('FriendsChatScreen')}
+      >
+        <View style={styles.topBar}>
+          <View style={styles.profile}>
+            <Image
+              style={styles.profileImage}
+              source={require('../../assets/images/Profile-Male-PNG.png')}
+            />
 
-                <View style={{backgroundColor: '#FF0B2B', width: 20, height: 20, borderRadius: 10, marginLeft: 50, marginTop: -25, alignItems: 'center', justifyContent: 'center'}}>
-                    <Text style={{color: 'white'}}>
-                        5
-                    </Text>
-
-                </View>
-
-
+            <View>
+              <Text style={styles.firstText}>Nick</Text>
+              <Text style={styles.secondText}>Remember that time i gave..</Text>
             </View>
-        </TouchableOpacity>
+          </View>
+
+          <View style={styles.notifications}>
+            <Text style={{ color: 'white' }}>5</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
     );
   }
 }
 
 const styles = StyleSheet.create({
   topBar: {
-    paddingTop: 15,
-    paddingBottom: 15,
-    paddingHorizontal: 20,
+    paddingVertical: 15,
     backgroundColor: '#fff',
     borderRadius: 25,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     alignItems: 'center',
     shadowOffset: { width: 0, height: 6 },
     shadowColor: '#000000',
     shadowOpacity: 0.05,
-    width: '105%',
-    
-    
+    width: '103%',
   },
-  userNameText: {
-    marginLeft: 15,
-    marginTop: 0,
-    textAlign:'center'
+  profile: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  profileImage: {
+    height: 65,
+    width: 65,
+    marginLeft: 20,
+    marginRight: 25,
+  },
+  notifications: {
+    backgroundColor: '#FF0B2B',
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 15,
+    alignSelf: 'flex-start',
   },
   firstText: {
     fontSize: 20,
     fontFamily: 'Inter-Bold',
     color: '#21293A',
-    textAlign: 'left',
-    marginLeft: -5
   },
   secondText: {
     fontSize: 10,
-    paddingTop: 10,
-    marginTop: 5,
     fontFamily: 'Inter-SemiBold',
     color: '#919191',
-  },
-  loginButton: {
-    backgroundColor: '#4B00FF',
-    marginTop: 10,
-    borderRadius: 30,
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    shadowOffset: { width: 0, height: 2 },
-    shadowColor: '#4B00FF',
-    shadowOpacity: 0.27,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginRight: -10,
-  },
-  loginText: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 10,
-    fontFamily: 'Inter-SemiBold',
-    marginLeft: 10,
+    marginTop: 5,
   },
 });

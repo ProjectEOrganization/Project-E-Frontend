@@ -1,7 +1,5 @@
-import * as React from 'react';
+import React from 'react';
 import { StyleSheet, TouchableOpacity, Image } from 'react-native';
-import FriendsChat from '../components/Friends/FriendsChat';
-
 import { Text, View } from '../components/Themed';
 import BackArrowSvgComponent from '../assets/backArrowSvgComponent.js';
 import { useFonts } from 'expo-font';
