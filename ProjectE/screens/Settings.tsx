@@ -12,6 +12,7 @@ import Navigation from '../navigation';
 import { useNavigation } from '@react-navigation/native';
 import TabOneScreen from './TabOneScreen';
 import SettingsPageSwitch from '../components/SettingsPageSwitch'
+import { useAuth } from '../services/auth';
 
 // import * as yourModuleName from 'module-name';
 
@@ -26,13 +27,15 @@ export default function Settings() {
   });
 
   const navigation = useNavigation();
- 
+
+  const auth = useAuth();
+
   if (!fontsLoaded) {
     return <View />;
   } else {
-  return (
-      
-    <View style={styles.container}>
+    return (
+
+      <View style={styles.container}>
         {/* <View style={{width: 300, backgroundColor: 'rgba(52, 52, 52, 0.0)', }}> */}
         {/* onPress={() => navigation.navigate('TabTwoScreen')} */}
         {/* <TouchableOpacity onPress={() => navigation.navigate('TabTwo')} >
@@ -45,48 +48,48 @@ export default function Settings() {
         </TouchableOpacity> */}
 
 
-{/* </View> */}
-        
-      <Text style={styles.title1}>Settings</Text>
+        {/* </View> */}
 
-      {/* Settings text */}
-      <View style={{width: '90%', height: '70%', marginTop: 80, backgroundColor: 'transparent'}}>
-      <TouchableOpacity onPress={() => navigation.navigate('Account')}>
-      <Text style={[styles.settingsText]}>Account</Text>
-      </TouchableOpacity>
+        <Text style={styles.title1}>Settings</Text>
 
-      <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
-      <Text style={styles.settingsText}>Notifications</Text>
-      </TouchableOpacity>
+        {/* Settings text */}
+        <View style={{ width: '90%', height: '70%', marginTop: 80, backgroundColor: 'transparent' }}>
+          <TouchableOpacity onPress={() => navigation.navigate('Account')}>
+            <Text style={[styles.settingsText]}>Account</Text>
+          </TouchableOpacity>
 
-      <TouchableOpacity>
-      <Text style={styles.settingsText}>Report a Problem</Text>
-      </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
+            <Text style={styles.settingsText}>Notifications</Text>
+          </TouchableOpacity>
 
-     
-      <TouchableOpacity>
-      <Text style={styles.settingsText}>Support</Text>
-      </TouchableOpacity>
+          <TouchableOpacity>
+            <Text style={styles.settingsText}>Report a Problem</Text>
+          </TouchableOpacity>
 
-      <Text style={styles.settingsText}>Customization</Text>
-        <SettingsPageSwitch />
 
-      
+          <TouchableOpacity>
+            <Text style={styles.settingsText}>Support</Text>
+          </TouchableOpacity>
 
-      <TouchableOpacity>
-      <Text style={[styles.settingsText, styles.text1]}>Terms and Policy</Text>
-      </TouchableOpacity>
+          <Text style={styles.settingsText}>Customization</Text>
+          <SettingsPageSwitch />
 
-      <TouchableOpacity>
-      <Text style={[styles.settingsText, styles.text2]}>Log Out</Text>
-      </TouchableOpacity>
 
-      </View>
 
-      {/* Login Component  */}
-      {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
-      {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
-      {/* <View style={styles.container2}>
+          <TouchableOpacity>
+            <Text style={[styles.settingsText, styles.text1]}>Terms and Policy</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity>
+            {auth.user?.uid && <Text onPress={auth.signout} style={[styles.settingsText, styles.text2]}>Log Out</Text>}
+          </TouchableOpacity>
+
+        </View>
+
+        {/* Login Component  */}
+        {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
+        {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
+        {/* <View style={styles.container2}>
       <Text style={styles.title3}>
         Chat with random people and create 
         everlasting friendships, 
@@ -94,12 +97,12 @@ export default function Settings() {
        
         </Text >  
       </View> */}
-        
-      {/* <SvgComponent1 /> */}
-      
 
-      {/* <Image style={{marginTop: 40 ,height: 138, width: 138, transform: [{ rotate: '25deg'}]}} source={require('../assets/images/peace-sign-emoji-by-google.png')}/> */}
-      {/* <View style={styles.container3}>
+        {/* <SvgComponent1 /> */}
+
+
+        {/* <Image style={{marginTop: 40 ,height: 138, width: 138, transform: [{ rotate: '25deg'}]}} source={require('../assets/images/peace-sign-emoji-by-google.png')}/> */}
+        {/* <View style={styles.container3}>
       <Text style={styles.title4}>
         Already have an account?
         <Text onPress={() => navigation.navigate(TabOneScreen)} style={{fontFamily: 'Inter-SemiBold', color: '#4B00FF'}}> Log in </Text>
@@ -108,9 +111,9 @@ export default function Settings() {
       </View> */}
 
 
-   
-    </View>
-  );
+
+      </View>
+    );
   }
 }
 
@@ -119,26 +122,26 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     paddingTop: '22%',
-    
+
     backgroundColor: '#F1F6FC'
   },
   container2: { //text part
     flex: 1,
     width: 300,
-    
+
     justifyContent: 'center',
     paddingTop: '13%',
-    
+
     backgroundColor: '#F5F7F9',
     flexDirection: 'row'
   },
   container3: { //bottom login text part
     flex: 1,
     width: 300,
-    
+
     justifyContent: 'center',
-    
-    
+
+
     backgroundColor: '#F5F7F9',
     flexDirection: 'row'
   },
@@ -148,14 +151,14 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter-SemiBold',
     color: '#21293A',
     marginTop: -20
-    
+
   },
   settingsText: { //Rapid
     fontSize: 16,
     fontFamily: 'Inter-Regular',
     color: '#59606E',
     paddingBottom: 30
-    
+
   },
   text1: {
     color: '#6F8BA4',
@@ -165,6 +168,6 @@ const styles = StyleSheet.create({
   text2: {
     color: '#E53D53',
     fontSize: 14,
-   
+
   }
 });
