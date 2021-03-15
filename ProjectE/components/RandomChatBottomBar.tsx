@@ -1,12 +1,6 @@
-import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import LoginSvgComponent from '../assets/loginSvgComponent.js';
 import SendIcon from '../assets/sendIcon.js';
-
-import Colors from '../../constants/Colors';
-import { MonoText } from '../StyledText';
-// import { Text, View } from './Themed';
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput, Image } from 'react-native';
 
@@ -22,59 +16,14 @@ export default function RandomChatBottomBar() {
     return <View />;
   } else {
     return (
-      // <View style={styles.topBar}>
-      //   <View style={styles.userNameText}>
-      //     <TextInput
-      //               // onBlur={() => setFocused({ email: false, password: false })}
-      //               // onFocus={() => setFocused({ email: false, password: true })}
-      //               // onChangeText={text => setPassword(text)}
-      //               autoCapitalize={"none"}
-      //               autoCorrect={false}
-      //               secureTextEntry={false}
-      //               accessibilityElementsHidden={true}
-      //               caretHidden={true}
-      //               contextMenuHidden={true}
-      //               placeholder="Username"
-      //               placeholderTextColor="#85ACD6"
-      //               style={{
-      //                   // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
-      //                   // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
-      //                   backgroundColor: '#F1F6FC',
-      //                   height: 48,
-      //                   // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
-      //                   borderWidth: 0,
-      //                   shadowOffset:{ width: 0, height: 2},
-      //                   shadowColor: 'black',
-      //                   shadowOpacity: 0.16,
-      //                   flex: 5,
-      //                   width: '75%',
-      //                   borderRadius: 6,
-      //                   fontSize: 15,
-      //                   paddingHorizontal: 20,
-      //                   textAlign: 'left',
-      //                   // marginTop: 35
-      //               }} />
-      //   </View>
-      //   <View>
-      //     <TouchableOpacity style={styles.loginButton}>
-      //       <RandomChatTopBarSvgComponent />
-      //     </TouchableOpacity>
-      //   </View>
-      // </View>
       <View style={styles.topBar}>
-        <TextInput placeholder="Message"
-                   placeholderTextColor="#85ACD6"
-                   style={{
-                        backgroundColor: '#F1F6FC',
-                        borderWidth: 0,
-                        width: '85%',
-                        height: 40,
-                        borderRadius: 30,
-                        fontSize: 15,
-                        paddingHorizontal: 20,
-                        textAlign: 'left',}} />
+        <TextInput
+          placeholder='Message'
+          placeholderTextColor='#85ACD6'
+          style={styles.textInput}
+        />
         <TouchableOpacity style={styles.loginButton}>
-            <SendIcon />
+          <SendIcon />
         </TouchableOpacity>
       </View>
     );
@@ -82,56 +31,40 @@ export default function RandomChatBottomBar() {
 }
 
 const styles = StyleSheet.create({
+  textInput: {
+    backgroundColor: '#F1F6FC',
+    borderWidth: 0,
+    width: '85%',
+    borderRadius: 30,
+    fontSize: 15,
+    paddingHorizontal: 20,
+    height: 41,
+  },
   topBar: {
     paddingTop: 15,
     paddingBottom: 20,
     paddingHorizontal: 20,
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    height: 70,
-    width:'100%',
+    backgroundColor: '#ffffff',
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
     flexDirection: 'row',
-    // justifyContent: 'space-around',
-    // alignItems: 'center',
     shadowOffset: { width: 0, height: 6 },
     shadowColor: '#000000',
     shadowOpacity: 0.05,
-    position:'absolute',
-    bottom: 0
-  },
-  userNameText: {
-    marginRight: 15,
-    // marginTop: 10,
-  },
-  firstText: {
-    fontSize: 20,
-    fontFamily: 'Inter-ExtraBold',
-    color: '#21293A',
-  },
-  secondText: {
-    fontSize: 10,
-    fontFamily: 'Inter-Medium',
-    color: '#5D5D5D',
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
   },
   loginButton: {
     backgroundColor: '#00DBD0',
+    width: 35,
     height: 35,
     borderRadius: 30,
-    paddingHorizontal: 10,
     shadowOffset: { width: 0, height: 2 },
     shadowColor: '#4B00FF',
     shadowOpacity: 0.27,
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 20,
-    width: 35
-  },
-  loginText: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 10,
-    fontFamily: 'Inter-SemiBold',
-    marginLeft: 10,
   },
 });

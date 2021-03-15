@@ -1,10 +1,7 @@
-import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import LoginSvgComponent from '../../assets/loginSvgComponent.js';
 import SendIcon from '../../assets/sendIcon.js';
 
-import Colors from '../../constants/Colors';
 import { MonoText } from '../StyledText';
 // import { Text, View } from './Themed';
 import { useFonts } from 'expo-font';
@@ -22,21 +19,23 @@ export default function FriendsChatScreenBottomBar() {
     return <View />;
   } else {
     return (
-      
       <View style={styles.topBar}>
-        <TextInput placeholder="Message"
-                   placeholderTextColor="#85ACD6"
-                   style={{
-                        backgroundColor: '#F1F6FC',
-                        borderWidth: 0,
-                        width: '85%',
-                        height: 40,
-                        borderRadius: 30,
-                        fontSize: 15,
-                        paddingHorizontal: 20,
-                        textAlign: 'left',}} />
+        <TextInput
+          placeholder='Message'
+          placeholderTextColor='#85ACD6'
+          style={{
+            backgroundColor: '#F1F6FC',
+            borderWidth: 0,
+            width: '85%',
+            height: 40,
+            borderRadius: 30,
+            fontSize: 15,
+            paddingHorizontal: 20,
+            textAlign: 'left',
+          }}
+        />
         <TouchableOpacity style={styles.loginButton}>
-            <SendIcon />
+          <SendIcon />
         </TouchableOpacity>
       </View>
     );
@@ -52,15 +51,15 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     height: 70,
-    width:'100%',
+    width: '100%',
     flexDirection: 'row',
     // justifyContent: 'space-around',
     // alignItems: 'center',
     shadowOffset: { width: 0, height: 6 },
     shadowColor: '#000000',
     shadowOpacity: 0.05,
-    position:'absolute',
-    bottom: 0
+    position: 'absolute',
+    bottom: 0,
   },
   userNameText: {
     marginRight: 15,
@@ -87,7 +86,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 20,
-    width: 35
+    width: 35,
   },
   loginText: {
     color: 'white',

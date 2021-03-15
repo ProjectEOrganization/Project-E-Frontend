@@ -1,21 +1,11 @@
-import * as React from 'react';
+import React from 'react';
 import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '../components/EditScreenInfo';
-// import FriendReulert from '../components/Alerts/TheyHadToGoAlert';
 import { Text, View } from '../components/Themed';
-import { Image, TouchableOpacity } from 'react-native';
 import { useFonts } from 'expo-font';
-import BackArrowSvgComponent from '../assets/backArrowSvgComponent.js';
-import Navigation from '../navigation';
 import RandomChatTopBar from '../components/RandomChatTopBar';
-
 import { useNavigation } from '@react-navigation/native';
-import FriendsPageSwitch from '../components/Friends/FriendsPageSwitch';
 import ChatBox from '../components/ChatBox';
 import RandomChatBottomBar from '../components/RandomChatBottomBar';
-
-// import * as yourModuleName from 'module-name';
 
 export default function RandomChatScreen() {
   let [fontsLoaded] = useFonts({
