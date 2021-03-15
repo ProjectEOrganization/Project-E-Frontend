@@ -1,9 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import FriendsChat from '../components/Friends/FriendsChat';
-
 import { Text, View } from '../components/Themed';
-import BackArrowSvgComponent from '../assets/backArrowSvgComponent.js';
 import { useFonts } from 'expo-font';
 import { useNavigation } from '@react-navigation/native';
 import FriendsPageSwitch from '../components/Friends/FriendsPageSwitch';
@@ -26,31 +24,13 @@ export default function FriendsScreen() {
 
   const auth = useAuth();
   const socket = useSocket();
-  // Example of using firebase auth and API.
-  React.useEffect(() => {
-    (async () => {
-      // await auth.signin('email', 'password')
-      // await auth.signInAnonymously();
-      // console.log(auth.user.uid);
-
-      // const res = await api.get('/hi');
-      // console.log(res.data);
-    })();
-  }, []);
 
   if (!fontsLoaded) {
     return <View />;
   } else {
     return (
       <View style={styles.container}>
-        <View
-          style={{
-            marginTop: 80,
-            backgroundColor: 'transparent',
-          }}
-        >
-          <ThreeDotsSvg />
-        </View>
+        <ThreeDotsSvg />
 
         <View
           style={{
@@ -58,19 +38,11 @@ export default function FriendsScreen() {
             backgroundColor: 'transparent',
           }}
         >
-          <Text
-            style={{
-              fontFamily: 'Inter-SemiBold',
-              fontSize: 25,
-              color: '#21293A',
-            }}
-          >
-            Hello {username}!
-          </Text>
+          <Text style={styles.h1}>Hello {username}!</Text>
           <FriendsPageSwitch />
         </View>
 
-        <View style={{ backgroundColor: 'transparent', marginTop: 50 }}>
+        <View style={{ backgroundColor: 'transparent', marginTop: 35 }}>
           <FriendsChat />
         </View>
 
@@ -81,9 +53,7 @@ export default function FriendsScreen() {
         />
         <TouchableOpacity
           onPress={() => navigation.navigate('FriendsChatScreen')}
-        >
-          <Text>FriendsChatScreenTest</Text>
-        </TouchableOpacity>
+        ></TouchableOpacity>
       </View>
     );
   }
@@ -91,14 +61,15 @@ export default function FriendsScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 35,
-    flex: 1,
+    paddingHorizontal: 30,
+    paddingTop: 70,
     backgroundColor: '#F1F6FC',
     height: '100%',
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  h1: {
+    fontFamily: 'Inter-SemiBold',
+    fontSize: 25,
+    color: '#21293A',
   },
   separator: {
     marginVertical: 30,

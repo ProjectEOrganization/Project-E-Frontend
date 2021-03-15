@@ -1,4 +1,3 @@
-import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import SwitchSelector from 'react-native-switch-selector';
@@ -31,8 +30,8 @@ export default function FriendsPageSwitch({ path }: { path: string }) {
           selectedTextStyle={{ fontSize: 12, fontFamily: 'Inter-SemiBold' }}
           hasPadding
           options={[
-            { label: 'Messages', value: 'f' }, //images.feminino = require('./path_to/assets/img/feminino.png')
-            { label: 'Friends', value: 'm' }, //images.masculino = require('./path_to/assets/img/masculino.png')
+            { label: 'Messages', value: 'messages' },
+            { label: 'Friends', value: 'friends' },
           ]}
         />
       </View>
@@ -42,23 +41,12 @@ export default function FriendsPageSwitch({ path }: { path: string }) {
 
 const styles = StyleSheet.create({
   overallContainer: {
-    //overall container
-    height: 40,
-    width: 200,
+    width: 250,
     backgroundColor: 'transparent',
     borderRadius: 30,
-    alignItems: 'center',
     shadowOffset: { width: 0, height: 6 },
     shadowColor: '#21293A',
     shadowOpacity: 0.05,
-    marginTop: 25,
-  },
-
-  loginText: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 12,
-    fontFamily: 'Inter-SemiBold',
-    marginLeft: 10,
+    marginTop: 45,
   },
 });
