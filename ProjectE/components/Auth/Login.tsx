@@ -11,125 +11,112 @@ import { useAuth } from '../../services/auth';
 import { api } from '../../services/api';
 import { useSocket } from '../../services/socket';
 export default function Login({ path }: { path: string }) {
-  let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-ExtraBold': require('../../assets/fonts/Inter/Inter-ExtraBold.ttf'),
-  });
-  const auth = useAuth();
-  const socket = useSocket();
-  // Example of using firebase auth and API.
-  React.useEffect(() => {
-    (async () => {
-      await auth
-        .signin(email, password)
-        .then(() => {
-          console.log(email, 'Account is found');
-        })
-        .catch(() => {
-          console.log(password, 'Account is not found');
-        });
-      // await auth.signInAnonymously();
-      // auth.user.uid
 
-      // const res = await api.get('/hi');
-      // console.log(res.data)
-    })();
-  }, []);
+  const auth = useAuth();
+
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  if (!fontsLoaded) {
-    return <View />;
-  } else {
-    return (
-      <View style={styles.overallContainer}>
-        <LoginSvgComponent />
-        <View style={{ width: 260, paddingTop: 30 }}>
-          <Text style={styles.firstText}>Login</Text>​
-          {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
-          <Text style={styles.secondText}>
-            Login to continue chatting with your friends
+
+  const onLogin = () => {
+    auth
+      .signin(email, password)
+      .then(() => {
+        console.log(email, 'Account is found');
+      })
+      .catch(() => {
+        console.log(password, 'Account is not found');
+      });
+  }
+
+  return (
+    <View style={styles.overallContainer}>
+      <LoginSvgComponent />
+      <View style={{ width: 260, paddingTop: 30 }}>
+        <Text style={styles.firstText}>Login</Text>
+        {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
+        <Text style={styles.secondText}>
+          Login to continue chatting with your friends
           </Text>
-          <TextInput
-            // onBlur={() => setFocused({ email: false, password: false })}
-            // onFocus={() => setFocused({ email: false, password: true })}
-            onChangeText={(text) => setEmail(text)}
-            autoCapitalize={'none'}
-            autoCorrect={false}
-            secureTextEntry={false}
-            accessibilityElementsHidden={true}
-            caretHidden={true}
-            contextMenuHidden={true}
-            placeholder='Email'
-            placeholderTextColor='#85ACD6'
-            style={{
-              // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
-              // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
-              backgroundColor: '#F1F6FC',
+        <TextInput
+          // onBlur={() => setFocused({ email: false, password: false })}
+          // onFocus={() => setFocused({ email: false, password: true })}
+          onChangeText={(text) => setEmail(text)}
+          autoCapitalize={'none'}
+          autoCorrect={false}
+          secureTextEntry={false}
+          accessibilityElementsHidden={true}
+          caretHidden={true}
+          contextMenuHidden={true}
+          placeholder='Email'
+          placeholderTextColor='#85ACD6'
+          style={{
+            // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
+            // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
+            backgroundColor: '#F1F6FC',
 
-              height: 48,
-              // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
-              borderWidth: 0,
-              shadowOffset: { width: 0, height: 2 },
-              shadowColor: 'black',
-              shadowOpacity: 0.16,
-              // height: 44,
-              width: '100%',
-              borderRadius: 6,
-              fontSize: 15,
-              paddingHorizontal: 20,
-              textAlign: 'left',
-              marginTop: 35,
-            }}
-          />
-          ​
-          <TextInput
-            // onBlur={() => setFocused({ email: false, password: false })}
-            // onFocus={() => setFocused({ email: false, password: true })}
-            onChangeText={(text) => setPassword(text)}
-            autoCapitalize={'none'}
-            autoCorrect={false}
-            secureTextEntry={true}
-            accessibilityElementsHidden={true}
-            caretHidden={true}
-            contextMenuHidden={true}
-            placeholder='Password'
-            placeholderTextColor='#85ACD6'
-            style={{
-              // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
-              // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
-              backgroundColor: '#F1F6FC',
+            height: 48,
+            // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
+            borderWidth: 0,
+            shadowOffset: { width: 0, height: 2 },
+            shadowColor: 'black',
+            shadowOpacity: 0.16,
+            // height: 44,
+            width: '100%',
+            borderRadius: 6,
+            fontSize: 15,
+            paddingHorizontal: 20,
+            textAlign: 'left',
+            marginTop: 35,
+          }}
+        />
 
-              height: 48,
-              // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
-              borderWidth: 0,
-              shadowOffset: { width: 0, height: 2 },
-              shadowColor: 'black',
-              shadowOpacity: 0.16,
-              // height: 44,
-              width: '100%',
-              borderRadius: 6,
-              fontSize: 15,
-              paddingHorizontal: 20,
-              textAlign: 'left',
-              marginTop: 25,
-            }}
-          />
-          ​
-          <TouchableOpacity style={styles.loginButton}>
-            <Text style={styles.loginText}>Login</Text>
-          </TouchableOpacity>
-          ​
-        </View>
-        ​
-        {/* <View
+        <TextInput
+          // onBlur={() => setFocused({ email: false, password: false })}
+          // onFocus={() => setFocused({ email: false, password: true })}
+          onChangeText={(text) => setPassword(text)}
+          autoCapitalize={'none'}
+          autoCorrect={false}
+          secureTextEntry={true}
+          accessibilityElementsHidden={true}
+          caretHidden={true}
+          contextMenuHidden={true}
+          placeholder='Password'
+          placeholderTextColor='#85ACD6'
+          style={{
+            // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
+            // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
+            backgroundColor: '#F1F6FC',
+
+            height: 48,
+            // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
+            borderWidth: 0,
+            shadowOffset: { width: 0, height: 2 },
+            shadowColor: 'black',
+            shadowOpacity: 0.16,
+            // height: 44,
+            width: '100%',
+            borderRadius: 6,
+            fontSize: 15,
+            paddingHorizontal: 20,
+            textAlign: 'left',
+            marginTop: 25,
+          }}
+        />
+
+        <TouchableOpacity onPress={onLogin} style={styles.loginButton}>
+          <Text style={styles.loginText}>Login</Text>
+        </TouchableOpacity>
+
+      </View>
+
+      {/* <View
           style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
           >
           <MonoText>{path}</MonoText>
         </View> */}
-        ​
-        {/* <Text
+
+      {/* <Text
           style={styles.getStartedText}
           >
           Change any of the text, save the file, and your app will automatically update.
@@ -142,15 +129,16 @@ export default function Login({ path }: { path: string }) {
             Tap here if your app doesn't automatically update after making changes
           </Text>
         </TouchableOpacity> */}
-      </View>
-    );
-  }
+    </View>
+  );
 }
+
 function handleHelpPress() {
   WebBrowser.openBrowserAsync(
     'https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet'
   );
 }
+
 const styles = StyleSheet.create({
   overallContainer: {
     //overall container
