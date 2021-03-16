@@ -8,14 +8,14 @@ const { height } = Dimensions.get('screen');
 export const popupEffect: StackNavigationOptions = {
     transparentCard: true,
     headerShown: false,
-    gestureEnabled: true,
+    gestureEnabled: false,
     cardOverlay: ({ style }: ViewProps) => {
         return (
             <Animated.View style={[{ height: height * 2, backgroundColor: 'rgba(0,0,0,.5)' }, style]} />
         )
     },
-    gestureDirection: 'vertical',
-    gestureResponseDistance: { vertical: height },
+    // gestureDirection: 'vertical',
+    // gestureResponseDistance: { vertical: height },
     cardStyleInterpolator: ({ current, next, inverted }: StackCardInterpolationProps) => ({
         containerStyle: {
             transform: [
