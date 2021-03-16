@@ -17,10 +17,11 @@ import FriendsScreen from '../screens/FriendsScreen';
 import Account from '../screens/SettingsScreens/Account';
 import Notifications from '../screens/SettingsScreens/Notifications';
 import FriendsChatScreen from '../screens/FriendsChatScreen';
+import onBoarding1 from '../screens/Onboarding1';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
-export default function BottomTabNavigator() {
+function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
   return (
@@ -32,9 +33,10 @@ export default function BottomTabNavigator() {
         inactiveTintColor: '#5C626E',
       }}
     >
+
       <BottomTab.Screen
         name='Friends'
-        component={FriendsStackScreen}
+        component={FriendsScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <FontAwesome name='user-friends' color={color} />
@@ -125,12 +127,12 @@ function SettingsStackScreen() {
 
 const FriendsStack = createStackNavigator();
 
-function FriendsStackScreen() {
+export default function FriendsStackScreen() {
   return (
     <FriendsStack.Navigator>
       <FriendsStack.Screen
         name='Friends'
-        component={FriendsScreen}
+        component={BottomTabNavigator}
         options={{ headerShown: false }}
       />
       <FriendsStack.Screen

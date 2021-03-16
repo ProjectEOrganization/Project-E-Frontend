@@ -46,11 +46,12 @@ const styles = StyleSheet.create({
   topBar: {
     paddingTop: 15,
     paddingBottom: 20,
+    marginBottom:0,
     paddingHorizontal: 20,
     backgroundColor: '#fff',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    height: 70,
+    height: 90,
     width: '100%',
     flexDirection: 'row',
     // justifyContent: 'space-around',
