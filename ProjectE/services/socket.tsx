@@ -24,29 +24,32 @@ function useProvideSocket(): Socket {
 
     useEffect(() => {
         const setup = async () => {
-            const token = await auth.user?.getIdToken(true);
+            try {
+                const token = await auth.user.getIdToken();
 
-            const socket = io(config.SOCKET_URL, {
-                transports: ["websocket"],
-                query: { token }
-            })
+                const socket = io(config.SOCKET_URL, {
+                    transports: ["websocket"],
+                    query: { token }
+                })
 
-            socket.on('connect', () => {
-                console.log('connected')
-            })
+                socket.on('connect', () => {
+                    console.log('connected')
+                })
 
-            socket.on('disconnect', () => {
-                console.log('disconnected')
-            })
-
-
-            setSocket(socket);
+                socket.on('disconnect', () => {
+                    console.log('disconnected')
+                })
+                setSocket(socket);
+            }
+            catch (err) {
+                console.log(err)
+            }
         }
-        setup();
+        if (auth.user?.getIdToken) setup();
         return () => {
             socket?.close();
         }
-    }, [auth]);
+    }, [auth.user]);
 
     return socket
 }

@@ -90,7 +90,13 @@ function useProvideAuth() {
         const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
                 const res = await api.post('/auth');
-                setUser(res.data.user);
+                const newUser: firebase.User = {
+                    ...user,
+                    ...res.data.user,
+                    getIdToken: user.getIdToken
+                }
+                console.log({ newUser: newUser.getIdToken })
+                setUser(newUser);
             } else {
                 setUser();
             }
