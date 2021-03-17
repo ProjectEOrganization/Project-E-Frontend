@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 // import { Text, View } from './Themed';
 import { useFonts } from 'expo-font';
 import { Text, View } from 'react-native';
 import FriendsMessagesCard from './FriendsMessagesCard';
+import { api } from '../../services/api';
+import { useAuth } from '../../services/auth';
 
 export default function FriendsChat() {
+  const [friends, setFriends] = useState();
+
+  const auth = useAuth();
+
+  useEffect(() => {
+    if (auth.user) {
+      (async () => {
+        const res = await api.get('/friends');
+        console.log(res);
+        setFriends(res.data);
+      })();
+    }
+  }, []);
+
   let [fontsLoaded] = useFonts({
     'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
     'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
@@ -18,7 +34,7 @@ export default function FriendsChat() {
   } else {
     return (
       <View>
-        <FriendsMessagesCard />
+        <Text>{friends}</Text>
       </View>
     );
   }
