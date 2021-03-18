@@ -59,7 +59,7 @@ function useProvideAuth() {
             .auth()
             .signOut()
             .then(() => {
-                setUser(false);
+                setUser();
             });
     };
 
@@ -92,7 +92,7 @@ function useProvideAuth() {
                 const newUser: firebase.User = {
                     ...user,
                     ...res.data.user,
-                    getIdToken: user.getIdTokens
+                    getIdToken: user.getIdToken
                 }
                 setUser(newUser);
             } else {
