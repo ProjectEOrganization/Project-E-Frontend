@@ -1,87 +1,100 @@
-import React from 'react';
-import { StyleSheet, TouchableOpacity, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, TouchableOpacity, Image, ActivityIndicator, KeyboardAvoidingView, Dimensions } from 'react-native';
 import { Text, View } from '../components/Themed';
 import BackArrowSvgComponent from '../assets/backArrowSvgComponent.js';
 import { useFonts } from 'expo-font';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import FriendsPageSwitch from '../components/Friends/FriendsPageSwitch';
 import ThreeDotsSvg from '../assets/threeDotsSvg.js';
 import FriendsChatBox from '../components/Friends/FriendsChatBox';
 import FriendsChatScreenBottomBar from '../components/Friends/FriendsChatScreenBottomBar';
+import { api } from '../services/api';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+const { width } = Dimensions.get('screen')
 
 export default function FriendsChatScreen() {
-  let username = 'David';
-
-  let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-SemiBold': require('../assets/fonts/Inter/Inter-SemiBold.ttf'),
-  });
-
   const navigation = useNavigation();
+  const route = useRoute();
 
-  if (!fontsLoaded) {
-    return <View />;
-  } else {
-    return (
-      <View style={styles.container}>
-        <View
+  const [loading, setLoading] = useState(false);
+
+  const { user }: any = route.params;
+
+  const [chat, setChat] = useState({ messages: [] });
+
+  useEffect(() => {
+    setLoading(true)
+    api.get(`/chat/${user.uid}`).then((res) => {
+      setChat(res.data)
+      setLoading(false);
+    })
+  }, [])
+
+  const Header = () => (
+    <View
+      style={{
+        marginTop: 20,
+        backgroundColor: 'transparent',
+        flexDirection: 'row',
+        alignItems: 'center',
+        height: 60,
+        marginHorizontal: 20
+      }}
+    >
+      <View style={{ width: 50, backgroundColor: 'transparent', }}>
+        <TouchableOpacity onPress={() => navigation.navigate('Friends')}>
+          <BackArrowSvgComponent />
+        </TouchableOpacity>
+      </View>
+
+      <View style={{ flexGrow: 1, flexDirection: 'row', alignItems: 'center', backgroundColor: 'transparent', }}>
+        <Image
+          style={{ height: 50, width: 50 }}
+          source={require('../assets/images/Profile-Male-PNG.png')}
+        />
+        <Text
           style={{
-            marginTop: 80,
-            backgroundColor: 'transparent',
-            width: '80%',
-            flexDirection: 'row',
+            fontSize: 20,
+            fontFamily: 'Inter-SemiBold',
+            color: '#21293A',
+            marginLeft: 15,
+            marginTop: -5,
           }}
         >
-          <TouchableOpacity onPress={() => navigation.navigate('Friends')}>
-            <BackArrowSvgComponent />
-          </TouchableOpacity>
+          {user.displayName}
+        </Text>
+      </View>
+      <View
+        style={{
+          transform: [{ rotate: '90deg' }],
+          backgroundColor: 'transparent',
+        }}
+      >
+        <ThreeDotsSvg />
+      </View>
+    </View>
+  )
 
-          <Image
-            style={{ height: 50, width: 50, marginLeft: -250, marginTop: -17 }}
-            source={require('../assets/images/Profile-Male-PNG.png')}
-          />
-          <Text
-            style={{
-              fontSize: 20,
-              fontFamily: 'Inter-SemiBold',
-              color: '#21293A',
-              marginLeft: 15,
-              marginTop: -5,
-            }}
-          >
-            Nick
-          </Text>
-          <View
-            style={{
-              transform: [{ rotate: '90deg' }],
-              marginLeft: 120,
-              marginTop: -20,
-              backgroundColor: 'transparent',
-            }}
-          >
-            <ThreeDotsSvg />
-          </View>
-        </View>
-
-        <View
-          style={{
-            width: '75%',
-            marginTop: 60,
-            backgroundColor: 'transparent',
-          }}
-        ></View>
-
-        <View
-          style={{ width: '100%', backgroundColor: '#F1F6FC', height: '100%' }}
-        >
-          <FriendsChatBox />
+  return (
+    <SafeAreaView edges={['top']} style={[styles.container, { flex: 1, width: '100%' }]}>
+      <KeyboardAvoidingView behavior="padding">
+        <Header />
+        <View style={{ width, flexGrow: 1, backgroundColor: 'transparent', }}>
+          {loading ? <LoadingScreen /> : <FriendsChatBox messages={chat?.messages} />}
         </View>
         <FriendsChatScreenBottomBar />
-      </View>
-    );
-  }
+      </KeyboardAvoidingView>
+    </SafeAreaView>
+  );
+}
+
+const LoadingScreen = () => {
+  return (
+    <View style={[styles.loading]}>
+      <ActivityIndicator size="small" color="" />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -91,4 +104,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#F1F6FC',
     height: '100%',
   },
+  loading: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent'
+  }
 });

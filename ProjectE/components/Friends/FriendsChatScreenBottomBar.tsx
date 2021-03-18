@@ -8,63 +8,50 @@ import { useFonts } from 'expo-font';
 import { Text, View, TextInput, Image } from 'react-native';
 
 export default function FriendsChatScreenBottomBar() {
-  let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-ExtraBold': require('../../assets/fonts/Inter/Inter-ExtraBold.ttf'),
-  });
 
-  if (!fontsLoaded) {
-    return <View />;
-  } else {
-    return (
-      <View style={styles.topBar}>
-        <TextInput
-          placeholder='Message'
-          placeholderTextColor='#85ACD6'
-          style={{
-            backgroundColor: '#F1F6FC',
-            borderWidth: 0,
-            width: '85%',
-            height: 40,
-            borderRadius: 30,
-            fontSize: 15,
-            paddingHorizontal: 20,
-            textAlign: 'left',
-          }}
-        />
-        <TouchableOpacity style={styles.loginButton}>
-          <SendIcon />
-        </TouchableOpacity>
-      </View>
-    );
-  }
+  return (
+    <View style={styles.topBar}>
+      <TextInput
+        autoCorrect={false}
+        placeholder='Message'
+        placeholderTextColor='#85ACD6'
+        style={{
+          backgroundColor: '#F1F6FC',
+          borderWidth: 0,
+          width: '85%',
+          height: 40,
+          borderRadius: 30,
+          fontSize: 15,
+          paddingHorizontal: 20,
+          textAlign: 'left',
+        }}
+      />
+      <TouchableOpacity style={styles.loginButton}>
+        <SendIcon />
+      </TouchableOpacity>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   topBar: {
     paddingTop: 15,
     paddingBottom: 20,
-    marginBottom:0,
+    marginBottom: 0,
     paddingHorizontal: 20,
     backgroundColor: '#fff',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     height: 90,
-    width: '100%',
     flexDirection: 'row',
     // justifyContent: 'space-around',
     // alignItems: 'center',
     shadowOffset: { width: 0, height: 6 },
     shadowColor: '#000000',
     shadowOpacity: 0.05,
-    position: 'absolute',
-    bottom: 0,
   },
   userNameText: {
     marginRight: 15,
-    // marginTop: 10,
   },
   firstText: {
     fontSize: 20,
