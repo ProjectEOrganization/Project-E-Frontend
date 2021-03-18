@@ -10,6 +10,7 @@ import FriendsChatBox from '../components/Friends/FriendsChatBox';
 import FriendsChatScreenBottomBar from '../components/Friends/FriendsChatScreenBottomBar';
 import { api } from '../services/api';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useAuth } from '../services/auth';
 
 const { width } = Dimensions.get('screen')
 
@@ -20,13 +21,30 @@ export default function FriendsChatScreen() {
   const [loading, setLoading] = useState(false);
 
   const { user }: any = route.params;
+  const auth = useAuth();
 
-  const [chat, setChat] = useState({ messages: [] });
+  const [chat, setChat] = useState<{ messages: Array<any> }>({ messages: [] });
+
+  const sendMessage = (content: any) => {
+    const newMessage = {
+      id: ([...chat.messages].pop() || 1) + 1,
+      content,
+      sentBy: auth.user.uid,
+      sentAt: Date.now()
+    }
+    setChat(prev => ({
+      ...prev,
+      messages: [
+        ...prev.messages,
+        newMessage
+      ]
+    }))
+  }
 
   useEffect(() => {
     setLoading(true)
     api.get(`/chat/${user.uid}`).then((res) => {
-      setChat(res.data)
+      setChat(res.data);
       setLoading(false);
     })
   }, [])
@@ -80,10 +98,11 @@ export default function FriendsChatScreen() {
     <SafeAreaView edges={['top']} style={[styles.container, { flex: 1, width: '100%' }]}>
       <KeyboardAvoidingView behavior="padding">
         <Header />
+        <Text>{JSON.stringify(chat?.messages?.[0])}</Text>
         <View style={{ width, flexGrow: 1, backgroundColor: 'transparent', }}>
           {loading ? <LoadingScreen /> : <FriendsChatBox messages={chat?.messages} />}
         </View>
-        <FriendsChatScreenBottomBar />
+        <FriendsChatScreenBottomBar onSend={(message: string) => sendMessage(message)} />
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -92,7 +111,7 @@ export default function FriendsChatScreen() {
 const LoadingScreen = () => {
   return (
     <View style={[styles.loading]}>
-      <ActivityIndicator size="small" color="" />
+      <ActivityIndicator size="small" color="#4B00FF" />
     </View>
   )
 }
