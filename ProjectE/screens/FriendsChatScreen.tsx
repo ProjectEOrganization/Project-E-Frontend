@@ -59,7 +59,20 @@ export default function FriendsChatScreen() {
 
   useEffect(() => {
     socket?.on('message', (msg) => {
-      alert(JSON.stringify(msg))
+      const newMessage = {
+        id: msg.t,
+        content: msg.message,
+        sentBy: msg.sentBy,
+        sentAt: msg.t
+      }
+
+      setChat(prev => ({
+        ...prev,
+        messages: [
+          ...prev.messages,
+          newMessage
+        ]
+      }))
     })
 
     return () => {
@@ -114,11 +127,9 @@ export default function FriendsChatScreen() {
 
   const { top } = useSafeAreaInsets()
   return (
-    <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={150} style={[styles.container, { flex: 1, width: '100%', paddingTop: top }]}>
+    <KeyboardAvoidingView behavior="padding" style={[styles.container, { flex: 1, width: '100%', paddingTop: top }]}>
       <Header />
-      <View style={{ width, flexGrow: 1, backgroundColor: 'transparent', }}>
-        {loading ? <LoadingScreen /> : <FriendsChatBox messages={chat?.messages} />}
-      </View>
+      {loading ? <LoadingScreen /> : <FriendsChatBox messages={chat?.messages} />}
       <FriendsChatScreenBottomBar onSend={(message: string) => sendMessage(message)} />
     </KeyboardAvoidingView>
 
@@ -127,8 +138,10 @@ export default function FriendsChatScreen() {
 
 const LoadingScreen = () => {
   return (
-    <View style={[styles.loading]}>
-      <ActivityIndicator size="small" color="#4B00FF" />
+    <View style={{ width, flexGrow: 1, backgroundColor: 'transparent', }}>
+      <View style={[styles.loading]}>
+        <ActivityIndicator size="small" color="#4B00FF" />
+      </View>
     </View>
   )
 }
