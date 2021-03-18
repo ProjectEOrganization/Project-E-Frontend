@@ -1,5 +1,6 @@
 //@ts-nocheck
 import React, { useState, useEffect, useContext, createContext } from "react";
+import { AsyncStorage } from "react-native";
 import { api } from "./api";
 import { firebase } from "./firebase";
 
@@ -88,6 +89,7 @@ function useProvideAuth() {
     useEffect(() => {
         const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
+                const token = await AsyncStorage.setItem('token', await user.getIdToken())
                 const res = await api.post('/auth')
                 const newUser: firebase.User = {
                     ...user,
