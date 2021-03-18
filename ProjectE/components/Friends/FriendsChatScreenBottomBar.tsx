@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import SendIcon from '../../assets/sendIcon.js';
+import { io, Socket } from 'socket.io-client';
 
 import { MonoText } from '../StyledText';
 // import { Text, View } from './Themed';
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput, Image } from 'react-native';
+import { api } from '../../services/api';
+import FriendRequestReceivedAlert from '../Alerts/FriendRequestReceivedAlert.js';
 
 interface IProps {
   onSend: (message: string) => void
@@ -40,6 +43,23 @@ export default function FriendsChatScreenBottomBar({ onSend }: IProps) {
       </TouchableOpacity>
     </View>
   );
+}
+
+async function sendMessage(friendId: string, text: string) {
+  // const res = await api.get('/friends');
+  // console.log(res.data);
+  // console.log("result");
+  // console.log(this.textInput.current.value);
+
+  console.log(friendId);
+  await api.post('/message', {
+    recipientId: "WEhlwirlM1R5NXRljGd7FMXb7Nq1",
+    message: 'test' 
+  })
+  // const chatId = await api.get('/chat/WEhlwirlM1R5NXRljGd7FMXb7Nq1');
+  // console.log(chatId.data);
+  // const res = await api.get('/chats');
+  // console.log(res.data);
 }
 
 const styles = StyleSheet.create({
