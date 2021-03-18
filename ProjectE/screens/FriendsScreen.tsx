@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { Button, Dimensions, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import FriendsChat from '../components/Friends/FriendsChat';
 
 import { Text, View } from '../components/Themed';
@@ -11,6 +11,11 @@ import ThreeDotsSvg from '../assets/threeDotsSvg.js';
 import { useAuth } from '../services/auth';
 import { api } from '../services/api';
 import { useSocket } from '../services/socket';
+import FriendsMessagesCard from '../components/Friends/FriendsMessagesCard';
+import IndividualFriendChat from '../components/Friends/IndividualFriendChat';
+import FriendsChatList from '../components/Friends/FriendsChatList';
+
+const { width } = Dimensions.get('screen');
 
 export default function FriendsScreen() {
   let username = 'David';
@@ -24,19 +29,17 @@ export default function FriendsScreen() {
 
   const navigation = useNavigation();
 
+  const scrollRef = React.useRef<ScrollView | null>(null);
+
   const auth = useAuth();
   const socket = useSocket();
-  // Example of using firebase auth and API.
-  React.useEffect(() => {
-    (async () => {
-      // await auth.signin('email', 'password')
-      // await auth.signInAnonymously();
-      // console.log(auth.user.uid);
 
-      // const res = await api.get('/hi');
-      // console.log(res.data);
-    })();
-  }, []);
+  const [route, setRoute] = React.useState<"messages" | "friends">("messages")
+
+  React.useEffect(() => {
+    if (route === 'messages') scrollRef.current?.scrollTo({ x: 0, animated: true })
+    else if (route === 'friends') scrollRef.current?.scrollTo({ x: width, animated: true })
+  }, [route])
 
   if (!fontsLoaded) {
     return <View />;
@@ -65,6 +68,7 @@ export default function FriendsScreen() {
           style={{
             marginTop: 60,
             backgroundColor: 'transparent',
+            paddingHorizontal: 35,
           }}
         >
           <Text
@@ -76,23 +80,20 @@ export default function FriendsScreen() {
           >
             Hello {auth.user?.displayName || username}!
           </Text>
-          <FriendsPageSwitch />
+          <FriendsPageSwitch onChange={(route) => setRoute(route)} />
         </View>
 
-        <View style={{ backgroundColor: 'transparent', marginTop: 50 }}>
-          <FriendsChat />
-        </View>
 
-        <View
-          style={styles.separator}
-          lightColor='#eee'
-          darkColor='rgba(255,255,255,0.1)'
-        />
-        <TouchableOpacity
-          onPress={() => navigation.navigate('FriendsChatScreen')}
-        >
-          <Text>FriendsChatScreenTest</Text>
-        </TouchableOpacity>
+
+        <ScrollView ref={scrollRef} scrollEnabled={false} horizontal pagingEnabled contentContainerStyle={{ flexDirection: 'row', width: width * 2, marginTop: 35 }}>
+          <View style={{ backgroundColor: 'transparent', width, paddingHorizontal: 35 }}>
+            <FriendsChatList />
+          </View>
+          <View style={{ backgroundColor: 'transparent', width, paddingHorizontal: 35 }}>
+            <FriendsChat />
+          </View>
+        </ScrollView>
+
       </View>
     );
   }
@@ -100,7 +101,6 @@ export default function FriendsScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 35,
     flex: 1,
     backgroundColor: '#F1F6FC',
     height: '100%',

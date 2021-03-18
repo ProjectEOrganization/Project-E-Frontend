@@ -17,7 +17,7 @@ export default function ChatBubble({
 }: {
   path: string;
   content: string;
-  user: string;
+  user?: string;
 }) {
   let [fontsLoaded] = useFonts({
     'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),

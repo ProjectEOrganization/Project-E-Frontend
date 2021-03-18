@@ -5,7 +5,8 @@ import SwitchSelector from 'react-native-switch-selector';
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput, Image } from 'react-native';
 
-export default function FriendsPageSwitch({ path }: { path: string }) {
+export default function FriendsPageSwitch({ onChange }: { onChange: () => void }) {
+
   let [fontsLoaded] = useFonts({
     'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
     'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
@@ -20,7 +21,7 @@ export default function FriendsPageSwitch({ path }: { path: string }) {
       <View style={styles.overallContainer}>
         <SwitchSelector
           initial={0}
-          onPress={(value) => console.log(`Call onPress with value: ${value}`)}
+          onPress={(value: string) => onChange(value)}
           textColor={'#21293A'} //'#7a44cf'
           selectedColor={'#FFFFFF'}
           buttonColor={'#4B00FF'}

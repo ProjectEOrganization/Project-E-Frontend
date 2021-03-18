@@ -5,45 +5,35 @@ import { MonoText } from '../StyledText';
 // import { Text, View } from './Themed';
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
-export default function FriendsMessagesCard() {
-  let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-ExtraBold': require('../../assets/fonts/Inter/Inter-ExtraBold.ttf'),
-  });
-
+export default function FriendsMessagesCard(props) {
   const navigation = useNavigation();
 
-  if (!fontsLoaded) {
-    return <View />;
-  } else {
-    return (
-      <TouchableOpacity
-        onPress={() => navigation.navigate('FriendsChatScreen')}
-      >
-        <View style={styles.topBar}>
-          <View style={styles.profile}>
-            <Image
-              style={styles.profileImage}
-              source={require('../../assets/images/Profile-Male-PNG.png')}
-            />
+  return (
+    <TouchableOpacity
+      onPress={() => navigation.navigate('FriendsChatScreen', props)}
+    >
+      <View style={styles.topBar}>
+        <View style={styles.profile}>
+          <Image
+            style={styles.profileImage}
+            source={require('../../assets/images/Profile-Male-PNG.png')}
+          />
 
-            <View>
-              <Text style={styles.firstText}>Nick</Text>
-              <Text style={styles.secondText}>Remember that time i gave..</Text>
-            </View>
-          </View>
-
-          <View style={styles.notifications}>
-            <Text style={{ color: 'white' }}>5</Text>
+          <View>
+            <Text style={styles.firstText}>{props.user.displayName}</Text>
+            <Text style={styles.secondText}>{props.content}</Text>
           </View>
         </View>
-      </TouchableOpacity>
-    );
-  }
+
+        {props.is_read === false && <View style={styles.notifications}>
+          <Text style={{ color: 'white' }}>1</Text>
+        </View>}
+
+      </View>
+    </TouchableOpacity>
+  );
 }
 
 const styles = StyleSheet.create({

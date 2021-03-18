@@ -1,5 +1,6 @@
 //@ts-nocheck
 import React, { useEffect, useState } from 'react'
+import { AsyncStorage } from 'react-native';
 import { io, Socket } from 'socket.io-client';
 import { useAuth } from './auth';
 import config from './config';
@@ -25,14 +26,14 @@ function useProvideSocket(): Socket {
     useEffect(() => {
         const setup = async () => {
             try {
-                const token = await auth.user.getIdToken();
-
+                const token = await AsyncStorage.getItem('token')
                 const socket = io(config.SOCKET_URL, {
                     transports: ["websocket"],
                     query: { token }
                 })
 
                 socket.on('connect', () => {
+                    alert('connected')
                     console.log('connected')
                 })
 
@@ -49,7 +50,7 @@ function useProvideSocket(): Socket {
         return () => {
             socket?.close();
         }
-    }, [auth.user]);
+    }, [auth]);
 
     return socket
 }

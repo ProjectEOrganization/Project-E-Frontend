@@ -1,5 +1,6 @@
 //@ts-nocheck
 import React, { useState, useEffect, useContext, createContext } from "react";
+import { AsyncStorage } from "react-native";
 import { api } from "./api";
 import { firebase } from "./firebase";
 
@@ -28,12 +29,11 @@ function useProvideAuth() {
         return firebase
             .auth()
             .signInWithEmailAndPassword(email, password)
-            .then(response => {
+            .then((response) => {
                 setUser(response.user);
                 return response.user;
             });
     };
-
 
     const signInAnonymously = () => {
         return firebase
@@ -60,7 +60,7 @@ function useProvideAuth() {
             .auth()
             .signOut()
             .then(() => {
-                setUser(false);
+                setUser();
             });
     };
 
@@ -89,13 +89,13 @@ function useProvideAuth() {
     useEffect(() => {
         const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
-                const res = await api.post('/auth');
+                const token = await AsyncStorage.setItem('token', await user.getIdToken())
+                const res = await api.post('/auth')
                 const newUser: firebase.User = {
                     ...user,
                     ...res.data.user,
                     getIdToken: user.getIdToken
                 }
-                console.log({ newUser: newUser.getIdToken })
                 setUser(newUser);
             } else {
                 setUser();
@@ -103,7 +103,9 @@ function useProvideAuth() {
         });
 
         // Cleanup subscription on unmount
-        return () => unsubscribe();
+        return () => {
+            unsubscribe();
+        }
     }, []);
 
     // Return the user object and auth methods

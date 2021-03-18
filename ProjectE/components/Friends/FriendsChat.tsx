@@ -6,37 +6,42 @@ import { Text, View } from 'react-native';
 import FriendsMessagesCard from './FriendsMessagesCard';
 import { api } from '../../services/api';
 import { useAuth } from '../../services/auth';
+import IndividualFriendChat from './IndividualFriendChat';
+import FriendsChatBox from './FriendsChatBox';
 
 export default function FriendsChat() {
-  const [friends, setFriends] = useState();
+  const [friends, setFriends] = useState([]);
 
   const auth = useAuth();
 
   useEffect(() => {
     if (auth.user) {
-      (async () => {
-        const res = await api.get('/friends');
-        console.log(res.data);
-        console.log("res");
-        setFriends(res.data);
-      })();
+      api.get('/friends')
+        .then(res => {
+          setFriends(res.data);
+        })
+        .catch(() => {
+          setFriends([])
+        })
     }
-  }, []);
+  }, [auth.user]);
 
-  let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-ExtraBold': require('../../assets/fonts/Inter/Inter-ExtraBold.ttf'),
-  });
-
-  if (!fontsLoaded) {
-    return <View />;
-  } else {
+  if (friends.length === 0) {
     return (
-      <View>
-        <Text>{friends}</Text>
+      <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>No friends</Text>
       </View>
-    );
+    )
   }
+
+  return (
+    <View>
+      <Text>Friends</Text>
+      {friends.map(friend => {
+        return (
+          <Text key={friend.id}>{friend.username}</Text>
+        )
+      })}
+    </View>
+  );
 }
