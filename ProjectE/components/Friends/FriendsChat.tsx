@@ -16,32 +16,32 @@ export default function FriendsChat() {
 
   useEffect(() => {
     if (auth.user) {
-      api.get('/friends').then(res => {
-        setFriends(res.data);
-      })
+      api.get('/friends')
+        .then(res => {
+          setFriends(res.data);
+        })
+        .catch(() => {
+          setFriends([])
+        })
     }
   }, [auth.user]);
 
-  let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-ExtraBold': require('../../assets/fonts/Inter/Inter-ExtraBold.ttf'),
-  });
-
-  if (!fontsLoaded) {
-    return <View />;
-  } else {
+  if (friends.length === 0) {
     return (
-      <View>
-        <Text>Friends</Text>
-
-        {friends.map(friend => {
-          return (
-            <Text key={friend.id}>{friend.id}</Text>
-          )
-        })}
+      <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>No friends</Text>
       </View>
-    );
+    )
   }
+
+  return (
+    <View>
+      <Text>Friends</Text>
+      {friends.map(friend => {
+        return (
+          <Text key={friend.id}>{friend.username}</Text>
+        )
+      })}
+    </View>
+  );
 }
