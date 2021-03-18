@@ -17,6 +17,14 @@ export default function FriendsChatBox({ messages }: { messages: Array<any> }) {
   const navigation = useNavigation();
   const auth = useAuth();
 
+  if (messages.length === 0) {
+    return (
+      <View style={{ flexGrow: 1, backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center' }}>
+        <Text>no messages</Text>
+      </View>
+    )
+  }
+
   return (
     <FlatList
       style={[styles.container]}
