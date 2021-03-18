@@ -33,6 +33,7 @@ function useProvideSocket(): Socket {
                 })
 
                 socket.on('connect', () => {
+                    alert('connected')
                     console.log('connected')
                 })
 
@@ -49,7 +50,7 @@ function useProvideSocket(): Socket {
         return () => {
             socket?.close();
         }
-    }, [auth.user]);
+    }, [auth]);
 
     return socket
 }
