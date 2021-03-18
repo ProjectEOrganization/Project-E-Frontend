@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import SendIcon from '../../assets/sendIcon.js';
 
@@ -7,14 +7,20 @@ import { MonoText } from '../StyledText';
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput, Image } from 'react-native';
 
-export default function FriendsChatScreenBottomBar() {
+interface IProps {
+  onSend: (message: string) => void
+}
 
+export default function FriendsChatScreenBottomBar({ onSend }: IProps) {
+  const [message, setMessage] = useState("");
   return (
     <View style={styles.topBar}>
       <TextInput
         autoCorrect={false}
         placeholder='Message'
         placeholderTextColor='#85ACD6'
+        onChangeText={text => setMessage(text)}
+        value={message}
         style={{
           backgroundColor: '#F1F6FC',
           borderWidth: 0,
@@ -26,7 +32,10 @@ export default function FriendsChatScreenBottomBar() {
           textAlign: 'left',
         }}
       />
-      <TouchableOpacity style={styles.loginButton}>
+      <TouchableOpacity disabled={!message} onPress={() => {
+        onSend(message)
+        setMessage("")
+      }} style={[styles.loginButton, { opacity: !message ? 0.2 : 1 }]}>
         <SendIcon />
       </TouchableOpacity>
     </View>
