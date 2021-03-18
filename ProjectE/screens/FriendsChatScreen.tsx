@@ -9,11 +9,11 @@ import ThreeDotsSvg from '../assets/threeDotsSvg.js';
 import FriendsChatBox from '../components/Friends/FriendsChatBox';
 import FriendsChatScreenBottomBar from '../components/Friends/FriendsChatScreenBottomBar';
 import { api } from '../services/api';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuth } from '../services/auth';
 import { useSocket } from '../services/socket';
 
-const { width } = Dimensions.get('screen')
+const { width, height } = Dimensions.get('screen')
 
 export default function FriendsChatScreen() {
   const navigation = useNavigation();
@@ -34,6 +34,12 @@ export default function FriendsChatScreen() {
       sentBy: auth.user.uid,
       sentAt: Date.now()
     }
+    api.post('/message', {
+      recipientId: user.uid,
+      message: content
+    }).then((res) => {
+      // alert(JSON.stringify(res.data))
+    })
     setChat(prev => ({
       ...prev,
       messages: [
@@ -106,16 +112,16 @@ export default function FriendsChatScreen() {
     </View>
   )
 
+  const { top } = useSafeAreaInsets()
   return (
-    <SafeAreaView edges={['top']} style={[styles.container, { flex: 1, width: '100%' }]}>
-      <KeyboardAvoidingView behavior="padding">
-        <Header />
-        <View style={{ width, flexGrow: 1, backgroundColor: 'transparent', }}>
-          {loading ? <LoadingScreen /> : <FriendsChatBox messages={chat?.messages} />}
-        </View>
-        <FriendsChatScreenBottomBar onSend={(message: string) => sendMessage(message)} />
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+    <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={150} style={[styles.container, { flex: 1, width: '100%', paddingTop: top }]}>
+      <Header />
+      <View style={{ width, flexGrow: 1, backgroundColor: 'transparent', }}>
+        {loading ? <LoadingScreen /> : <FriendsChatBox messages={chat?.messages} />}
+      </View>
+      <FriendsChatScreenBottomBar onSend={(message: string) => sendMessage(message)} />
+    </KeyboardAvoidingView>
+
   );
 }
 
@@ -129,10 +135,9 @@ const LoadingScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
     backgroundColor: '#F1F6FC',
-    height: '100%',
+    height
   },
   loading: {
     flex: 1,
