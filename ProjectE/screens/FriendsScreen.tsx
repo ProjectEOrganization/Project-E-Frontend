@@ -11,6 +11,8 @@ import ThreeDotsSvg from '../assets/threeDotsSvg.js';
 import { useAuth } from '../services/auth';
 import { api } from '../services/api';
 import { useSocket } from '../services/socket';
+import FriendsMessagesCard from '../components/Friends/FriendsMessagesCard';
+import IndividualFriendChat from '../components/Friends/IndividualFriendChat';
 
 export default function FriendsScreen() {
   let username = 'David';
@@ -26,6 +28,8 @@ export default function FriendsScreen() {
 
   const auth = useAuth();
   const socket = useSocket();
+
+  const [route, setRoute] = React.useState<"messages" | "friends">("messages")
   // Example of using firebase auth and API.
   React.useEffect(() => {
     (async () => {
@@ -76,23 +80,21 @@ export default function FriendsScreen() {
           >
             Hello {auth.user?.displayName || username}!
           </Text>
-          <FriendsPageSwitch />
+          <FriendsPageSwitch onChange={(route) => setRoute(route)} />
         </View>
 
-        <View style={{ backgroundColor: 'transparent', marginTop: 50 }}>
-          <FriendsChat />
-        </View>
 
-        <View
-          style={styles.separator}
-          lightColor='#eee'
-          darkColor='rgba(255,255,255,0.1)'
-        />
-        <TouchableOpacity
-          onPress={() => navigation.navigate('FriendsChatScreen')}
-        >
-          <Text>FriendsChatScreenTest</Text>
-        </TouchableOpacity>
+        {route === 'messages' ? (
+          <View style={{ backgroundColor: 'transparent', marginTop: 50 }}>
+            <FriendsMessagesCard />
+          </View>
+        ) :
+          (
+            <View style={{ backgroundColor: 'transparent', marginTop: 50 }}>
+              <FriendsChat />
+            </View>
+          )}
+
       </View>
     );
   }
