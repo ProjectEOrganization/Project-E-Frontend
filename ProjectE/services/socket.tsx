@@ -33,7 +33,6 @@ function useProvideSocket(): Socket {
                 })
 
                 socket.on('connect', () => {
-                    alert('connected')
                     console.log('connected')
                 })
 

@@ -1,15 +1,13 @@
 import * as React from 'react';
-import { StyleSheet, ScrollView, FlatList } from 'react-native';
+import { StyleSheet, ScrollView, FlatList, Dimensions } from 'react-native';
 
 import { Text, View } from '../../components/Themed';
-import { useFonts } from 'expo-font';
-import Navigation from '../../navigation';
-import RandomChatTopBar from '../../components/RandomChatTopBar';
-
+const { width } = Dimensions.get('screen')
 import { useNavigation } from '@react-navigation/native';
 import ChatBubble from '../../components/ChatBubble';
 import TopicStarter from '../../components/TopicStarter';
 import { useAuth } from '../../services/auth';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // import * as yourModuleName from 'module-name';
 
@@ -25,11 +23,13 @@ export default function FriendsChatBox({ messages }: { messages: Array<any> }) {
     )
   }
 
+  const { bottom } = useSafeAreaInsets();
+
   return (
     <FlatList
       style={[styles.container]}
       data={messages}
-      contentContainerStyle={{ marginTop: 25 }}
+      contentContainerStyle={{ marginTop: 25, paddingBottom: bottom + 20 }}
       renderItem={({ item }) => (
         <ChatBubble
           content={item.content}
@@ -44,7 +44,7 @@ export default function FriendsChatBox({ messages }: { messages: Array<any> }) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'transparent',
-    marginBottom: 30,
     paddingHorizontal: 20,
+    width
   },
 });
