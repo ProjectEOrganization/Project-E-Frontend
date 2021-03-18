@@ -1,11 +1,15 @@
 import React from 'react';
+import useRef from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import SendIcon from '../../assets/sendIcon.js';
+import { io, Socket } from 'socket.io-client';
 
 import { MonoText } from '../StyledText';
 // import { Text, View } from './Themed';
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput, Image } from 'react-native';
+import { api } from '../../services/api';
+import FriendRequestReceivedAlert from '../Alerts/FriendRequestReceivedAlert.js';
 
 export default function FriendsChatScreenBottomBar() {
   let [fontsLoaded] = useFonts({
@@ -15,12 +19,15 @@ export default function FriendsChatScreenBottomBar() {
     'Inter-ExtraBold': require('../../assets/fonts/Inter/Inter-ExtraBold.ttf'),
   });
 
+  // const textInput = useRef(null);
+
   if (!fontsLoaded) {
     return <View />;
   } else {
     return (
       <View style={styles.topBar}>
         <TextInput
+          // ref={textInput}
           placeholder='Message'
           placeholderTextColor='#85ACD6'
           style={{
@@ -34,12 +41,29 @@ export default function FriendsChatScreenBottomBar() {
             textAlign: 'left',
           }}
         />
-        <TouchableOpacity style={styles.loginButton}>
+        <TouchableOpacity onPress={ (text) => sendMessage("WEhlwirlM1R5NXRljGd7FMXb7Nq1", "test message") }style={styles.loginButton}>
           <SendIcon />
         </TouchableOpacity>
       </View>
     );
   }
+}
+
+async function sendMessage(friendId: string, text: string) {
+  // const res = await api.get('/friends');
+  // console.log(res.data);
+  // console.log("result");
+  // console.log(this.textInput.current.value);
+
+  console.log(friendId);
+  await api.post('/message', {
+    recipientId: "WEhlwirlM1R5NXRljGd7FMXb7Nq1",
+    message: 'test' 
+  })
+  // const chatId = await api.get('/chat/WEhlwirlM1R5NXRljGd7FMXb7Nq1');
+  // console.log(chatId.data);
+  // const res = await api.get('/chats');
+  // console.log(res.data);
 }
 
 const styles = StyleSheet.create({

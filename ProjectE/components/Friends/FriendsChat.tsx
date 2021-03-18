@@ -16,7 +16,8 @@ export default function FriendsChat() {
     if (auth.user) {
       (async () => {
         const res = await api.get('/friends');
-        console.log(res);
+        console.log(res.data);
+        console.log("res");
         setFriends(res.data);
       })();
     }
