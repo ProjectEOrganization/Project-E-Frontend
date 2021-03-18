@@ -28,12 +28,11 @@ function useProvideAuth() {
         return firebase
             .auth()
             .signInWithEmailAndPassword(email, password)
-            .then(response => {
+            .then((response) => {
                 setUser(response.user);
                 return response.user;
             });
     };
-
 
     const signInAnonymously = () => {
         return firebase
@@ -89,13 +88,12 @@ function useProvideAuth() {
     useEffect(() => {
         const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
-                const res = await api.post('/auth');
+                const res = await api.post('/auth')
                 const newUser: firebase.User = {
                     ...user,
                     ...res.data.user,
-                    getIdToken: user.getIdToken
+                    getIdToken: user.getIdTokens
                 }
-                console.log({ newUser: newUser.getIdToken })
                 setUser(newUser);
             } else {
                 setUser();
@@ -103,7 +101,9 @@ function useProvideAuth() {
         });
 
         // Cleanup subscription on unmount
-        return () => unsubscribe();
+        return () => {
+            unsubscribe();
+        }
     }, []);
 
     // Return the user object and auth methods

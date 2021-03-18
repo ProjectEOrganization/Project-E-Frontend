@@ -24,12 +24,11 @@ export default function FriendsChatBox({ messages }: { messages: Array<any> }) {
       contentContainerStyle={{ marginTop: 25 }}
       renderItem={({ item }) => (
         <ChatBubble
-          key={`message-${item.id}`}
           content={item.content}
           user={auth.user.uid !== item.sentBy ? 'opposingUser' : 'currentUser'}
         />
       )}
-      keyExtractor={item => item.id}
+      keyExtractor={item => (`message-${item.id}`)}
     />
   );
 }

@@ -11,6 +11,7 @@ import FriendsChatScreenBottomBar from '../components/Friends/FriendsChatScreenB
 import { api } from '../services/api';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../services/auth';
+import { useSocket } from '../services/socket';
 
 const { width } = Dimensions.get('screen')
 
@@ -22,6 +23,7 @@ export default function FriendsChatScreen() {
 
   const { user }: any = route.params;
   const auth = useAuth();
+  const socket = useSocket();
 
   const [chat, setChat] = useState<{ messages: Array<any> }>({ messages: [] });
 
@@ -48,6 +50,16 @@ export default function FriendsChatScreen() {
       setLoading(false);
     })
   }, [])
+
+  useEffect(() => {
+    socket?.on('message', (msg) => {
+      alert(JSON.stringify(msg))
+    })
+
+    return () => {
+      socket?.off('message')
+    }
+  }, [auth, socket])
 
   const Header = () => (
     <View
@@ -98,7 +110,6 @@ export default function FriendsChatScreen() {
     <SafeAreaView edges={['top']} style={[styles.container, { flex: 1, width: '100%' }]}>
       <KeyboardAvoidingView behavior="padding">
         <Header />
-        <Text>{JSON.stringify(chat?.messages?.[0])}</Text>
         <View style={{ width, flexGrow: 1, backgroundColor: 'transparent', }}>
           {loading ? <LoadingScreen /> : <FriendsChatBox messages={chat?.messages} />}
         </View>
