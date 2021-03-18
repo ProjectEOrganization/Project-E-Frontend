@@ -17,8 +17,13 @@ export default function FriendsChatBox({ messages }: { messages: Array<any> }) {
 
   const scrollRef = React.useRef<FlatList>()
 
+  const toBottom = () => scrollRef.current?.scrollToEnd({ animated: true });
+
+
   React.useEffect(() => {
-    scrollRef.current?.scrollToEnd({ animated: true });
+    setTimeout(() => {
+      toBottom()
+    }, 300)
   }, [messages])
 
   if (messages.length === 0) {
@@ -36,7 +41,7 @@ export default function FriendsChatBox({ messages }: { messages: Array<any> }) {
       ref={scrollRef}
       style={[styles.container]}
       data={messages}
-      contentContainerStyle={{ marginTop: 25, paddingBottom: bottom + 20, }}
+      contentContainerStyle={{ paddingTop: 25, paddingBottom: bottom || 20, }}
       renderItem={({ item }) => (
         <ChatBubble
           content={item.content}
