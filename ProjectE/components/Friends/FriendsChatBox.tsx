@@ -15,6 +15,12 @@ export default function FriendsChatBox({ messages }: { messages: Array<any> }) {
   const navigation = useNavigation();
   const auth = useAuth();
 
+  const scrollRef = React.useRef<FlatList>()
+
+  React.useEffect(() => {
+    scrollRef.current?.scrollToEnd({ animated: true });
+  }, [messages])
+
   if (messages.length === 0) {
     return (
       <View style={{ flexGrow: 1, backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center' }}>
@@ -27,9 +33,10 @@ export default function FriendsChatBox({ messages }: { messages: Array<any> }) {
 
   return (
     <FlatList
+      ref={scrollRef}
       style={[styles.container]}
       data={messages}
-      contentContainerStyle={{ marginTop: 25, paddingBottom: bottom + 20 }}
+      contentContainerStyle={{ marginTop: 25, paddingBottom: bottom + 20, }}
       renderItem={({ item }) => (
         <ChatBubble
           content={item.content}

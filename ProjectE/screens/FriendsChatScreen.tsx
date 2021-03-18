@@ -28,25 +28,25 @@ export default function FriendsChatScreen() {
   const [chat, setChat] = useState<{ messages: Array<any> }>({ messages: [] });
 
   const sendMessage = (content: any) => {
-    const newMessage = {
-      id: ([...chat.messages].pop() || 1) + 1,
-      content,
-      sentBy: auth.user.uid,
-      sentAt: Date.now()
-    }
+    // const newMessage = {
+    //   id: ([...chat.messages].pop() || 1) + 1,
+    //   content,
+    //   sentBy: auth.user.uid,
+    //   sentAt: Date.now()
+    // }
     api.post('/message', {
       recipientId: user.uid,
       message: content
     }).then((res) => {
-      // alert(JSON.stringify(res.data))
+      console.log(res.data)
+      setChat(prev => ({
+        ...prev,
+        messages: [
+          ...prev.messages,
+          res.data.message
+        ]
+      }))
     })
-    setChat(prev => ({
-      ...prev,
-      messages: [
-        ...prev.messages,
-        newMessage
-      ]
-    }))
   }
 
   useEffect(() => {
@@ -59,18 +59,11 @@ export default function FriendsChatScreen() {
 
   useEffect(() => {
     socket?.on('message', (msg) => {
-      const newMessage = {
-        id: msg.t,
-        content: msg.message,
-        sentBy: msg.sentBy,
-        sentAt: msg.t
-      }
-
       setChat(prev => ({
         ...prev,
         messages: [
           ...prev.messages,
-          newMessage
+          msg
         ]
       }))
     })
@@ -127,7 +120,7 @@ export default function FriendsChatScreen() {
 
   const { top } = useSafeAreaInsets()
   return (
-    <KeyboardAvoidingView behavior="padding" style={[styles.container, { flex: 1, width: '100%', paddingTop: top }]}>
+    <KeyboardAvoidingView behavior="padding" style={[styles.container, { flex: 1, width: '100%', paddingTop: top, paddingBottom: 20 }]}>
       <Header />
       {loading ? <LoadingScreen /> : <FriendsChatBox messages={chat?.messages} />}
       <FriendsChatScreenBottomBar onSend={(message: string) => sendMessage(message)} />
