@@ -15,7 +15,7 @@ export default function ChatBubble({
   content,
   user,
 }: {
-  path: string;
+  path?: string;
   content: string;
   user?: string;
 }) {

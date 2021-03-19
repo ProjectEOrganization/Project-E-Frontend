@@ -9,61 +9,52 @@ import { MonoText } from '../StyledText';
 // import { Text, View } from './Themed';
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput, Image } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-export default function RandomChatTopBar({ path }: { path: string }) {
-  let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-ExtraBold': require('../assets/fonts/Inter/Inter-ExtraBold.ttf'),
-  });
-
-  if (!fontsLoaded) {
-    return <View />;
-  } else {
-    return (
-      <View style={styles.topBar}>
-        <Image
-          style={{ height: 60, width: 60 }}
-          source={require('../assets/images/Profile-Male-PNG.png')}
-        />
-        <View style={styles.userNameText}>
-          <Text style={styles.secondText}>You are chatting with</Text>
-          <Text style={styles.firstText}>Red Poodle</Text>
-        </View>
-        <View>
-          <TouchableOpacity style={styles.loginButton}>
-            <RandomChatTopBarSvgComponent />
-            <Text style={styles.loginText}>Let's be Friends</Text>
-          </TouchableOpacity>
-        </View>
+export default function RandomChatTopBar({ user }) {
+  const { top } = useSafeAreaInsets();
+  return (
+    <View style={[styles.topBar, { paddingTop: top + 10 }]}>
+      <Image
+        style={{ height: 60, width: 60 }}
+        source={require('../assets/images/Profile-Male-PNG.png')}
+      />
+      <View style={styles.userNameText}>
+        <Text style={styles.secondText}>You are chatting with</Text>
+        <Text style={styles.firstText}>{user?.username}</Text>
       </View>
+      <View>
+        <TouchableOpacity style={styles.loginButton}>
+          <RandomChatTopBarSvgComponent />
+          <Text style={styles.loginText}>Let's be Friends</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
 
-      // <View>
-      //   {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
-      // </View>
+    // <View>
+    //   {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
+    // </View>
 
-      // {/* <View
-      //   style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
-      //   >
-      //   <MonoText>{path}</MonoText>
-      // </View> */}
+    // {/* <View
+    //   style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
+    //   >
+    //   <MonoText>{path}</MonoText>
+    // </View> */}
 
-      //   {/* <Text
-      //     style={styles.getStartedText}
-      //     >
-      //     Change any of the text, save the file, and your app will automatically update.
-      //   </Text>
-      // </View>
+    //   {/* <Text
+    //     style={styles.getStartedText}
+    //     >
+    //     Change any of the text, save the file, and your app will automatically update.
+    //   </Text>
+    // </View>
 
-      // <View style={styles.helpContainer}>
-      //   <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-      //     <Text style={styles.helpLinkText} >
-      //       Tap here if your app doesn't automatically update after making changes
-      //     </Text>
-      //   </TouchableOpacity> */}
-    );
-  }
+    // <View style={styles.helpContainer}>
+    //   <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
+    //     <Text style={styles.helpLinkText} >
+    //       Tap here if your app doesn't automatically update after making changes
+    //     </Text>
+    //   </TouchableOpacity> */}
+  );
 }
 
 function handleHelpPress() {
@@ -74,7 +65,6 @@ function handleHelpPress() {
 
 const styles = StyleSheet.create({
   topBar: {
-    paddingTop: 50,
     paddingBottom: 20,
     paddingHorizontal: 20,
     backgroundColor: '#fff',

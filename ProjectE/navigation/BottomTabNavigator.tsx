@@ -49,7 +49,7 @@ function BottomTabNavigator() {
         name=' '
         component={RandomChatScreen}
         options={{
-          tabBarIcon: ({ color }) => <Icon />,
+          tabBarIcon: Icon,
         }}
       />
 
@@ -142,36 +142,5 @@ export default function FriendsStackScreen() {
         options={{ headerShown: false }}
       />
     </FriendsStack.Navigator>
-  );
-}
-
-//Should delete this after probably.
-
-const TabOneStack = createStackNavigator<TabOneParamList>();
-
-function TabOneNavigator() {
-  return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name='TabOneScreen'
-        component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
-      />
-    </TabOneStack.Navigator>
-  );
-}
-
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
-
-function TabTwoNavigator() {
-  return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name='RandomChatScreen'
-        component={RandomChatScreen}
-        // options={{ headerTitle: 'Tab Two Title' }}
-        options={{ headerShown: false }}
-      />
-    </TabTwoStack.Navigator>
   );
 }

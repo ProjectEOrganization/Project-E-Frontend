@@ -5,29 +5,18 @@ import { useFonts } from 'expo-font';
 import { Text, View, TextInput, Image } from 'react-native';
 
 export default function RandomChatBottomBar() {
-  let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-ExtraBold': require('../assets/fonts/Inter/Inter-ExtraBold.ttf'),
-  });
-
-  if (!fontsLoaded) {
-    return <View />;
-  } else {
-    return (
-      <View style={styles.topBar}>
-        <TextInput
-          placeholder='Message'
-          placeholderTextColor='#85ACD6'
-          style={styles.textInput}
-        />
-        <TouchableOpacity style={styles.loginButton}>
-          <SendIcon />
-        </TouchableOpacity>
-      </View>
-    );
-  }
+  return (
+    <View style={styles.topBar}>
+      <TextInput
+        placeholder='Message'
+        placeholderTextColor='#85ACD6'
+        style={styles.textInput}
+      />
+      <TouchableOpacity style={styles.loginButton}>
+        <SendIcon />
+      </TouchableOpacity>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

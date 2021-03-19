@@ -11,14 +11,12 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // import * as yourModuleName from 'module-name';
 
-export default function FriendsChatBox({ messages }: { messages: Array<any> }) {
-  const navigation = useNavigation();
+export default function FriendsChatBox({ messages }: { messages: Array<{ content: string, sentBy: string, id: string }> }) {
   const auth = useAuth();
 
   const scrollRef = React.useRef<FlatList>()
 
   const toBottom = () => scrollRef.current?.scrollToEnd({ animated: true });
-
 
   React.useEffect(() => {
     setTimeout(() => {

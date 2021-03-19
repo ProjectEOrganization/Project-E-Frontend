@@ -5,15 +5,17 @@ import { Animated, Dimensions } from "react-native"
 import { ViewProps } from "../../components/Themed";
 const { height } = Dimensions.get('screen');
 
+const Backdrop = ({ style }: ViewProps) => {
+    return (
+        <Animated.View style={[{ height: height * 2, backgroundColor: 'rgba(0,0,0,.5)' }, style]} />
+    )
+}
+
 export const popupEffect: StackNavigationOptions = {
     transparentCard: true,
     headerShown: false,
     gestureEnabled: false,
-    cardOverlay: ({ style }: ViewProps) => {
-        return (
-            <Animated.View style={[{ height: height * 2, backgroundColor: 'rgba(0,0,0,.5)' }, style]} />
-        )
-    },
+    cardOverlay: Backdrop,
     // gestureDirection: 'vertical',
     // gestureResponseDistance: { vertical: height },
     cardStyleInterpolator: ({ current, next, inverted }: StackCardInterpolationProps) => ({
