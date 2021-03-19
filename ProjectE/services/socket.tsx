@@ -7,6 +7,8 @@ import config from './config';
 
 const SocketContext = React.createContext<Socket>();
 
+const navigation = useNavigation();
+
 export function ProvideSocket({ children }) {
     const socket = useProvideSocket();
     return (
@@ -39,6 +41,20 @@ function useProvideSocket(): Socket {
                 socket.on('disconnect', () => {
                     console.log('disconnected')
                 })
+                
+                socket.on('friend_request', (uid) => {
+                    console.log('friend request received from '+uid)
+                    navigation.navigate('FriendRequestRecceivedModal')
+                })
+
+                socket.on('friend_request_accepted', (friendId) => {
+                    console.log('friend request accepted from '+friendId)
+                })
+
+                socket.on('friend_request_rejected', (friendId) => {
+                    console.log('friend request rejected from '+friendId)
+                })
+
                 setSocket(socket);
             }
             catch (err) {

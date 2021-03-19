@@ -18,7 +18,7 @@ import FriendsChatList from '../components/Friends/FriendsChatList';
 const { width } = Dimensions.get('screen');
 
 export default function FriendsScreen() {
-  let username = 'David';
+  let username = 'Anonymous';
 
   let [fontsLoaded] = useFonts({
     'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),

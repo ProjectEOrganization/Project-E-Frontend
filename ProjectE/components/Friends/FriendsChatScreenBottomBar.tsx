@@ -54,8 +54,8 @@ async function sendMessage(friendId: string, text: string) {
   console.log(friendId);
   await api.post('/message', {
     recipientId: "WEhlwirlM1R5NXRljGd7FMXb7Nq1",
-    message: 'test' 
-  })
+    message: 'test'
+  });
   // const chatId = await api.get('/chat/WEhlwirlM1R5NXRljGd7FMXb7Nq1');
   // console.log(chatId.data);
   // const res = await api.get('/chats');

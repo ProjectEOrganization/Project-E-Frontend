@@ -7,25 +7,31 @@ import Colors from '../../constants/Colors';
 import { MonoText } from '../StyledText';
 // import { Text, View } from './Themed';
 import { useFonts } from 'expo-font';
+import { api } from '../../services/api';
+
  import { Text, View, TextInput } from 'react-native'
 
-export default function FriendRequestReceivedAlert({ path }: { path: string }) {
+export default function FriendRequestReceivedAlert(friendId: string) {
     let [fontsLoaded] = useFonts({
         'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
         'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
         'Inter-Regular': require('../../assets/fonts/Inter/Inter-Regular.ttf'),
         'Inter-ExtraBold': require('../../assets/fonts/Inter/Inter-ExtraBold.ttf'),
       });
-
+    async function acceptRequest() {
+      await api.post('/friends/accept/' + friendId);
+    }
+    async function rejectRequest() {
+      await api.post('/friends/decline/' + friendId);
+    }
       if (!fontsLoaded) {
         return <View />;
     } else {
   return (
     <View style={styles.overallContainer}>
      
-     
     <LoginSvgComponent />
-<View style={{ width: 260, paddingTop: 30, alignItems: 'center'}}>
+      <View style={{ width: 260, paddingTop: 30, alignItems: 'center'}}>
         <Text style={styles.firstText}>
           Wanna be Friends?
         </Text>
@@ -35,50 +41,28 @@ export default function FriendRequestReceivedAlert({ path }: { path: string }) {
         This person loves chatting with you, accept their friend request to continue chatting with them forever
         </Text>
        
-<View style={{flex : 1, flexDirection: 'row'}}>
+        <View style={{flex : 1, flexDirection: 'row'}}>
 
-<TouchableOpacity style={styles.yesButton}>
-          <Text style={styles.loginText} >
+          <TouchableOpacity onPress={acceptRequest} style={styles.yesButton}>
+          <Text style={styles.loginText}>
            YES
           </Text>
-        </TouchableOpacity>
+          </TouchableOpacity>
 
-
-<TouchableOpacity style={styles.noButton}>
-          <Text style={styles.loginText} >
-            Nah
-          </Text>
-        </TouchableOpacity>
-
-
+          <TouchableOpacity onPress={rejectRequest} style={styles.noButton}>
+            <Text style={styles.loginText} >
+              Nah
+            </Text>
+          </TouchableOpacity>
         </View>
-
-        </View>
-
-        {/* <View
-          style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
-          >
-          <MonoText>{path}</MonoText>
-        </View> */}
-
-        {/* <Text
-          style={styles.getStartedText}
-          >
-          Change any of the text, save the file, and your app will automatically update.
-        </Text>
       </View>
-
-      <View style={styles.helpContainer}>
-        <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-          <Text style={styles.helpLinkText} >
-            Tap here if your app doesn't automatically update after making changes
-          </Text>
-        </TouchableOpacity> */}
-    
     </View>
   );
+
 }
 }
+
+
 
 function handleHelpPress() {
   WebBrowser.openBrowserAsync(

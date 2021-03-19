@@ -18,6 +18,7 @@ import Account from '../screens/SettingsScreens/Account';
 import Notifications from '../screens/SettingsScreens/Notifications';
 import FriendsChatScreen from '../screens/FriendsChatScreen';
 import onBoarding1 from '../screens/Onboarding1';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -78,9 +79,9 @@ function BottomTabNavigator() {
 // https://icons.expo.fyi/
 function Icon() {
   return (
-    <View style={{ marginBottom: -25, backgroundColor: 'transparent' }}>
+    <TouchableOpacity style={{ marginBottom: -25, backgroundColor: 'transparent' }}>
       <SvgComponentNav />
-    </View>
+    </TouchableOpacity>
   );
 }
 
