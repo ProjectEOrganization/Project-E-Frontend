@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView, FlatList } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import { useFonts } from 'expo-font';
@@ -13,52 +13,18 @@ import TopicStarter from '../components/TopicStarter';
 // import * as yourModuleName from 'module-name';
 
 export default function RandomChatScreen() {
-  let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-SemiBold': require('../assets/fonts/Inter/Inter-SemiBold.ttf'),
-  });
 
-  const navigation = useNavigation();
-
-  if (!fontsLoaded) {
-    return <View />;
-  } else {
-    return (
-      <ScrollView style={styles.container}>
-        <TopicStarter />
-        <ChatBubble
-          content='hey, how are you? I think we should talk about unicorns or something along those lines?'
-          user='opposingUser'
-        />
+  return (
+    <FlatList
+      contentContainerStyle={{ paddingHorizontal: 20 }}
+      ListHeaderComponent={() => <TopicStarter />}
+      data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+      renderItem={({ item }) => (
         <ChatBubble
           content="I honestly think unicorns are like majestic creatures, literally rainbow coloured and can fly. Like that's awesome!!"
-          user='opposingUser'
+          user={(item % 2 === 0) ? 'opposingUser' : 'currentUser'}
         />
-        <ChatBubble content="hii, I'm doing good ish" user='currentUser' />
-        <ChatBubble
-          content='Wdym ish? Maybe unicorns will cheer you up?'
-          user='opposingUser'
-        />
-        <ChatBubble
-          content='Yah, lol. Its fine. Lets talk about unicorns? I thought unicorns were white lol'
-          user='currentUser'
-        />
-        <ChatBubble
-          content='Uhhh, I thought they were full rainbow'
-          user='opposingUser'
-        />
-        <ChatBubble content="lol. i'll search it up" user='currentUser' />
-      </ScrollView>
-    );
-  }
+      )}
+    />
+  );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'transparent',
-    marginBottom: 30,
-    paddingHorizontal: 20,
-  },
-});

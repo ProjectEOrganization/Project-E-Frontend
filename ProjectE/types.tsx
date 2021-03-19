@@ -3,6 +3,7 @@ export type RootStackParamList = {
   NotFound: undefined;
   LoginModal: undefined;
   RegisterModal: undefined;
+  FriendRequestReceivedModal: undefined;
 };
 
 export type BottomTabParamList = {

@@ -1,72 +1,87 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { ActivityIndicator, Button, KeyboardAvoidingView, StyleSheet } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { useFonts } from 'expo-font';
 import RandomChatTopBar from '../components/RandomChatTopBar';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import ChatBox from '../components/ChatBox';
-import RandomChatBottomBar from '../components/RandomChatBottomBar';
+import FriendsChatScreenBottomBar from '../components/Friends/FriendsChatScreenBottomBar';
+import FriendsChatBox from '../components/Friends/FriendsChatBox';
+import { useAuth } from '../services/auth';
+import { useStore } from 'react-redux';
+import { api } from '../services/api';
+import { useSocket } from '../services/socket';
+
 
 export default function RandomChatScreen() {
-  let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-SemiBold': require('../assets/fonts/Inter/Inter-SemiBold.ttf'),
-  });
+  const auth = useAuth();
+  const [waiting, setWaiting] = useState(true);
+  const [status, setStatus] = useState("");
 
-  const navigation = useNavigation();
+  const [chat, setChat] = useState();
+  const socket = useSocket();
 
-  if (!fontsLoaded) {
-    return <View />;
-  } else {
-    return (
-      <View style={styles.container}>
-        <RandomChatTopBar />
-        <ChatBox />
-        <RandomChatBottomBar />
-
-        {/* <View style={{width: 300, backgroundColor: 'rgba(52, 52, 52, 0.0)', }}> */}
-        {/* onPress={() => navigation.navigate('TabTwoScreen')} */}
-        {/* <TouchableOpacity onPress={() => navigation.navigate('TabTwoScreen')} >
-        <BackArrowSvgComponent />
-        </TouchableOpacity> */}
-
-        {/* DEELETE FOR PRODUCTION */}
-        {/* <TouchableOpacity onPress={() => navigation.navigate('TabTwoScreen')} >
-        <Text> TESTING TheyHadToGo COMPONENT</Text>
-        </TouchableOpacity> */}
-
-        {/* </View> */}
-
-        {/* Login Component  */}
-        {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
-        {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
-        {/* <View style={styles.container2}>
-      <Text style={styles.title3}>
-        Chat with random people and create 
-        everlasting friendships, 
-        <Text style={{fontWeight: 'bold'}}> click below </Text>
-       
-        </Text >  
-      </View> */}
-
-        {/* <SvgComponent1 /> */}
-        <View style={{ backgroundColor: 'transparent', marginTop: 50 }}>
-          {/* <FriendRequestReceivedAlert /> */}
-        </View>
-
-        {/* <Image style={{marginTop: 40 ,height: 138, width: 138, transform: [{ rotate: '25deg'}]}} source={require('../assets/images/peace-sign-emoji-by-google.png')}/> */}
-        {/* <View style={styles.container3}>
-      <Text style={styles.title4}>
-        Already have an account?
-        <Text onPress={() => navigation.navigate(TabOneScreen)} style={{fontFamily: 'Inter-SemiBold', color: '#4B00FF'}}> Log in </Text>
-       
-        </Text >  
-      </View> */}
-      </View>
-    );
+  const initChat = async (uid) => {
+    // socket?.off('queue')
+    const chat = await (await api.get(`/chat/${uid}`)).data
+    setChat(chat);
+    setStatus('Connecting...')
+    setWaiting(false);
   }
+
+  const join = () => {
+    api.get("/join_queue")
+      .then((res) => {
+        if (res.data.status === 'searching') {
+          socket.on('queue', (msg) => {
+            initChat(msg.uid)
+          })
+        }
+        else if (res.data.status === 'found') {
+          initChat(res.data.uid)
+        }
+        setStatus(res.data.status)
+      })
+  }
+
+  useFocusEffect(useCallback(() => {
+    return () => {
+      api.get('/leave_queue')
+      setWaiting(true)
+      setStatus("")
+      setChat();
+      socket?.off('queue')
+    }
+  }, [auth.user]))
+
+  useEffect(() => {
+    socket.on('skip', () => {
+      setWaiting(true)
+      setStatus('reconnecting')
+      setChat();
+      join()
+    })
+    return () => {
+      socket.off('skip')
+    }
+  }, [auth.user])
+
+  if (waiting) {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        {status === 'searcing' && <ActivityIndicator size="small" color="black" />}
+        <Button title="Join" onPress={join} />
+        <Text>{JSON.stringify(status)}</Text>
+      </View>
+    )
+  }
+  return (
+    <KeyboardAvoidingView behavior="padding" style={styles.container}>
+      <RandomChatTopBar user={chat?.user} />
+      <FriendsChatBox messages={chat?.messages} />
+      <FriendsChatScreenBottomBar onSend={(message) => alert(message)} />
+    </KeyboardAvoidingView>
+  );
 }
 
 const styles = StyleSheet.create({
