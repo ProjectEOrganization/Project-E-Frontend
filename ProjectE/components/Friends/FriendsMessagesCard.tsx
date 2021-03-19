@@ -1,13 +1,14 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
 import Colors from '../../constants/Colors';
 import { MonoText } from '../StyledText';
-// import { Text, View } from './Themed';
+const { width } = Dimensions.get('screen')
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput, Image } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { IChat } from '../../store/reducers/chat';
 
-export default function FriendsMessagesCard(props) {
+export default function FriendsMessagesCard(props: IChat) {
   const navigation = useNavigation();
 
   return (
@@ -15,20 +16,19 @@ export default function FriendsMessagesCard(props) {
       onPress={() => navigation.navigate('FriendsChatScreen', props)}
     >
       <View style={styles.topBar}>
-        <View style={styles.profile}>
-          <Image
-            style={styles.profileImage}
-            source={require('../../assets/images/Profile-Male-PNG.png')}
-          />
+        <Image
+          style={styles.profileImage}
+          source={require('../../assets/images/Profile-Male-PNG.png')}
+        />
 
-          <View>
-            <Text style={styles.firstText}>{props.user.displayName}</Text>
-            <Text style={styles.secondText}>{props.content}</Text>
-          </View>
+        <View style={[styles.profile, { flex: 1 }]}>
+          <Text style={styles.firstText}>{props.user.displayName}</Text>
+          <Text numberOfLines={3} style={styles.secondText}>{props.content}</Text>
         </View>
 
-        {props.is_read === false && <View style={styles.notifications}>
-          <Text style={{ color: 'white' }}>1</Text>
+
+        {props.missed > 0 && <View style={styles.notifications}>
+          <Text style={{ color: 'white' }}>{props.missed}</Text>
         </View>}
 
       </View>
@@ -47,11 +47,12 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 6 },
     shadowColor: '#000000',
     shadowOpacity: 0.05,
-    width: '103%',
+    width: width * 0.85,
   },
   profile: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    flexGrow: 1
   },
   profileImage: {
     height: 65,

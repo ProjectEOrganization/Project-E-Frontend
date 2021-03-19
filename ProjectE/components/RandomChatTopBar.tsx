@@ -11,9 +11,18 @@ import { useFonts } from 'expo-font';
 import { Text, View, TextInput, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { api } from '../services/api';
+import { useNavigation } from '@react-navigation/core';
 
 export default function RandomChatTopBar({ user }) {
   const { top } = useSafeAreaInsets();
+
+  const navigation = useNavigation();
+
+  const sendFriendRequest = () => {
+    api.post(`/friends/add/${user?.uid}`)
+      .then(() => navigation.navigate('FriendRequestSentModal'))
+  }
+
   return (
     <View style={[styles.topBar, { paddingTop: top + 10 }]}>
       <Image
@@ -22,10 +31,10 @@ export default function RandomChatTopBar({ user }) {
       />
       <View style={styles.userNameText}>
         <Text style={styles.secondText}>You are chatting with</Text>
-        <Text style={styles.firstText}>{user?.username}</Text>
+        <Text style={styles.firstText}>{user?.displayName}</Text>
       </View>
       <View>
-        <TouchableOpacity onPress={() => api.post(`/friends/add/${user?.id}`)} style={styles.loginButton}>
+        <TouchableOpacity onPress={sendFriendRequest} style={styles.loginButton}>
           <RandomChatTopBarSvgComponent />
           <Text style={styles.loginText}>Let's be Friends</Text>
         </TouchableOpacity>

@@ -8,15 +8,20 @@ import ChatBubble from '../../components/ChatBubble';
 import TopicStarter from '../../components/TopicStarter';
 import { useAuth } from '../../services/auth';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { IMessage } from '../../store/reducers/chat';
+import { useSocket } from '../../services/socket';
+import { store } from '../../store';
 
 // import * as yourModuleName from 'module-name';
 
-export default function FriendsChatBox({ messages }: { messages: Array<{ content: string, sentBy: string, id: string }> }) {
+export default function FriendsChatBox({ messages }: { messages: Array<IMessage> }) {
   const auth = useAuth();
 
   const scrollRef = React.useRef<FlatList>()
 
   const toBottom = () => scrollRef.current?.scrollToEnd({ animated: true });
+
+  const { bottom } = useSafeAreaInsets();
 
   React.useEffect(() => {
     setTimeout(() => {
@@ -24,7 +29,7 @@ export default function FriendsChatBox({ messages }: { messages: Array<{ content
     }, 300)
   }, [messages])
 
-  if (messages.length === 0) {
+  if (messages?.length === 0) {
     return (
       <View style={{ flexGrow: 1, backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center' }}>
         <Text>no messages</Text>
@@ -32,13 +37,11 @@ export default function FriendsChatBox({ messages }: { messages: Array<{ content
     )
   }
 
-  const { bottom } = useSafeAreaInsets();
-
   return (
     <FlatList
       ref={scrollRef}
       style={[styles.container]}
-      data={messages}
+      data={messages || []}
       contentContainerStyle={{ paddingTop: 25, paddingBottom: bottom || 20, }}
       renderItem={({ item }) => (
         <ChatBubble

@@ -8,16 +8,19 @@ import { MonoText } from '../StyledText';
 // import { Text, View } from './Themed';
 import { useFonts } from 'expo-font';
 import { api } from '../../services/api';
-import {useRoute} from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 
 import { Text, View, TextInput } from 'react-native'
+import { navigationRef } from '../../navigation';
 
 export default function FriendRequestReceivedAlert({ friendId }) {
 
   async function acceptRequest() {
+    navigationRef.current?.goBack()
     await api.post('/friends/accept/' + friendId);
   }
   async function rejectRequest() {
+    navigationRef.current?.goBack()
     await api.post('/friends/decline/' + friendId);
   }
   return (

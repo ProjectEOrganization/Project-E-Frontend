@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity, Image, ActivityIndicator, KeyboardAvoidin
 import { Text, View } from '../components/Themed';
 import BackArrowSvgComponent from '../assets/backArrowSvgComponent.js';
 import { useFonts } from 'expo-font';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import FriendsPageSwitch from '../components/Friends/FriendsPageSwitch';
 import ThreeDotsSvg from '../assets/threeDotsSvg.js';
 import FriendsChatBox from '../components/Friends/FriendsChatBox';
@@ -12,66 +12,33 @@ import { api } from '../services/api';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuth } from '../services/auth';
 import { useSocket } from '../services/socket';
+import { RootState, store } from '../store';
+import { fetchMessages, IChat, IMessage } from '../store/reducers/chat';
+import { useSelector } from '../hooks';
+import { createSelector } from 'reselect';
 
 const { width, height } = Dimensions.get('screen')
 
+type ParamList = {
+  FriendsChatScreen: IChat
+};
+
 export default function FriendsChatScreen() {
   const navigation = useNavigation();
-  const route = useRoute();
+  const route = useRoute<RouteProp<ParamList, 'FriendsChatScreen'>>();
 
-  const [loading, setLoading] = useState(false);
+  const loading = useSelector(state => state.chat.loadingMessages);
 
-  const { user }: any = route.params;
-  const auth = useAuth();
-  const socket = useSocket();
+  const chatSelector = createSelector(
+    (state: RootState) => state.chat.chats,
+    chat => chat[route.params.id]
+  )
 
-  const [chat, setChat] = useState<{ messages: Array<any> }>({ messages: [] });
-
-  const sendMessage = (content: any) => {
-    // const newMessage = {
-    //   id: ([...chat.messages].pop() || 1) + 1,
-    //   content,
-    //   sentBy: auth.user.uid,
-    //   sentAt: Date.now()
-    // }
-    api.post('/message', {
-      recipientId: user.uid,
-      message: content
-    }).then((res) => {
-      console.log(res.data)
-      setChat(prev => ({
-        ...prev,
-        messages: [
-          ...prev.messages,
-          res.data.message
-        ]
-      }))
-    })
-  }
+  const chat = useSelector(chatSelector);
 
   useEffect(() => {
-    setLoading(true)
-    api.get(`/chat/${user.uid}`).then((res) => {
-      setChat(res.data);
-      setLoading(false);
-    })
+    store.dispatch(fetchMessages({ chatId: route.params.id, userId: route.params.user.uid }))
   }, [])
-
-  useEffect(() => {
-    socket?.on('message', (msg) => {
-      setChat(prev => ({
-        ...prev,
-        messages: [
-          ...prev.messages,
-          msg
-        ]
-      }))
-    })
-
-    return () => {
-      socket?.off('message')
-    }
-  }, [auth, socket])
 
   const Header = () => (
     <View
@@ -104,7 +71,7 @@ export default function FriendsChatScreen() {
             marginTop: -5,
           }}
         >
-          {user.displayName}
+          {chat?.user?.displayName}
         </Text>
       </View>
       <View
@@ -123,7 +90,7 @@ export default function FriendsChatScreen() {
     <KeyboardAvoidingView behavior="padding" style={[styles.container, { flex: 1, width: '100%', paddingTop: top, paddingBottom: 20 }]}>
       <Header />
       {loading ? <LoadingScreen /> : <FriendsChatBox messages={chat?.messages} />}
-      <FriendsChatScreenBottomBar onSend={(message: string) => sendMessage(message)} />
+      <FriendsChatScreenBottomBar recipientId={chat.user.uid} />
     </KeyboardAvoidingView>
 
   );

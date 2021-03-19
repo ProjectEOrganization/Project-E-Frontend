@@ -46,54 +46,54 @@ export default function FriendsScreen() {
   } else {
     return (
       <View style={styles.container}>
-        <View
-          style={{
-            marginTop: 80,
-            backgroundColor: 'transparent',
-          }}
-        >
-          <ThreeDotsSvg />
-        </View>
-
-        {auth.user?.uid ?
-          <Button title="Log out" onPress={auth.signout} />
-          : (
-            <>
-              <Button title="Sign in" onPress={() => navigation.navigate('LoginModal')} />
-              <Button title="Sign up" onPress={() => navigation.navigate('RegisterModal')} />
-            </>
-          )}
-
-        <View
-          style={{
-            marginTop: 60,
-            backgroundColor: 'transparent',
-            paddingHorizontal: 35,
-          }}
-        >
-          <Text
+        <ScrollView>
+          <View
             style={{
-              fontFamily: 'Inter-SemiBold',
-              fontSize: 25,
-              color: '#21293A',
+              marginTop: 80,
+              backgroundColor: 'transparent',
             }}
           >
-            Hello {auth.user?.displayName || username}!
+            <ThreeDotsSvg />
+          </View>
+
+          {auth.user?.uid ?
+            <Button title="Log out" onPress={auth.signout} />
+            : (
+              <>
+                <Button title="Sign in" onPress={() => navigation.navigate('LoginModal')} />
+                <Button title="Sign up" onPress={() => navigation.navigate('RegisterModal')} />
+              </>
+            )}
+
+          <View
+            style={{
+              marginTop: 60,
+              backgroundColor: 'transparent',
+              paddingHorizontal: 35,
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: 'Inter-SemiBold',
+                fontSize: 25,
+                color: '#21293A',
+              }}
+            >
+              Hello {auth.user?.displayName || username}!
           </Text>
-          <FriendsPageSwitch onChange={(route) => setRoute(route)} />
-        </View>
-
-
-
-        <ScrollView ref={scrollRef} scrollEnabled={false} horizontal pagingEnabled contentContainerStyle={{ flexDirection: 'row', width: width * 2, marginTop: 35 }}>
-          <View style={{ backgroundColor: 'transparent', width, paddingHorizontal: 35 }}>
-            <FriendsChatList />
+            <FriendsPageSwitch onChange={(route) => setRoute(route)} />
           </View>
-          <View style={{ backgroundColor: 'transparent', width, paddingHorizontal: 35 }}>
-            <FriendsChat />
-          </View>
+
+          <ScrollView ref={scrollRef} scrollEnabled={false} horizontal pagingEnabled contentContainerStyle={{ flexDirection: 'row', width: width * 2, marginTop: 35, }}>
+            <View style={{ backgroundColor: 'transparent', width, paddingLeft: (width * 0.15) / 2 }}>
+              <FriendsChatList />
+            </View>
+            <View style={{ backgroundColor: 'transparent', width, paddingHorizontal: 35 }}>
+              <FriendsChat />
+            </View>
+          </ScrollView>
+
         </ScrollView>
-
       </View>
     );
   }
@@ -103,7 +103,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F1F6FC',
-    height: '100%',
   },
   title: {
     fontSize: 20,

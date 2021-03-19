@@ -19,12 +19,15 @@ import Notifications from '../screens/SettingsScreens/Notifications';
 import FriendsChatScreen from '../screens/FriendsChatScreen';
 import onBoarding1 from '../screens/Onboarding1';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { store } from '../store';
+import { joinQueue } from '../store/reducers/chat';
+import { useSelector } from '../hooks';
+import { Pressable } from 'react-native';
+import { navigationRef } from '.';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
-
   return (
     <BottomTab.Navigator
       initialRouteName='Friends'
@@ -46,10 +49,11 @@ function BottomTabNavigator() {
       />
 
       <BottomTab.Screen
-        name=' '
+        name='RandomChat'
         component={RandomChatScreen}
         options={{
           tabBarIcon: Icon,
+          tabBarLabel: ''
         }}
       />
 
@@ -71,6 +75,7 @@ function BottomTabNavigator() {
           tabBarVisible: false,
         }}
       />  */}
+
     </BottomTab.Navigator>
   );
 }
@@ -78,8 +83,18 @@ function BottomTabNavigator() {
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
 function Icon() {
+  const queue = useSelector(state => state.chat.queue);
+  const onPress = () => {
+    if (queue.status === 'found') {
+      navigationRef.current?.navigate('SkipConfirmationModal')
+    }
+    else {
+      store.dispatch(joinQueue())
+    }
+  }
+
   return (
-    <TouchableOpacity style={{ marginBottom: -25, backgroundColor: 'transparent' }}>
+    <TouchableOpacity onPress={onPress} style={{ marginBottom: -25, backgroundColor: 'transparent' }}>
       <SvgComponentNav />
     </TouchableOpacity>
   );

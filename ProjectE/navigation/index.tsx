@@ -6,6 +6,10 @@ import FriendRequestReceivedModal from '../components/Modals/FriendRequestReceiv
 import LoginModal from '../components/Modals/LoginModal';
 import RegisterModal from '../components/Modals/RegisterModal';
 import RejectedModal from '../components/Modals/RejectedModal';
+import SkipConfirmationModal from '../components/Modals/SkipConfirmationModal';
+import TheyHadToGoModal from '../components/Modals/TheyHadToGoModal';
+import YouAreNowFriendsModal from '../components/Modals/YouAreNowFriendsModal';
+import FriendRequestSentModal from '../components/Modals/FriendRequestSentModal';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
@@ -42,6 +46,26 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
         <Stack.Screen
           name='RejectedModal'
           component={RejectedModal}
+          options={{ ...popupEffect }}
+        />
+        <Stack.Screen
+          name='YouAreNowFriendsModal'
+          component={YouAreNowFriendsModal}
+          options={{ ...popupEffect }}
+        />
+        <Stack.Screen
+          name='FriendRequestSentModal'
+          component={FriendRequestSentModal}
+          options={{ ...popupEffect }}
+        />
+        <Stack.Screen
+          name='TheyHadToGoModal'
+          component={TheyHadToGoModal}
+          options={{ ...popupEffect }}
+        />
+        <Stack.Screen
+          name='SkipConfirmationModal'
+          component={SkipConfirmationModal}
           options={{ ...popupEffect }}
         />
         <Stack.Screen name="Root" component={BottomTabNavigator} />
