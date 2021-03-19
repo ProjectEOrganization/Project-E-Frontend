@@ -8,25 +8,29 @@ import { MonoText } from '../StyledText';
 // import { Text, View } from './Themed';
 import { useFonts } from 'expo-font';
 import { api } from '../../services/api';
+import {useRoute} from '@react-navigation/native';
 
  import { Text, View, TextInput } from 'react-native'
 
-export default function FriendRequestReceivedAlert(friendId: string) {
-    let [fontsLoaded] = useFonts({
-        'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
-        'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
-        'Inter-Regular': require('../../assets/fonts/Inter/Inter-Regular.ttf'),
-        'Inter-ExtraBold': require('../../assets/fonts/Inter/Inter-ExtraBold.ttf'),
-      });
-    async function acceptRequest() {
-      await api.post('/friends/accept/' + friendId);
-    }
-    async function rejectRequest() {
-      await api.post('/friends/decline/' + friendId);
-    }
-      if (!fontsLoaded) {
-        return <View />;
-    } else {
+export default function FriendRequestReceivedAlert() {
+  let [fontsLoaded] = useFonts({
+      'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
+      'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
+      'Inter-Regular': require('../../assets/fonts/Inter/Inter-Regular.ttf'),
+      'Inter-ExtraBold': require('../../assets/fonts/Inter/Inter-ExtraBold.ttf'),
+  });
+
+  const {params} = useRoute();
+
+  async function acceptRequest() {
+    await api.post('/friends/accept/' + friendId);
+  }
+  async function rejectRequest() {
+    await api.post('/friends/decline/' + friendId);
+  }
+    if (!fontsLoaded) {
+      return <View />;
+  } else {
   return (
     <View style={styles.overallContainer}>
      

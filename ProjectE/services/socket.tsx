@@ -42,9 +42,9 @@ function useProvideSocket(): Socket {
                     console.log('disconnected')
                 })
                 
-                socket.on('friend_request', (uid) => {
-                    console.log('friend request received from '+uid)
-                    navigation.navigate('FriendRequestRecceivedModal')
+                socket.on('friend_request', (friendId) => {
+                    console.log('friend request received from '+friendId)
+                    navigation.navigate('FriendRequestRecceivedModal', friendId)
                 })
 
                 socket.on('friend_request_accepted', (friendId) => {
