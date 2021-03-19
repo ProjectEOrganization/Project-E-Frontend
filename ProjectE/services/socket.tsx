@@ -5,9 +5,9 @@ import { io, Socket } from 'socket.io-client';
 import { useAuth } from './auth';
 import config from './config';
 
-const SocketContext = React.createContext<Socket>();
+import { navigationRef } from '../navigation'
 
-const navigation = useNavigation();
+const SocketContext = React.createContext<Socket>();
 
 export function ProvideSocket({ children }) {
     const socket = useProvideSocket();
@@ -41,18 +41,18 @@ function useProvideSocket(): Socket {
                 socket.on('disconnect', () => {
                     console.log('disconnected')
                 })
-                
-                socket.on('friend_request', (uid) => {
-                    console.log('friend request received from '+uid)
-                    navigation.navigate('FriendRequestRecceivedModal')
+
+                socket.on('friend_request', (user) => {
+                    console.log('friend request received from ' + user.uid)
+                    navigationRef.current?.navigate('FriendRequestReceivedModal')
                 })
 
                 socket.on('friend_request_accepted', (friendId) => {
-                    console.log('friend request accepted from '+friendId)
+                    console.log('friend request accepted from ' + friendId.uid)
                 })
 
                 socket.on('friend_request_rejected', (friendId) => {
-                    console.log('friend request rejected from '+friendId)
+                    console.log('friend request rejected from ' + friendId.uid)
                 })
 
                 setSocket(socket);
@@ -65,7 +65,7 @@ function useProvideSocket(): Socket {
         return () => {
             socket?.close();
         }
-    }, [auth]);
+    }, [auth, navigationRef]);
 
     return socket
 }
