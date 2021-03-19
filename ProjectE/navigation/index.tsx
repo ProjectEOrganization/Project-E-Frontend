@@ -5,6 +5,7 @@ import { ColorSchemeName } from 'react-native';
 import FriendRequestReceivedModal from '../components/Modals/FriendRequestReceivedModal';
 import LoginModal from '../components/Modals/LoginModal';
 import RegisterModal from '../components/Modals/RegisterModal';
+import RejectedModal from '../components/Modals/RejectedModal';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
@@ -36,6 +37,11 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
         <Stack.Screen
           name='FriendRequestReceivedModal'
           component={FriendRequestReceivedModal}
+          options={{ ...popupEffect }}
+        />
+        <Stack.Screen
+          name='RejectedModal'
+          component={RejectedModal}
           options={{ ...popupEffect }}
         />
         <Stack.Screen name="Root" component={BottomTabNavigator} />

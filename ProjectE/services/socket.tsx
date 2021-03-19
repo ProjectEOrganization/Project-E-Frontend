@@ -44,15 +44,15 @@ function useProvideSocket(): Socket {
 
                 socket.on('friend_request', (user) => {
                     console.log('friend request received from ' + user.uid)
-                    navigationRef.current?.navigate('FriendRequestReceivedModal')
+                    navigationRef.current?.navigate('FriendRequestReceivedModal', { uid: user.uid })
                 })
 
                 socket.on('friend_request_accepted', (friendId) => {
                     console.log('friend request accepted from ' + friendId.uid)
                 })
 
-                socket.on('friend_request_rejected', (friendId) => {
-                    console.log('friend request rejected from ' + friendId.uid)
+                socket.on('friend_request_declined', (friendId) => {
+                    navigationRef.current?.navigate('RejectedModal', { uid: friendId.uid })
                 })
 
                 setSocket(socket);

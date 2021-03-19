@@ -57,7 +57,7 @@ export default function RandomChatScreen() {
   useEffect(() => {
     socket.on('skip', () => {
       setWaiting(true)
-      setStatus('')
+      setStatus('reconnecting')
       setChat();
       join()
     })
@@ -69,7 +69,7 @@ export default function RandomChatScreen() {
   if (waiting) {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <ActivityIndicator size="small" color="black" />
+        {status === 'searcing' && <ActivityIndicator size="small" color="black" />}
         <Button title="Join" onPress={join} />
         <Text>{JSON.stringify(status)}</Text>
       </View>

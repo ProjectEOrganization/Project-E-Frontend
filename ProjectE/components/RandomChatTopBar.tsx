@@ -10,6 +10,7 @@ import { MonoText } from '../StyledText';
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { api } from '../services/api';
 
 export default function RandomChatTopBar({ user }) {
   const { top } = useSafeAreaInsets();
@@ -24,7 +25,7 @@ export default function RandomChatTopBar({ user }) {
         <Text style={styles.firstText}>{user?.username}</Text>
       </View>
       <View>
-        <TouchableOpacity style={styles.loginButton}>
+        <TouchableOpacity onPress={() => api.post(`/friends/add/${user?.id}`)} style={styles.loginButton}>
           <RandomChatTopBarSvgComponent />
           <Text style={styles.loginText}>Let's be Friends</Text>
         </TouchableOpacity>
