@@ -56,6 +56,7 @@ function handleHelpPress() {
 const styles = StyleSheet.create({
   whiteChatBubble: {
     maxWidth: 300,
+    marginRight: 'auto',
     paddingHorizontal: 20,
     paddingVertical: 15,
     marginBottom: 15,

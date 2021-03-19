@@ -16,31 +16,32 @@ export default function FriendsChat() {
 
   useEffect(() => {
     if (auth.user) {
-      api.get('/friends')
-        .then(res => {
+      api.post('/friends/add/');
+
+      api
+        .get('/friends')
+        .then((res) => {
           setFriends(res.data);
         })
         .catch(() => {
-          setFriends([])
-        })
+          setFriends([]);
+        });
     }
   }, [auth.user]);
 
   if (friends.length === 0) {
     return (
-      <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
         <Text>No friends</Text>
       </View>
-    )
+    );
   }
 
   return (
     <View>
       <Text>Friends</Text>
-      {friends.map(friend => {
-        return (
-          <Text key={friend.id}>{friend.username}</Text>
-        )
+      {friends.map((friend) => {
+        return <Text key={friend.id}>{friend.username}</Text>;
       })}
     </View>
   );
