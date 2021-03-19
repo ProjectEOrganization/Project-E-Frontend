@@ -9,13 +9,22 @@ import { useFonts } from 'expo-font';
 import { Text, View, TextInput, Image } from 'react-native';
 import { api } from '../../services/api';
 import FriendRequestReceivedAlert from '../Alerts/FriendRequestReceivedAlert.js';
+import { store } from '../../store/store';
+import { addMessage } from '../../store/reducers/chat';
 
-interface IProps {
-  onSend: (message: string) => void
-}
 
-export default function FriendsChatScreenBottomBar({ onSend }: IProps) {
+export default function FriendsChatScreenBottomBar({ recipientId, isQueue }: { recipientId: string, isQueue?: boolean }) {
   const [message, setMessage] = useState("");
+
+  const onSend = (content: any) => {
+    api.post('/message', {
+      recipientId,
+      message: content,
+      isQueue
+    }).then((res) => {
+      store.dispatch(addMessage(res.data.message))
+    })
+  }
   return (
     <View style={styles.topBar}>
       <TextInput

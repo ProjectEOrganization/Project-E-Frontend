@@ -8,78 +8,58 @@ import ChatBox from '../components/ChatBox';
 import FriendsChatScreenBottomBar from '../components/Friends/FriendsChatScreenBottomBar';
 import FriendsChatBox from '../components/Friends/FriendsChatBox';
 import { useAuth } from '../services/auth';
-import { useStore } from 'react-redux';
+import { batch, useStore } from 'react-redux';
 import { api } from '../services/api';
 import { useSocket } from '../services/socket';
+import { useSelector } from '../hooks';
+import { store } from '../store';
+import { foundQueue, initQueue, joinQueue, skip } from '../store/reducers/chat';
 
 
 export default function RandomChatScreen() {
   const auth = useAuth();
-  const [waiting, setWaiting] = useState(true);
-  const [status, setStatus] = useState("");
-
-  const [chat, setChat] = useState();
+  const navigation = useNavigation();
   const socket = useSocket();
 
-  const initChat = async (uid) => {
-    // socket?.off('queue')
-    const chat = await (await api.get(`/chat/${uid}`)).data
-    setChat(chat);
-    setStatus('Connecting...')
-    setWaiting(false);
-  }
+  const queue = useSelector(state => state.chat.queue);
 
-  const join = () => {
-    api.get("/join_queue")
-      .then((res) => {
-        if (res.data.status === 'searching') {
-          socket.on('queue', (msg) => {
-            initChat(msg.uid)
-          })
-        }
-        else if (res.data.status === 'found') {
-          initChat(res.data.uid)
-        }
-        setStatus(res.data.status)
-      })
-  }
-
-  useFocusEffect(useCallback(() => {
-    return () => {
-      api.get('/leave_queue')
-      setWaiting(true)
-      setStatus("")
-      setChat();
-      socket?.off('queue')
+  useEffect(() => {
+    if (queue.status === 'found') {
+      store.dispatch(initQueue(queue.user.uid))
     }
-  }, [auth.user]))
+  }, [queue.status, queue.user?.uid])
 
   useEffect(() => {
     socket.on('skip', () => {
-      setWaiting(true)
-      setStatus('reconnecting')
-      setChat();
-      join()
+      navigation.navigate('TheyHadToGoModal')
+    })
+
+    socket.on('queue', (msg) => {
+      store.dispatch(foundQueue(msg))
     })
     return () => {
       socket.off('skip')
+      socket.off('queue')
     }
   }, [auth.user])
 
-  if (waiting) {
+  if (queue.status === 'joining' || queue.status === 'searching') {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        {status === 'searcing' && <ActivityIndicator size="small" color="black" />}
-        <Button title="Join" onPress={join} />
-        <Text>{JSON.stringify(status)}</Text>
+        {queue.status === 'searching' && <ActivityIndicator size="small" color="black" />}
+        <Text style={{ top: 20 }}>
+          {/* {queue.status === 'joining' && "Joining Queue"} */}
+          {/* {queue.status === 'searching' && "Searching"} */}
+          {queue.status}
+        </Text>
       </View>
     )
   }
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
-      <RandomChatTopBar user={chat?.user} />
-      <FriendsChatBox messages={chat?.messages} />
-      <FriendsChatScreenBottomBar onSend={(message) => alert(message)} />
+      <RandomChatTopBar user={queue.user} />
+      <FriendsChatBox messages={queue.messages} />
+      <FriendsChatScreenBottomBar recipientId={queue.user.uid} isQueue={true} />
     </KeyboardAvoidingView>
   );
 }

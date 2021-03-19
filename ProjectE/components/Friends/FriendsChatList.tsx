@@ -1,26 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, ActivityIndicator } from 'react-native'
+import { createSelector } from 'reselect'
+import { useSelector } from '../../hooks'
 import { api } from '../../services/api'
 import { useAuth } from '../../services/auth'
+import { RootState, store } from '../../store'
+import { fetchChats } from '../../store/reducers/chat'
 import FriendsMessagesCard from './FriendsMessagesCard'
 
+const chatsSelector = createSelector(
+    (state: RootState) => state.chat.chats,
+    chats => Object.values(chats)
+)
+
 export default function FriendsChatList() {
-    const [chats, setChats] = useState([])
-    const [loading, setLoading] = useState(false)
+    const loading = useSelector(state => state.chat.loadingChats);
+    const chats = useSelector(chatsSelector);
     const auth = useAuth();
 
     useEffect(() => {
-        setLoading(true);
-        api.get('/chats')
-            .then((res) => {
-                setChats(res.data)
-                setLoading(false)
-            })
-            .catch(() => {
-                setChats([])
-                setLoading(false)
-            })
-
+        store.dispatch(fetchChats())
     }, [auth])
 
     if (loading) {
@@ -48,7 +47,6 @@ export default function FriendsChatList() {
                     </View>
                 )
             })}
-
         </View>
     )
 }

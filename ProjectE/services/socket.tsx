@@ -6,6 +6,8 @@ import { useAuth } from './auth';
 import config from './config';
 
 import { navigationRef } from '../navigation'
+import { store } from '../store';
+import { addMessage } from '../store/reducers/chat';
 
 const SocketContext = React.createContext<Socket>();
 
@@ -38,17 +40,17 @@ function useProvideSocket(): Socket {
                     console.log('connected')
                 })
 
-                socket.on('disconnect', () => {
-                    console.log('disconnected')
-                })
-
                 socket.on('friend_request', (user) => {
                     console.log('friend request received from ' + user.uid)
                     navigationRef.current?.navigate('FriendRequestReceivedModal', { uid: user.uid })
                 })
 
+                socket?.on('message', (msg: IMessage) => {
+                    store.dispatch(addMessage(msg))
+                })
+
                 socket.on('friend_request_accepted', (friendId) => {
-                    console.log('friend request accepted from ' + friendId.uid)
+                    navigationRef.current?.navigate('YouAreNowFriendsModal', { uid: friendId.uid })
                 })
 
                 socket.on('friend_request_declined', (friendId) => {
@@ -63,6 +65,7 @@ function useProvideSocket(): Socket {
         }
         if (auth.user?.getIdToken) setup();
         return () => {
+            socket?.off('message')
             socket?.close();
         }
     }, [auth, navigationRef]);

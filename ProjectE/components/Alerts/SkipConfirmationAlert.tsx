@@ -7,51 +7,63 @@ import Colors from '../../constants/Colors';
 import { MonoText } from '../StyledText';
 // import { Text, View } from './Themed';
 import { useFonts } from 'expo-font';
- import { Text, View, TextInput } from 'react-native'
+import { Text, View, TextInput } from 'react-native'
+import { navigationRef } from '../../navigation/index';
+import { joinQueue } from '../../store/reducers/chat';
+import { store } from '../../store/store';
 
 export default function SkipConfirmationAlert({ path }: { path: string }) {
-    let [fontsLoaded] = useFonts({
-        'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
-        'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
-        'Inter-Regular': require('../../assets/fonts/Inter/Inter-Regular.ttf'),
-        'Inter-ExtraBold': require('../../assets/fonts/Inter/Inter-ExtraBold.ttf'),
-      });
+  let [fontsLoaded] = useFonts({
+    'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
+    'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
+    'Inter-Regular': require('../../assets/fonts/Inter/Inter-Regular.ttf'),
+    'Inter-ExtraBold': require('../../assets/fonts/Inter/Inter-ExtraBold.ttf'),
+  });
 
-      if (!fontsLoaded) {
-        return <View />;
-    } else {
-  return (
-    <View style={styles.overallContainer}>
-     
-     
-    <LoginSvgComponent />
-<View style={{ width: 260, paddingTop: 30, alignItems: 'center'}}>
-        <Text style={styles.firstText}>
-          Are you sure you{"\n"}want to skip?
+  const skip = () => {
+    navigationRef.current?.goBack();
+    store.dispatch(joinQueue())
+  }
+
+  const dontSkip = () => {
+    navigationRef.current?.goBack();
+  }
+
+  if (!fontsLoaded) {
+    return <View />;
+  } else {
+    return (
+      <View style={styles.overallContainer}>
+
+
+        <LoginSvgComponent />
+        <View style={{ width: 260, paddingTop: 30, alignItems: 'center' }}>
+          <Text style={styles.firstText}>
+            Are you sure you{"\n"}want to skip?
         </Text>
 
-        {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
-        <Text style={styles.secondText}>
-        You will probably never talk to this person ever again.
+          {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
+          <Text style={styles.secondText}>
+            You will probably never talk to this person ever again.
         </Text>
-       
-<View style={{flex : 1, flexDirection: 'row'}}>
 
-<TouchableOpacity style={styles.yesButton}>
-          <Text style={styles.loginText} >
-           Yup
+          <View style={{ flex: 1, flexDirection: 'row' }}>
+
+            <TouchableOpacity onPress={skip} style={styles.yesButton}>
+              <Text style={styles.loginText} >
+                Yup
           </Text>
-        </TouchableOpacity>
+            </TouchableOpacity>
 
 
-<TouchableOpacity style={styles.noButton}>
-          <Text style={styles.loginText} >
-            Nah
+            <TouchableOpacity onPress={dontSkip} style={styles.noButton}>
+              <Text style={styles.loginText} >
+                Nah
           </Text>
-        </TouchableOpacity>
+            </TouchableOpacity>
 
 
-        </View>
+          </View>
 
         </View>
 
@@ -74,10 +86,10 @@ export default function SkipConfirmationAlert({ path }: { path: string }) {
             Tap here if your app doesn't automatically update after making changes
           </Text>
         </TouchableOpacity> */}
-    
-    </View>
-  );
-}
+
+      </View>
+    );
+  }
 }
 
 function handleHelpPress() {
@@ -93,7 +105,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 40,
     alignItems: 'center',
-    shadowOffset:{ width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowColor: '#000000',
     shadowOpacity: 0.05,
   },
@@ -117,34 +129,34 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     height: 75,
     marginTop: 35,
-    shadowOffset:{ width: 2, height: 6},
+    shadowOffset: { width: 2, height: 6 },
     shadowColor: '#3CDF7C',
     shadowOpacity: 0.27,
     justifyContent: 'center',
     width: 110,
     marginRight: 30
- 
+
   },
   noButton: {
     backgroundColor: '#F24646',
     borderRadius: 6,
     height: 75,
     marginTop: 35,
-    shadowOffset:{ width: 2, height: 6},
+    shadowOffset: { width: 2, height: 6 },
     shadowColor: '#F24646',
     shadowOpacity: 0.27,
     justifyContent: 'center',
     width: 110
- 
+
   },
   loginText: {
     color: 'white',
     textAlign: 'center',
     fontSize: 20,
     fontFamily: 'Inter-Bold',
-    
+
   }
-  
-  
- 
+
+
+
 });
