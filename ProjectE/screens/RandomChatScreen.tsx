@@ -19,6 +19,10 @@ export default function RandomChatScreen() {
 
   const queue = useSelector(state => state.chat.queue);
 
+  const reversed = React.useMemo(() => {
+    return [...queue.messages].reverse()
+  }, [queue.messages])
+
   if (queue.status !== 'found') {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -30,7 +34,7 @@ export default function RandomChatScreen() {
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
       <RandomChatTopBar user={queue.user} />
-      <FriendsChatBox messages={queue.messages} />
+      <FriendsChatBox messages={reversed} />
       <FriendsChatScreenBottomBar chatId={queue?.chatId} recipientId={queue.user.uid} isQueue={true} />
     </KeyboardAvoidingView>
   );

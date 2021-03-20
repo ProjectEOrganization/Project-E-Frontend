@@ -40,6 +40,10 @@ export default function FriendsChatScreen() {
     store.dispatch(fetchMessages({ chatId: route.params.id, userId: route.params.user.uid }))
   }, [])
 
+  const reversed = React.useMemo(() => {
+    return [...chat?.messages].reverse()
+  }, [chat?.messages])
+
   const Header = () => (
     <View
       style={{
@@ -89,7 +93,7 @@ export default function FriendsChatScreen() {
   return (
     <KeyboardAvoidingView behavior="padding" style={[styles.container, { flex: 1, width: '100%', paddingTop: top, paddingBottom: 20 }]}>
       <Header />
-      {loading ? <LoadingScreen /> : <FriendsChatBox messages={chat?.messages} />}
+      {loading ? <LoadingScreen /> : <FriendsChatBox messages={reversed} />}
       <FriendsChatScreenBottomBar chatId={chat?.id} recipientId={chat.user.uid} />
     </KeyboardAvoidingView>
 

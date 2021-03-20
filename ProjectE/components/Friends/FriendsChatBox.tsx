@@ -27,14 +27,10 @@ export default function FriendsChatBox({ messages }: { messages: Array<IMessage>
     )
   }
 
-  const reversed = React.useMemo(() => {
-    return [...messages].reverse()
-  }, [messages])
-
   return (
     <FlatList
       style={[styles.container]}
-      data={reversed}
+      data={messages}
       inverted
       contentContainerStyle={{ paddingTop: 25, paddingBottom: bottom || 20, }}
       renderItem={({ item }: { item: IMessage }) => (

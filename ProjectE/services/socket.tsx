@@ -44,7 +44,7 @@ function useProvideSocket(): Socket {
                 navigationRef.current?.navigate('FriendRequestReceivedModal', { uid: user.uid })
             })
 
-            socket?.on('message', (msg: IMessage) => {
+            socket.on('message', (msg: IMessage) => {
                 store.dispatch(addMessage(msg))
             })
 
@@ -77,7 +77,7 @@ function useProvideSocket(): Socket {
             socket?.off('queue')
             socket?.close();
         }
-    }, [auth, navigationRef]);
+    }, [auth, navigationRef, store]);
 
     return socket
 }
