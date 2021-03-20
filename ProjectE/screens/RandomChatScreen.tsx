@@ -14,6 +14,7 @@ import { useSocket } from '../services/socket';
 import { useSelector } from '../hooks';
 import { store } from '../store';
 import { foundQueue, initQueue, joinQueue, skip } from '../store/reducers/chat';
+import { navigationRef } from '../navigation';
 
 
 export default function RandomChatScreen() {
@@ -25,6 +26,7 @@ export default function RandomChatScreen() {
 
   useEffect(() => {
     if (queue.status === 'found') {
+      navigationRef.current?.navigate('RandomChat')
       store.dispatch(initQueue(queue.user.uid))
     }
   }, [queue.status, queue.user?.uid])

@@ -59,7 +59,8 @@ function useProvideAuth() {
         return firebase
             .auth()
             .signOut()
-            .then(() => {
+            .then(async () => {
+                await AsyncStorage.removeItem('token')
                 setUser();
             });
     };
@@ -86,11 +87,12 @@ function useProvideAuth() {
     // Because this sets state in the callback it will cause any ...
     // ... component that utilizes this hook to re-render with the ...
     // ... latest auth object.
+
     useEffect(() => {
         const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
-                const token = await AsyncStorage.setItem('token', await user.getIdToken())
-                const res = await api.post('/auth')
+                await AsyncStorage.setItem('token', await user.getIdToken())
+                const res = await api.post('/auth', user);
                 const newUser: firebase.User = {
                     ...user,
                     ...res.data.user,
@@ -98,6 +100,10 @@ function useProvideAuth() {
                 }
                 setUser(newUser);
             } else {
+                const token = await AsyncStorage.getItem('token')
+                if (!token) {
+                    signInAnonymously()
+                }
                 setUser();
             }
         });

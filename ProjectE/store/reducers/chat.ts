@@ -91,6 +91,10 @@ const chatSlice = createSlice({
             console.log(action.payload)
             if (action.payload.isQueue) {
                 state.queue.messages.push(action.payload)
+                if (action.payload.chatId in state.chats) {
+                    state.chats[action.payload.chatId].content = action.payload.content;
+                    state.chats[action.payload.chatId].sentAt = action.payload.sentAt;
+                }
             }
             else {
                 const routeName = navigationRef.current?.getCurrentRoute()?.name;
