@@ -4,16 +4,19 @@ import { navigationRef } from "../../navigation";
 import { api } from "../../services/api";
 import { store } from "../store";
 export interface IMessage {
+    id?: string;
     chatId: string;
     content: string;
     sentBy: string;
     sentAt: number;
     isQueue?: boolean
+    pending?: boolean;
 }
 
 interface IUser {
     displayName: string;
     uid: string;
+    isActive?: boolean;
 }
 export interface IChat {
     content: string;
@@ -30,14 +33,20 @@ interface IChats {
 
 interface IQueue {
     status: 'joining' | 'searching' | 'connecting' | "found";
-    user: IUser,
-    messages: Array<IMessage>
+    user: IUser;
+    messages: Array<IMessage>;
+    chatId: string;
 }
 interface IState {
     chats: IChats;
     loadingChats: boolean;
     loadingMessages: boolean;
     queue: IQueue;
+}
+
+export interface IisActiveEvent {
+    uid: string;
+    isActive: boolean;
 }
 
 export const fetchChats = createAsyncThunk(
@@ -50,7 +59,7 @@ export const fetchChats = createAsyncThunk(
 
 export const fetchMessages = createAsyncThunk(
     'chat/fetchMessages',
-    async ({ chatId, userId }, thunkAPI) => {
+    async ({ chatId, userId }) => {
         const response = await api.get(`/chat/${userId}`);
         return response.data;
     }
@@ -58,8 +67,11 @@ export const fetchMessages = createAsyncThunk(
 
 export const joinQueue = createAsyncThunk(
     'chat/joinQueue',
-    async () => {
+    async (_, thunkAPI) => {
         const response = await api.get('/join_queue');
+        if (response.data.status === 'found') {
+            thunkAPI.dispatch(initQueue(response.data.uid))
+        }
         return response.data;
     }
 )
@@ -68,6 +80,7 @@ export const initQueue = createAsyncThunk(
     'chat/initQueue',
     async (uid: string) => {
         const response = await api.get(`/chat/${uid}`);
+        navigationRef.current?.navigate('RandomChat')
         return response.data;
     }
 )
@@ -82,13 +95,14 @@ const chatSlice = createSlice({
             status: 'joining',
             user: {
                 uid: '',
-                displayName: ''
-            }
+                displayName: '',
+                isActive: true
+            },
+            chatId: ''
         }
     } as IState,
     reducers: {
         addMessage(state, action: { payload: IMessage }) {
-            console.log(action.payload)
             if (action.payload.isQueue) {
                 state.queue.messages.push(action.payload)
                 if (action.payload.chatId in state.chats) {
@@ -106,6 +120,21 @@ const chatSlice = createSlice({
                 state.chats[action.payload.chatId].sentAt = action.payload.sentAt;
             }
         },
+        setMessageDelivered(state, action: { payload: IMessage }) {
+            console.log(action.payload)
+            if (action.payload.isQueue === true) {
+                delete state.queue.messages.find(item => item.sentAt == action.payload.sentAt)?.pending;
+            }
+            else {
+                delete state.chats[action.payload.chatId].messages.find(item => item.sentAt === action.payload.sentAt)?.pending
+            }
+
+        },
+        changeIsActive(state, action: { payload: IisActiveEvent }) {
+            if (state.queue.user.uid === action.payload.uid) {
+                state.queue.user.isActive = action.payload.isActive
+            }
+        },
         skip(state) {
             state.queue.status = 'joining';
             state.queue.user = {
@@ -113,10 +142,6 @@ const chatSlice = createSlice({
                 displayName: ''
             }
             state.queue.messages = []
-        },
-        foundQueue(state, action: { payload: { uid: string } }) {
-            state.queue.status = 'found';
-            state.queue.user.uid = action.payload.uid
         }
     },
     extraReducers: {
@@ -151,14 +176,19 @@ const chatSlice = createSlice({
             state.queue.status = 'joining'
         },
         [joinQueue.fulfilled]: (state, action: { payload: { status: 'searching' | 'waiting' | 'found', uid: string } }) => {
-            state.queue.status = action.payload.status;
+            state.queue.status = 'connecting'
             if (action.payload.status === 'found') {
                 state.queue.user.uid = action.payload.uid
             }
+            else {
+                state.queue.status = action.payload.status;
+            }
         },
         [initQueue.fulfilled]: (state, action) => {
-            state.queue.messages = action.payload.messages
+            state.queue.status = 'found'
+            state.queue.messages = action.payload.messages || []
             state.queue.user = action.payload.user
+            state.queue.chatId = action.payload.chatId
         }
     }
 });
@@ -166,7 +196,8 @@ const chatSlice = createSlice({
 export const {
     addMessage,
     skip,
-    foundQueue
+    setMessageDelivered,
+    changeIsActive
 } = chatSlice.actions;
 
 export default chatSlice.reducer;

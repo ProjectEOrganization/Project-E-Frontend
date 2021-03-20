@@ -10,19 +10,30 @@ import { Text, View, TextInput, Image } from 'react-native';
 import { api } from '../../services/api';
 import FriendRequestReceivedAlert from '../Alerts/FriendRequestReceivedAlert.js';
 import { store } from '../../store/store';
-import { addMessage } from '../../store/reducers/chat';
+import { addMessage, setMessageDelivered } from '../../store/reducers/chat';
+import { useAuth } from '../../services/auth';
 
 
-export default function FriendsChatScreenBottomBar({ recipientId, isQueue }: { recipientId: string, isQueue?: boolean }) {
+export default function FriendsChatScreenBottomBar({ recipientId, isQueue, chatId }: { recipientId: string, isQueue?: boolean, chatId: string }) {
   const [message, setMessage] = useState("");
-
+  const auth = useAuth();
   const onSend = (content: any) => {
+    const sentAt = Date.now();
+    store.dispatch(addMessage({
+      chatId,
+      content,
+      sentAt,
+      sentBy: auth.user.uid,
+      isQueue,
+      pending: true
+    }))
     api.post('/message', {
       recipientId,
       message: content,
-      isQueue
+      isQueue,
+      sentAt
     }).then((res) => {
-      store.dispatch(addMessage(res.data.message))
+      store.dispatch(setMessageDelivered(res.data.message))
     })
   }
   return (

@@ -90,7 +90,7 @@ export default function FriendsChatScreen() {
     <KeyboardAvoidingView behavior="padding" style={[styles.container, { flex: 1, width: '100%', paddingTop: top, paddingBottom: 20 }]}>
       <Header />
       {loading ? <LoadingScreen /> : <FriendsChatBox messages={chat?.messages} />}
-      <FriendsChatScreenBottomBar recipientId={chat.user.uid} />
+      <FriendsChatScreenBottomBar chatId={chat?.id} recipientId={chat.user.uid} />
     </KeyboardAvoidingView>
 
   );

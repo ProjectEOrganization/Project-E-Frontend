@@ -17,17 +17,7 @@ import { store } from '../../store';
 export default function FriendsChatBox({ messages }: { messages: Array<IMessage> }) {
   const auth = useAuth();
 
-  const scrollRef = React.useRef<FlatList>()
-
-  const toBottom = () => scrollRef.current?.scrollToEnd({ animated: true });
-
   const { bottom } = useSafeAreaInsets();
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      toBottom()
-    }, 300)
-  }, [messages])
 
   if (messages?.length === 0) {
     return (
@@ -37,19 +27,28 @@ export default function FriendsChatBox({ messages }: { messages: Array<IMessage>
     )
   }
 
+  const reversed = React.useMemo(() => {
+    return [...messages].reverse()
+  }, [messages])
+
   return (
     <FlatList
-      ref={scrollRef}
       style={[styles.container]}
-      data={messages || []}
+      data={reversed}
+      inverted
       contentContainerStyle={{ paddingTop: 25, paddingBottom: bottom || 20, }}
-      renderItem={({ item }) => (
+      renderItem={({ item }: { item: IMessage }) => (
         <ChatBubble
           content={item.content}
           user={auth.user.uid !== item.sentBy ? 'opposingUser' : 'currentUser'}
+          pending={item?.pending}
         />
       )}
-      keyExtractor={item => (`message-${item.id}`)}
+      onEndReachedThreshold={0.1}
+      onEndReached={() => {
+        console.log('load more messages')
+      }}
+      keyExtractor={item => (`message-${item?.id || item.sentAt}`)}
     />
   );
 }

@@ -32,6 +32,7 @@ export default function RandomChatTopBar({ user }) {
       <View style={styles.userNameText}>
         <Text style={styles.secondText}>You are chatting with</Text>
         <Text style={styles.firstText}>{user?.displayName}</Text>
+        <Text style={[{ color: user?.isActive == true ? 'green' : 'red' }]}>{user?.isActive == 1 ? 'Active' : 'Offline'}</Text>
       </View>
       <View>
         <TouchableOpacity onPress={sendFriendRequest} style={styles.loginButton}>

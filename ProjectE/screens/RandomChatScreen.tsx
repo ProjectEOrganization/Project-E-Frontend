@@ -1,20 +1,15 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { ActivityIndicator, Button, KeyboardAvoidingView, StyleSheet } from 'react-native';
 import { Text, View } from '../components/Themed';
-import { useFonts } from 'expo-font';
 import RandomChatTopBar from '../components/RandomChatTopBar';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import ChatBox from '../components/ChatBox';
+import { useNavigation } from '@react-navigation/native';
 import FriendsChatScreenBottomBar from '../components/Friends/FriendsChatScreenBottomBar';
 import FriendsChatBox from '../components/Friends/FriendsChatBox';
 import { useAuth } from '../services/auth';
-import { batch, useStore } from 'react-redux';
-import { api } from '../services/api';
 import { useSocket } from '../services/socket';
 import { useSelector } from '../hooks';
 import { store } from '../store';
-import { foundQueue, initQueue, joinQueue, skip } from '../store/reducers/chat';
-import { navigationRef } from '../navigation';
+import { initQueue } from '../store/reducers/chat';
 
 
 export default function RandomChatScreen() {
@@ -24,36 +19,11 @@ export default function RandomChatScreen() {
 
   const queue = useSelector(state => state.chat.queue);
 
-  useEffect(() => {
-    if (queue.status === 'found') {
-      navigationRef.current?.navigate('RandomChat')
-      store.dispatch(initQueue(queue.user.uid))
-    }
-  }, [queue.status, queue.user?.uid])
-
-  useEffect(() => {
-    socket.on('skip', () => {
-      navigation.navigate('TheyHadToGoModal')
-    })
-
-    socket.on('queue', (msg) => {
-      store.dispatch(foundQueue(msg))
-    })
-    return () => {
-      socket.off('skip')
-      socket.off('queue')
-    }
-  }, [auth.user])
-
-  if (queue.status === 'joining' || queue.status === 'searching') {
+  if (queue.status !== 'found') {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         {queue.status === 'searching' && <ActivityIndicator size="small" color="black" />}
-        <Text style={{ top: 20 }}>
-          {/* {queue.status === 'joining' && "Joining Queue"} */}
-          {/* {queue.status === 'searching' && "Searching"} */}
-          {queue.status}
-        </Text>
+        <Text style={{ top: 20 }}>{queue.status}</Text>
       </View>
     )
   }
@@ -61,7 +31,7 @@ export default function RandomChatScreen() {
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
       <RandomChatTopBar user={queue.user} />
       <FriendsChatBox messages={queue.messages} />
-      <FriendsChatScreenBottomBar recipientId={queue.user.uid} isQueue={true} />
+      <FriendsChatScreenBottomBar chatId={queue?.chatId} recipientId={queue.user.uid} isQueue={true} />
     </KeyboardAvoidingView>
   );
 }

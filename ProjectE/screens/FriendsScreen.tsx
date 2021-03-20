@@ -56,7 +56,7 @@ export default function FriendsScreen() {
             <ThreeDotsSvg />
           </View>
 
-          {auth.user?.uid ?
+          {(auth.user?.uid || auth.user?.isAnonymous) ?
             <Button title="Log out" onPress={auth.signout} />
             : (
               <>
@@ -81,6 +81,7 @@ export default function FriendsScreen() {
             >
               Hello {auth.user?.displayName || username}!
           </Text>
+            <Text>{auth?.user?.uid}</Text>
             <FriendsPageSwitch onChange={(route) => setRoute(route)} />
           </View>
 

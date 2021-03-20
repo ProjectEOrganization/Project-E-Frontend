@@ -14,10 +14,12 @@ export default function ChatBubble({
   path,
   content,
   user,
+  pending
 }: {
   path?: string;
   content: string;
   user?: string;
+  pending?: boolean;
 }) {
   let [fontsLoaded] = useFonts({
     'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
@@ -33,7 +35,7 @@ export default function ChatBubble({
       <View
         style={
           user === 'currentUser'
-            ? styles.blueChatBubble
+            ? [styles.blueChatBubble, { backgroundColor: pending === true ? 'grey' : '#4b00ff' }]
             : styles.whiteChatBubble
         }
       >
