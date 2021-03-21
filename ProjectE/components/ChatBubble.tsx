@@ -9,49 +9,28 @@ import { MonoText } from '../StyledText';
 // import { Text, View } from './Themed';
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput } from 'react-native';
+import { IMessage } from '../store/reducers/chat.js';
 
 export default function ChatBubble({
-  path,
   content,
   user,
-  pending
-}: {
-  path?: string;
-  content: string;
-  user?: string;
-  pending?: boolean;
-}) {
-  let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-ExtraBold': require('../assets/fonts/Inter/Inter-ExtraBold.ttf'),
-  });
-
-  if (!fontsLoaded) {
-    return <View />;
-  } else {
-    return (
-      <View
-        style={
-          user === 'currentUser'
-            ? [styles.blueChatBubble, { backgroundColor: pending === true ? 'grey' : '#4b00ff' }]
-            : styles.whiteChatBubble
-        }
+  pending,
+  ...rest
+}: IMessage) {
+  return (
+    <View
+      style={
+        user === 'currentUser'
+          ? [styles.blueChatBubble, { backgroundColor: pending === true ? 'grey' : '#4b00ff' }]
+          : styles.whiteChatBubble
+      }
+    >
+      <Text
+        style={user === 'currentUser' ? styles.whiteText : styles.blackText}
       >
-        <Text
-          style={user === 'currentUser' ? styles.whiteText : styles.blackText}
-        >
-          {content}
-        </Text>
-      </View>
-    );
-  }
-}
-
-function handleHelpPress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet'
+        {content}
+      </Text>
+    </View>
   );
 }
 

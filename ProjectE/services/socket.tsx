@@ -7,7 +7,7 @@ import config from './config';
 
 import { navigationRef } from '../navigation'
 import { store } from '../store';
-import { addMessage, changeIsActive, IisActiveEvent, initQueue } from '../store/reducers/chat';
+import { addChat, addMessage, changeIsActive, IChat, IisActiveEvent, initQueue } from '../store/reducers/chat';
 
 const SocketContext = React.createContext<Socket>();
 
@@ -60,8 +60,9 @@ function useProvideSocket(): Socket {
                 store.dispatch(initQueue(msg.uid))
             })
 
-            socket.on('friend_request_accepted', (friendId) => {
-                navigationRef.current?.navigate('YouAreNowFriendsModal', { uid: friendId.uid })
+            socket.on('friend_request_accepted', ({ uid, chat }: { uid: string, chat: IChat }) => {
+                store.dispatch(addChat(chat))
+                navigationRef.current?.navigate('YouAreNowFriendsModal', { uid })
             })
 
             socket.on('friend_request_declined', (friendId) => {

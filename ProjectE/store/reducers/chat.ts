@@ -121,18 +121,29 @@ const chatSlice = createSlice({
             }
         },
         setMessageDelivered(state, action: { payload: IMessage }) {
-            console.log(action.payload)
             if (action.payload.isQueue === true) {
-                delete state.queue.messages.find(item => item.sentAt == action.payload.sentAt)?.pending;
+                const index = state.queue.messages.findIndex(item => item.sentAt === action.payload.sentAt);
+                if (index !== 1) {
+                    state.queue.messages[index] = action.payload
+                }
             }
             else {
-                delete state.chats[action.payload.chatId].messages.find(item => item.sentAt === action.payload.sentAt)?.pending
+                const index = state.chats[action.payload.chatId].messages.findIndex(item => item.sentAt === action.payload.sentAt);
+                if (index !== 1) {
+                    state.chats[action.payload.chatId].messages[index] = action.payload
+                }
             }
 
         },
         changeIsActive(state, action: { payload: IisActiveEvent }) {
             if (state.queue.user.uid === action.payload.uid) {
                 state.queue.user.isActive = action.payload.isActive
+            }
+        },
+        addChat(state, action: { payload: IChat }) {
+            state.chats[action.payload.id] = {
+                ...action.payload,
+                messages: [],
             }
         },
         skip(state) {
@@ -197,7 +208,8 @@ export const {
     addMessage,
     skip,
     setMessageDelivered,
-    changeIsActive
+    changeIsActive,
+    addChat
 } = chatSlice.actions;
 
 export default chatSlice.reducer;

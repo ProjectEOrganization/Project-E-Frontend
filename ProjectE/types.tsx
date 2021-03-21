@@ -10,7 +10,7 @@ export type BottomTabParamList = {
   Friends: undefined;
   Settings: undefined;
   NextPart: undefined;
-  " ": undefined;
+  RandomChat: undefined;
 };
 
 export type TabOneParamList = {

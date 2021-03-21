@@ -20,8 +20,11 @@ export default function RandomChatScreen() {
   const queue = useSelector(state => state.chat.queue);
 
   const reversed = React.useMemo(() => {
-    return [...queue.messages].reverse()
-  }, [queue.messages])
+    if (Array.isArray(queue?.messages)) {
+      return [...queue?.messages].reverse()
+    }
+    return []
+  }, [queue?.messages])
 
   if (queue.status !== 'found') {
     return (

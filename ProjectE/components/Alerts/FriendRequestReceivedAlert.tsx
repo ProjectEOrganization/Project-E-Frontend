@@ -12,12 +12,17 @@ import { useRoute } from '@react-navigation/native';
 
 import { Text, View, TextInput } from 'react-native'
 import { navigationRef } from '../../navigation';
+import { store } from '../../store/store';
+import { addChat } from '../../store/reducers/chat';
 
 export default function FriendRequestReceivedAlert({ friendId }) {
 
   async function acceptRequest() {
     navigationRef.current?.goBack()
-    await api.post('/friends/accept/' + friendId);
+    api.post('/friends/accept/' + friendId).then((res) => {
+      console.log(res.data.chat)
+      store.dispatch(addChat(res.data.chat))
+    });
   }
   async function rejectRequest() {
     navigationRef.current?.goBack()

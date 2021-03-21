@@ -27,14 +27,17 @@ export default function FriendsChatBox({ messages }: { messages: Array<IMessage>
     )
   }
 
+  // console.log(messages)
+
   return (
     <FlatList
       style={[styles.container]}
       data={messages}
       inverted
-      contentContainerStyle={{ paddingTop: 25, paddingBottom: bottom || 20, }}
+      contentContainerStyle={{ paddingTop: 25, paddingBottom: bottom || 20 }}
       renderItem={({ item }: { item: IMessage }) => (
         <ChatBubble
+          {...item}
           content={item.content}
           user={auth.user.uid !== item.sentBy ? 'opposingUser' : 'currentUser'}
           pending={item?.pending}

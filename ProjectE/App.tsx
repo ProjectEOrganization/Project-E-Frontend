@@ -1,13 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { StatusBar } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
-import { ProvideAuth } from './services/auth';
-import { ProvideSocket } from './services/socket';
+import TabTwoScreen from './screens/Onboarding1';
+import { ProvideAuth, useAuth } from './services/auth';
+import { ProvideSocket, useSocket } from './services/socket';
 import { store } from './store';
 
 export default function App() {
@@ -23,7 +24,7 @@ export default function App() {
           <ProvideSocket>
             <SafeAreaProvider>
               <Navigation colorScheme={colorScheme} />
-              <StatusBar />
+              <StatusBar barStyle="dark-content" />
             </SafeAreaProvider>
           </ProvideSocket>
         </ProvideAuth>

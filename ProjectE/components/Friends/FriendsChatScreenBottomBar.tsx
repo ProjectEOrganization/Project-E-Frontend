@@ -65,23 +65,6 @@ export default function FriendsChatScreenBottomBar({ recipientId, isQueue, chatI
   );
 }
 
-async function sendMessage(friendId: string, text: string) {
-  // const res = await api.get('/friends');
-  // console.log(res.data);
-  // console.log("result");
-  // console.log(this.textInput.current.value);
-
-  console.log(friendId);
-  await api.post('/message', {
-    recipientId: "WEhlwirlM1R5NXRljGd7FMXb7Nq1",
-    message: 'test'
-  });
-  // const chatId = await api.get('/chat/WEhlwirlM1R5NXRljGd7FMXb7Nq1');
-  // console.log(chatId.data);
-  // const res = await api.get('/chats');
-  // console.log(res.data);
-}
-
 const styles = StyleSheet.create({
   topBar: {
     paddingTop: 15,

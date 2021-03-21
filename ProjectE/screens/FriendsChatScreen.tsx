@@ -41,7 +41,10 @@ export default function FriendsChatScreen() {
   }, [])
 
   const reversed = React.useMemo(() => {
-    return [...chat?.messages].reverse()
+    if (Array.isArray(chat?.messages)) {
+      return [...chat?.messages].reverse()
+    }
+    return [];
   }, [chat?.messages])
 
   const Header = () => (
