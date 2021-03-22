@@ -38,9 +38,9 @@ export default function SendFriendRequestAlertId() {
           Enter their email to send them a friend request
         </Text>
 
-        <View style={{ flex: 1, flexDirection: 'column' }}>
+        <View style={{alignItems: 'center'}}>
 
-          <TextInput onChangeText={setEmail} value={email} placeholder='Email'/>
+          <TextInput onChangeText={setEmail} value={email} placeholder='Email' style={{backgroundColor: '#F1F6FC', height: 48, width: 150, borderWidth: 0, shadowOffset: { width: 0, height: 2 }, shadowColor: 'black', shadowOpacity: 0.16, borderRadius: 6, fontSize: 15, paddingHorizontal: 20, textAlign: 'left', marginTop: 35,}}/>
           <TouchableOpacity onPress={sendRequest} style={styles.yesButton}>
             <Text style={styles.loginText}>
               SEND
@@ -62,7 +62,7 @@ function handleHelpPress() {
 
 const styles = StyleSheet.create({
   overallContainer: { //overall container
-    height: 300,
+    paddingBottom: 50,
     width: 330,
     backgroundColor: '#fff',
     borderRadius: 40,
@@ -96,7 +96,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.27,
     justifyContent: 'center',
     width: 110,
-    marginRight: 30
 
   },
   noButton: {
@@ -112,6 +111,7 @@ const styles = StyleSheet.create({
 
   },
   loginText: {
+    
     color: 'white',
     textAlign: 'center',
     fontSize: 20,
