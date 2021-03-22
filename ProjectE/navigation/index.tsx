@@ -10,12 +10,14 @@ import SkipConfirmationModal from '../components/Modals/SkipConfirmationModal';
 import TheyHadToGoModal from '../components/Modals/TheyHadToGoModal';
 import YouAreNowFriendsModal from '../components/Modals/YouAreNowFriendsModal';
 import FriendRequestSentModal from '../components/Modals/FriendRequestSentModal';
+import SendFriendRequestModal from '../components/Modals/SendFriendRequestModal'
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import { popupEffect } from './effects/popupEffect';
 import LinkingConfiguration from './LinkingConfiguration';
+import SendFriendRequestAlertId from '../components/Alerts/SendFriendRequestAlert';
 
 export const navigationRef = React.createRef<NavigationContainerRef>();
 
@@ -66,6 +68,11 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
         <Stack.Screen
           name='SkipConfirmationModal'
           component={SkipConfirmationModal}
+          options={{ ...popupEffect }}
+        />
+        <Stack.Screen
+          name='SendFriendRequestModal'
+          component={SendFriendRequestModal}
           options={{ ...popupEffect }}
         />
         <Stack.Screen name="Root" component={BottomTabNavigator} />
