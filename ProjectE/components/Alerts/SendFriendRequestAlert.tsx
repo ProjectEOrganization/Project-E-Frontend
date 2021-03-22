@@ -1,6 +1,6 @@
 import * as WebBrowser from 'expo-web-browser';
 import React, {useState} from 'react';
-import { StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import LoginSvgComponent from '../../assets/loginSvgComponent.js';
 
 import Colors from '../../constants/Colors';

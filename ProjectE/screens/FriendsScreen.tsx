@@ -47,13 +47,21 @@ export default function FriendsScreen() {
     return (
       <View style={styles.container}>
         <ScrollView>
+
           <View
             style={{
               marginTop: 80,
               backgroundColor: 'transparent',
+              flexDirection: 'row', 
+              marginLeft: 30
+
             }}
           >
             <ThreeDotsSvg />
+            <TouchableOpacity onPress={() => navigation.navigate('SendFriendRequestModal')} >
+            <Text style={{marginLeft: 220, fontFamily: 'Inter-SemiBold',color: '#21293A'
+          }}>Add Friend +</Text>
+          </TouchableOpacity>
           </View>
 
           {(auth.user?.uid || auth.user?.isAnonymous) ?
