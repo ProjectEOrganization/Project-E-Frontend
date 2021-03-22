@@ -40,7 +40,7 @@ export default function SendFriendRequestAlertId() {
 
         <View style={{ flex: 1, flexDirection: 'column' }}>
 
-          <TextInput onChangeText={setEmail} value={email}/>
+          <TextInput onChangeText={setEmail} value={email} placeholder='Email'/>
           <TouchableOpacity onPress={sendRequest} style={styles.yesButton}>
             <Text style={styles.loginText}>
               SEND
