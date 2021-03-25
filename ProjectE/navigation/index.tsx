@@ -11,6 +11,7 @@ import TheyHadToGoModal from '../components/Modals/TheyHadToGoModal';
 import YouAreNowFriendsModal from '../components/Modals/YouAreNowFriendsModal';
 import FriendRequestSentModal from '../components/Modals/FriendRequestSentModal';
 import SendFriendRequestModal from '../components/Modals/SendFriendRequestModal'
+import Onboarding1 from '../screens/Onboarding1'
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
@@ -75,6 +76,7 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
           component={SendFriendRequestModal}
           options={{ ...popupEffect }}
         />
+        <Stack.Screen name="Onboarding" component={Onboarding1} />
         <Stack.Screen name="Root" component={BottomTabNavigator} />
         <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       </Stack.Navigator>
