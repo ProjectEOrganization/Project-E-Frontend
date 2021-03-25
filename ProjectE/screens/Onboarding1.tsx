@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
@@ -15,14 +15,17 @@ import TabOneScreen from './FriendsScreen';
 
 
 
-export default function TabTwoScreen( ) {
+export default function TabTwoScreen() {
+
   let [fontsLoaded] = useFonts({
     'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
     'Inter-Bold': require('../assets/fonts/Inter/Inter-Bold.ttf'),
     'Inter-Regular': require('../assets/fonts/Inter/Inter-Regular.ttf'),
     'Inter-SemiBold': require('../assets/fonts/Inter/Inter-SemiBold.ttf'),
   });
-
+  useEffect(() => {
+    
+  });
   const navigation = useNavigation();
 
   if (!fontsLoaded) {

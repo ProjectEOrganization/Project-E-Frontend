@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Button, Dimensions, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import FriendsChat from '../components/Friends/FriendsChat';
 
 import { Text, View } from '../components/Themed';
@@ -40,7 +41,20 @@ export default function FriendsScreen() {
     if (route === 'messages') scrollRef.current?.scrollTo({ x: 0, animated: true })
     else if (route === 'friends') scrollRef.current?.scrollTo({ x: width, animated: true })
   }, [route])
+  
+  async function setNewUser() {
+    console.log("setting new user")
+    await AsyncStorage.setItem('newUser', 'yesyesyes');
+    // await AsyncStorage.clear();
+  }
 
+  async function getNewUser() {
+    // const value = await AsyncStorage.getAllKeys();
+    const value = await AsyncStorage.getItem('newUser');
+    console.log("new user: ", value);
+  }
+  
+  
   if (!fontsLoaded) {
     return <View />;
   } else {
@@ -68,7 +82,7 @@ export default function FriendsScreen() {
             <Button title="Log out" onPress={auth.signout} />
             : (
               <>
-                <Button title="Sign in" onPress={() => navigation.navigate('LoginModal')} />
+                <Button title="Sign in" onPress={() => navigation.navigate('Onboarding')} />
                 <Button title="Sign up" onPress={() => navigation.navigate('RegisterModal')} />
               </>
             )}
@@ -89,6 +103,8 @@ export default function FriendsScreen() {
             >
               Hello {auth.user?.displayName || username}!
           </Text>
+          <Button title="set new user" onPress={setNewUser} />
+          <Button title="get new user" onPress={getNewUser} />
             <Text>{auth?.user?.uid}</Text>
             <FriendsPageSwitch onChange={(route) => setRoute(route)} />
           </View>
