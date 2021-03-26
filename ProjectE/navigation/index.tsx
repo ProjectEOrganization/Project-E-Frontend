@@ -19,12 +19,28 @@ import BottomTabNavigator from './BottomTabNavigator';
 import { popupEffect } from './effects/popupEffect';
 import LinkingConfiguration from './LinkingConfiguration';
 import SendFriendRequestAlertId from '../components/Alerts/SendFriendRequestAlert';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export const navigationRef = React.createRef<NavigationContainerRef>();
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
 const Navigation = (props: { colorScheme: ColorSchemeName }) => {
+  React.useEffect(() => {
+    async function fetchData() {
+      const newUser = await AsyncStorage.getItem('newUser');
+      if (newUser == "true") {
+        // await AsyncStorage.clear()
+        console.log("true!!");
+      } else {
+        console.log("false!!");
+        await AsyncStorage.setItem('newUser', 'true');
+        navigationRef.current?.navigate('Onboarding');
+      }
+    }
+    fetchData();
+  })
   return (
     <NavigationContainer
       ref={navigationRef}

@@ -44,20 +44,20 @@ export default function FriendsScreen() {
     else if (route === 'friends') scrollRef.current?.scrollTo({ x: width, animated: true })
   }, [route])
   
-  React.useEffect(() => {
-    async function fetchData() {
-      const newUser = await AsyncStorage.getItem('newUser');
-      if (newUser == "true") {
-        // navigation.navigate('Onboarding');
-        console.log("true!!");
-      } else {
-        navigation.navigate('Onboarding');
-        console.log("false!!");
-        await AsyncStorage.setItem('newUser', 'true');
-      }
-    }
-    fetchData();
-  })
+  // React.useEffect(() => {
+  //   async function fetchData() {
+  //     const newUser = await AsyncStorage.getItem('newUser');
+  //     if (newUser == "true") {
+  //       // navigation.navigate('Onboarding');
+  //       console.log("true!!");
+  //     } else {
+  //       navigation.navigate('Onboarding');
+  //       console.log("false!!");
+  //       await AsyncStorage.setItem('newUser', 'true');
+  //     }
+  //   }
+  //   fetchData();
+  // })
 
   if (!fontsLoaded) {
     return <View />;
