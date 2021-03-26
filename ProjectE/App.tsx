@@ -12,23 +12,37 @@ import { ProvideAuth, useAuth } from './services/auth';
 import { ProvideSocket, useSocket } from './services/socket';
 import { store } from './store';
 import { useNavigation } from '@react-navigation/core';
+import navigationRef from './navigation/index';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
-  // const navigation = useNavigation();
 
-  // useEffect(()=> {
-  //   if (AsyncStorage.getItem('newUser')) {
-  //     // navigation.navigate('OnBoarding1');
-  //   } else {
-  //     console.log(AsyncStorage.getItem('newUser'));
+  async function setNewUser() {
+    console.log("setting new user")
+    await AsyncStorage.setItem('newUser', 'true');
+  }
+
+  async function getNewUser() {
+    const value = await AsyncStorage.getItem('newUser');
+    // console.log("newUser value:");
+    // console.log(value);
+    return(value);
+  }
+
+  // useEffect(() =>{
+  //   async function fetchData() {
+  //     const newUser = await AsyncStorage.getItem('newUser');
+  //     if (newUser == "true") {
+  //       navigationRef.current.navigate('LoginModal');
+  //       console.log("true!!");
+  //     } else {
+  //       navigationRef.current?.navigate('SkipConfirmationModal');
+  //       console.log("false!!")
+  //     }
   //   }
-  //   console.log(AsyncStorage.getItem('newUser'));
-  //   console.log("hello")
-  // }, []);
-  console.log("hello")
-  AsyncStorage.setItem('newUser', 'yesyesyes');
+  //   fetchData();
+  // });
 
   if (!isLoadingComplete) {
     return null;

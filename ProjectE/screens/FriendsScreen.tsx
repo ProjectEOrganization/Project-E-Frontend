@@ -15,6 +15,8 @@ import { useSocket } from '../services/socket';
 import FriendsMessagesCard from '../components/Friends/FriendsMessagesCard';
 import IndividualFriendChat from '../components/Friends/IndividualFriendChat';
 import FriendsChatList from '../components/Friends/FriendsChatList';
+import navigationRef from '../navigation/index';
+
 
 const { width } = Dimensions.get('screen');
 
@@ -42,19 +44,21 @@ export default function FriendsScreen() {
     else if (route === 'friends') scrollRef.current?.scrollTo({ x: width, animated: true })
   }, [route])
   
-  async function setNewUser() {
-    console.log("setting new user")
-    await AsyncStorage.setItem('newUser', 'yesyesyes');
-    // await AsyncStorage.clear();
-  }
+  React.useEffect(() => {
+    async function fetchData() {
+      const newUser = await AsyncStorage.getItem('newUser');
+      if (newUser == "true") {
+        // navigation.navigate('Onboarding');
+        console.log("true!!");
+      } else {
+        navigation.navigate('Onboarding');
+        console.log("false!!");
+        await AsyncStorage.setItem('newUser', 'true');
+      }
+    }
+    fetchData();
+  })
 
-  async function getNewUser() {
-    // const value = await AsyncStorage.getAllKeys();
-    const value = await AsyncStorage.getItem('newUser');
-    console.log("new user: ", value);
-  }
-  
-  
   if (!fontsLoaded) {
     return <View />;
   } else {
@@ -82,7 +86,7 @@ export default function FriendsScreen() {
             <Button title="Log out" onPress={auth.signout} />
             : (
               <>
-                <Button title="Sign in" onPress={() => navigation.navigate('Onboarding')} />
+                <Button title="Sign in" onPress={() => navigation.navigate('LoginModal')} />
                 <Button title="Sign up" onPress={() => navigation.navigate('RegisterModal')} />
               </>
             )}
@@ -103,8 +107,6 @@ export default function FriendsScreen() {
             >
               Hello {auth.user?.displayName || username}!
           </Text>
-          <Button title="set new user" onPress={setNewUser} />
-          <Button title="get new user" onPress={getNewUser} />
             <Text>{auth?.user?.uid}</Text>
             <FriendsPageSwitch onChange={(route) => setRoute(route)} />
           </View>
