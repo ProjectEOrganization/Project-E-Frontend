@@ -11,6 +11,7 @@ import { Text, View, TextInput } from 'react-native'
 import { navigationRef } from '../../navigation/index';
 import { joinQueue } from '../../store/reducers/chat';
 import { store } from '../../store/store';
+import { api } from '../../services/api.js';
 
 export default function SkipConfirmationAlert({ path }: { path: string }) {
   let [fontsLoaded] = useFonts({
@@ -26,6 +27,11 @@ export default function SkipConfirmationAlert({ path }: { path: string }) {
   }
 
   const dontSkip = () => {
+    navigationRef.current?.goBack();
+  }
+
+  async function leaveQueue() {
+    await api.get('leave_queue');
     navigationRef.current?.goBack();
   }
 
@@ -68,7 +74,7 @@ export default function SkipConfirmationAlert({ path }: { path: string }) {
           
 
         </View>
-        <Text onPress={{}} style={{fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 140,fontSize: 16}}> Leave Queue </Text>
+        <Text onPress={leaveQueue} style={{fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 140,fontSize: 16}}> Leave Queue </Text>
 
 
         {/* <View

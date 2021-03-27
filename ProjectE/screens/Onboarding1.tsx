@@ -10,6 +10,7 @@ import Navigation from '../navigation';
 
 import { useNavigation } from '@react-navigation/native';
 import TabOneScreen from './FriendsScreen';
+import {useAuth} from '../services/auth';
 
 // import * as yourModuleName from 'module-name';
 
@@ -23,9 +24,18 @@ export default function TabTwoScreen() {
     'Inter-Regular': require('../assets/fonts/Inter/Inter-Regular.ttf'),
     'Inter-SemiBold': require('../assets/fonts/Inter/Inter-SemiBold.ttf'),
   });
+
+  const auth = useAuth();
+
   useEffect(() => {
-    
+
   });
+
+  function anonymousSignin() {
+    auth.signInAnonymously();
+    navigation.navigate('Settings');
+  }
+
   const navigation = useNavigation();
 
   if (!fontsLoaded) {
@@ -53,7 +63,7 @@ export default function TabTwoScreen() {
       <Text style={styles.title4}>
         Already have an account?
         <Text onPress={() => navigation.navigate('Settings')} style={{fontFamily: 'Inter-SemiBold', color: '#4B00FF'}}> Log in </Text>
-       
+        <Text onPress={anonymousSignin} style={{fontFamily: 'Inter-SemiBold', color: '#4B00FF'}}> Log in as a guest</Text>
         </Text >  
       </View>
 
