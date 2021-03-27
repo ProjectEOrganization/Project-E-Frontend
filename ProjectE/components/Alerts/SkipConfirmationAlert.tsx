@@ -62,10 +62,14 @@ export default function SkipConfirmationAlert({ path }: { path: string }) {
           </Text>
             </TouchableOpacity>
 
-
+           
           </View>
 
+          
+
         </View>
+        <Text onPress={{}} style={{fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 140,fontSize: 16}}> Leave Queue </Text>
+
 
         {/* <View
           style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
@@ -100,7 +104,7 @@ function handleHelpPress() {
 
 const styles = StyleSheet.create({
   overallContainer: { //overall container
-    height: 300,
+    height: 335,
     width: 330,
     backgroundColor: '#fff',
     borderRadius: 40,

@@ -14,6 +14,10 @@ import TabOneScreen from './TabOneScreen';
 import SettingsPageSwitch from '../components/SettingsPageSwitch'
 import { useAuth } from '../services/auth';
 
+
+
+import SkipConfirmationAlert from '../components/Alerts/SkipConfirmationAlert'
+
 // import * as yourModuleName from 'module-name';
 
 
@@ -52,6 +56,8 @@ export default function Settings() {
 
         <Text style={styles.title1}>Settings</Text>
 
+
+        <SkipConfirmationAlert />
         {/* Settings text */}
         <View style={{ width: '90%', height: '70%', marginTop: 80, backgroundColor: 'transparent' }}>
           <TouchableOpacity onPress={() => navigation.navigate('Account')}>
@@ -79,6 +85,8 @@ export default function Settings() {
           <TouchableOpacity>
             <Text style={[styles.settingsText, styles.text1]}>Terms and Policy</Text>
           </TouchableOpacity>
+
+          
 
           <TouchableOpacity>
             {auth.user?.uid && <Text onPress={auth.signout} style={[styles.settingsText, styles.text2]}>Log Out</Text>}
