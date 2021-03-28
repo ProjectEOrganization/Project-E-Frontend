@@ -10,7 +10,7 @@ import { useSocket } from '../services/socket';
 import { useSelector } from '../hooks';
 import { store } from '../store';
 import { initQueue } from '../store/reducers/chat';
-
+import { LogBox } from 'react-native';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
 
 
@@ -18,6 +18,10 @@ export default function RandomChatScreen() {
   const auth = useAuth();
   const navigation = useNavigation();
   const socket = useSocket();
+
+  useEffect(() => {
+    LogBox.ignoreLogs(['Animated: `useNativeDriver`']);
+  }, [])
 
   const queue = useSelector(state => state.chat.queue);
 
@@ -47,7 +51,7 @@ export default function RandomChatScreen() {
     shadowColor: random1,
     shadowOpacity: 1, alignItems:'center' }}>
 
-  <Text style={{ fontFamily:'Inter-Bold', fontSize: 20, marginTop: 25, color: 'white',marginBottom: -10 }}>{queue.status}</Text>
+  <Text style={{ fontFamily:'Inter-Bold', fontSize: 20, marginTop: 25, color: 'white',marginBottom: -10 }}>{queue.status=="joining"? "Finding Someone Awesome": queue.status}</Text>
   <AnimatedEllipsis style={{fontSize: 40, color: 'white'}} />
 
   <Text style={{ fontFamily:'Inter-Bold', fontSize: 13, marginTop: 25, color: 'white' }}>In the meantime, say Hello to Wocto</Text>

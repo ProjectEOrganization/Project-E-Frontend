@@ -18,31 +18,20 @@ export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
 
-  async function setNewUser() {
-    console.log("setting new user")
-    await AsyncStorage.setItem('newUser', 'true');
-  }
-
-  async function getNewUser() {
-    const value = await AsyncStorage.getItem('newUser');
-    // console.log("newUser value:");
-    // console.log(value);
-    return(value);
-  }
-
-  // useEffect(() =>{
-  //   async function fetchData() {
-  //     const newUser = await AsyncStorage.getItem('newUser');
-  //     if (newUser == "true") {
-  //       navigationRef.current.navigate('LoginModal');
-  //       console.log("true!!");
-  //     } else {
-  //       navigationRef.current?.navigate('SkipConfirmationModal');
-  //       console.log("false!!")
-  //     }
-  //   }
-  //   fetchData();
-  // });
+  useEffect(() => {
+    async function fetchData() {
+      const newUser = await AsyncStorage.getItem('newUser');
+      if (newUser == "true") {
+        console.log("true!!");
+      } else {
+        // navigation.navigate('Onboarding');
+        navigationRef.current?.navigate('RejectedModal', { uid: friendId.uid })
+        console.log("false!!");
+        await AsyncStorage.setItem('newUser', 'true');
+      }
+    }
+    fetchData();
+  })
 
   if (!isLoadingComplete) {
     return null;
