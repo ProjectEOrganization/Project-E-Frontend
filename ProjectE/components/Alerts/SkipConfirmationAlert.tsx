@@ -31,7 +31,7 @@ export default function SkipConfirmationAlert({ path }: { path: string }) {
   }
 
   async function leaveQueue() {
-    await api.get('leave_queue');
+    await api.get('/leave_queue');
     navigationRef.current?.goBack();
   }
 

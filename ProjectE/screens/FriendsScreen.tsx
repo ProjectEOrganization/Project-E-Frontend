@@ -46,7 +46,7 @@ export default function FriendsScreen() {
   
   React.useEffect(() => {
     if (!auth.user) {
-      navigation.navigate('notLoggedInModal');
+      navigation.navigate('LoginModal');
     }  
   })
 

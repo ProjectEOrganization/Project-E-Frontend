@@ -52,7 +52,10 @@ export interface IisActiveEvent {
 export const fetchChats = createAsyncThunk(
     'chat/fetchChats',
     async () => {
-        const response = await api.get('/chats');
+        const response = await api.get('/chats')
+            .catch(error => {
+                console.log(error);
+            });
         return response.data
     }
 )

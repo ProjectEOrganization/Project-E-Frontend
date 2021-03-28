@@ -12,7 +12,7 @@ import { store } from '../store';
 import { initQueue } from '../store/reducers/chat';
 import { LogBox } from 'react-native';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
-
+import {api} from '../services/api';
 
 export default function RandomChatScreen() {
   const auth = useAuth();
@@ -44,6 +44,11 @@ export default function RandomChatScreen() {
     const random = Math.floor(Math.random() * colors.length);
     const random1 = colors[random]
 
+    async function leaveQueue() {
+      await api.get('/leave_queue');
+      navigation.navigate('Friends');
+    }
+
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor:'#F1F6FC' }}>
         {queue.status === 'searching' && <ActivityIndicator size="small" color="black" />}
@@ -58,7 +63,7 @@ export default function RandomChatScreen() {
   <Text style={{ fontSize: 35, marginTop: 10}}>🐙</Text>
     </View>
 
-    <Text  style={{fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 30,fontSize: 16}}> Leave Queue </Text>
+    <Text onPress={leaveQueue} style={{fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 30,fontSize: 16}}> Leave Queue </Text>
     
       </View>
     )
