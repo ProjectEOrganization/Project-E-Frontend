@@ -11,6 +11,8 @@ import { useSelector } from '../hooks';
 import { store } from '../store';
 import { initQueue } from '../store/reducers/chat';
 
+import AnimatedEllipsis from 'react-native-animated-ellipsis';
+
 
 export default function RandomChatScreen() {
   const auth = useAuth();
@@ -27,13 +29,38 @@ export default function RandomChatScreen() {
   }, [queue?.messages])
 
   if (queue.status !== 'found') {
+
+    const colors = [
+      '#2D7CDB',
+      '#BA2DDB',
+      '#2DDBC0'
+     
+    ];
+
+    const random = Math.floor(Math.random() * colors.length);
+    const random1 = colors[random]
+
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor:'#F1F6FC' }}>
         {queue.status === 'searching' && <ActivityIndicator size="small" color="black" />}
-        <Text style={{ top: 20 }}>{queue.status}</Text>
+        <View style={{width:'100%',backgroundColor: random1,height:190,shadowOffset: { width: 0, height: 2 },
+    shadowColor: random1,
+    shadowOpacity: 1, alignItems:'center' }}>
+
+  <Text style={{ fontFamily:'Inter-Bold', fontSize: 20, marginTop: 25, color: 'white',marginBottom: -10 }}>{queue.status}</Text>
+  <AnimatedEllipsis style={{fontSize: 40, color: 'white'}} />
+
+  <Text style={{ fontFamily:'Inter-Bold', fontSize: 13, marginTop: 25, color: 'white' }}>In the meantime, say Hello to Wocto</Text>
+  <Text style={{ fontSize: 35, marginTop: 10}}>🐙</Text>
+    </View>
+
+    <Text  style={{fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 30,fontSize: 16}}> Leave Queue </Text>
+    
       </View>
     )
   }
+
+  
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
       <RandomChatTopBar user={queue.user} />

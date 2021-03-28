@@ -11,7 +11,7 @@ import { Text, View, TextInput } from 'react-native'
 import { navigationRef } from '../../navigation/index';
 import { joinQueue } from '../../store/reducers/chat';
 import { store } from '../../store/store';
-import { api } from '../../services/api.js';
+import { api } from '../../services/api';
 
 export default function SkipConfirmationAlert({ path }: { path: string }) {
   let [fontsLoaded] = useFonts({
