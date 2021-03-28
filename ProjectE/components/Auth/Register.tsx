@@ -82,7 +82,7 @@ export default function Register({ path }: { path: string }) {
               marginTop: 35,
             }}
           />
-
+          
           <TextInput
             // onBlur={() => setFocused({ email: false, password: false })}
             // onFocus={() => setFocused({ email: false, password: true })}
@@ -113,7 +113,43 @@ export default function Register({ path }: { path: string }) {
               fontSize: 15,
               paddingHorizontal: 20,
               textAlign: 'left',
-              marginTop: 25,
+              marginTop: 15,
+            }}
+          />
+       
+      
+            <Text style={{fontFamily: 'Inter-SemiBold', fontSize: 15, marginTop: 25, color:'#4957FF' }}> What do your friends call you?</Text>
+          <TextInput
+            // onBlur={() => setFocused({ email: false, password: false })}
+            // onFocus={() => setFocused({ email: false, password: true })}
+            // onChangeText={text => setPassword(text)}
+            autoCapitalize={'none'}
+            autoCorrect={false}
+            secureTextEntry={false}
+            accessibilityElementsHidden={true}
+            caretHidden={true}
+            contextMenuHidden={true}
+            placeholder='Display Name'
+            onChangeText={(text) => setEmail(text)}
+            placeholderTextColor='#85ACD6'
+            style={{
+              // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
+              // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
+              backgroundColor: '#F1F6FC',
+
+              height: 48,
+              // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
+              borderWidth: 0,
+              shadowOffset: { width: 0, height: 2 },
+              shadowColor: 'black',
+              shadowOpacity: 0.16,
+              // height: 44,
+              width: '100%',
+              borderRadius: 6,
+              fontSize: 15,
+              paddingHorizontal: 20,
+              textAlign: 'left',
+              marginTop: 15,
             }}
           />
 
@@ -188,7 +224,7 @@ function handleHelpPress() {
 const styles = StyleSheet.create({
   overallContainer: {
     //overall container
-    height: 500,
+    height: 580,
     width: 330,
     backgroundColor: '#fff',
     borderRadius: 40,
@@ -213,7 +249,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#4B00FF',
     borderRadius: 6,
     height: 50,
-    marginTop: 40,
+    marginTop: 35,
     shadowOffset: { width: 0, height: 2 },
     shadowColor: '#4B00FF',
     shadowOpacity: 0.27,

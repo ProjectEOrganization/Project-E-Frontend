@@ -16,7 +16,7 @@ import { useAuth } from '../services/auth';
 
 
 
-import SkipConfirmationAlert from '../components/Alerts/SkipConfirmationAlert'
+import Register from '../components/Auth/Register'
 
 // import * as yourModuleName from 'module-name';
 
@@ -57,7 +57,7 @@ export default function Settings() {
         <Text style={styles.title1}>Settings</Text>
 
 
-        <SkipConfirmationAlert />
+        <Register />
         {/* Settings text */}
         <View style={{ width: '90%', height: '70%', marginTop: 80, backgroundColor: 'transparent' }}>
           <TouchableOpacity onPress={() => navigation.navigate('Account')}>
