@@ -45,13 +45,16 @@ function useProvideAuth() {
             });
     };
 
-    const signup = (email, password) => {
+    const signup = (email, password, displayName) => {
         return firebase
             .auth()
             .createUserWithEmailAndPassword(email, password)
             .then(response => {
                 setUser(response.user);
                 return response.user;
+            })
+            .then((user) => {
+                user.updateProfile({displayName: displayName})
             });
     };
 

@@ -16,10 +16,11 @@ export default function Register({ path }: { path: string }) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [displayName, setDisplayName] = useState('');
 
   const onRegister = () => {
-    if (email !== '' && password !== '') {
-      auth.signup(email, password);
+    if (email !== '' && password !== '' && displayName !== '') {
+      auth.signup(email, password, displayName);
       console.log(
         `${email}: ${password} has signed up. You can now login and authenticate with this user.`
       );
@@ -130,7 +131,7 @@ export default function Register({ path }: { path: string }) {
             caretHidden={true}
             contextMenuHidden={true}
             placeholder='Display Name'
-            onChangeText={(text) => setEmail(text)}
+            onChangeText={(text) => setDisplayName(text)}
             placeholderTextColor='#85ACD6'
             style={{
               // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
