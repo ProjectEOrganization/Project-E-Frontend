@@ -63,7 +63,11 @@ function useProvideAuth() {
             .auth()
             .signOut()
             .then(async () => {
-                await AsyncStorage.removeItem('token')
+                try {
+                    await AsyncStorage.removeItem('token');
+                } catch (error) {
+                    console.log(error);
+                }
                 setUser();
             });
     };
