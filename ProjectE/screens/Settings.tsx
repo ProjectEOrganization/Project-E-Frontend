@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Linking } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import Login from '../components/Auth/Login';
@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import TabOneScreen from './TabOneScreen';
 import SettingsPageSwitch from '../components/SettingsPageSwitch'
 import { useAuth } from '../services/auth';
+
 
 
 
@@ -57,33 +58,38 @@ export default function Settings() {
         <Text style={styles.title1}>Settings</Text>
 
 
-        <Register />
+        {/* <Register /> */}
         {/* Settings text */}
         <View style={{ width: '90%', height: '70%', marginTop: 80, backgroundColor: 'transparent' }}>
           <TouchableOpacity onPress={() => navigation.navigate('Account')}>
             <Text style={[styles.settingsText]}>Account</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
+
+          <TouchableOpacity onPress={() => navigation.navigate('Security')}>
+            <Text style={[styles.settingsText]}>Security</Text>
+          </TouchableOpacity>
+
+          {/* <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
             <Text style={styles.settingsText}>Notifications</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <TouchableOpacity>
-            <Text style={styles.settingsText}>Report a Problem</Text>
+            <Text style={styles.settingsText}  onPress={() => Linking.openURL('http://rapidapp.live/report')}>Report a Problem</Text>
           </TouchableOpacity>
-
-
-          <TouchableOpacity>
-            <Text style={styles.settingsText}>Support</Text>
-          </TouchableOpacity>
-
-          <Text style={styles.settingsText}>Customization</Text>
-          <SettingsPageSwitch />
-
 
 
           <TouchableOpacity>
-            <Text style={[styles.settingsText, styles.text1]}>Terms and Policy</Text>
+            <Text style={styles.settingsText} onPress={() => Linking.openURL('http://rapidapp.live/support')} >Support</Text>
+          </TouchableOpacity>
+
+          {/* <Text style={styles.settingsText}>Customization</Text>
+          <SettingsPageSwitch /> */}
+
+
+
+          <TouchableOpacity>
+            <Text style={[styles.settingsText, styles.text1]}  onPress={() => Linking.openURL('http://rapidapp.live/terms')}>Terms and Policy</Text>
           </TouchableOpacity>
 
           

@@ -16,6 +16,7 @@ import Settings from '../screens/Settings';
 import FriendsScreen from '../screens/FriendsScreen';
 import Account from '../screens/SettingsScreens/Account';
 import Notifications from '../screens/SettingsScreens/Notifications';
+import Security from '../screens/SettingsScreens/Security'
 import FriendsChatScreen from '../screens/FriendsChatScreen';
 import onBoarding1 from '../screens/Onboarding1';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -135,6 +136,11 @@ function SettingsStackScreen() {
       <SettingsStack.Screen
         name='Notifications'
         component={Notifications}
+        options={{ headerShown: false }}
+      />
+      <SettingsStack.Screen
+        name='Security'
+        component={Security}
         options={{ headerShown: false }}
       />
     </SettingsStack.Navigator>

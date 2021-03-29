@@ -12,7 +12,7 @@ import { ScrollView } from 'react-native';
 
 // import * as yourModuleName from 'module-name';
 
-export default function Account() {
+export default function Security() {
   let [fontsLoaded] = useFonts({
     'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
     'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
@@ -42,7 +42,7 @@ export default function Account() {
         <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
           <BackArrowSvgComponent />
         </TouchableOpacity>
-        <Text style={styles.title1}>Account</Text>
+        <Text style={styles.title1}>Security</Text>
 
         {/* <Login />
         <Register /> */}
@@ -50,8 +50,8 @@ export default function Account() {
         {/* Settings text */}
         <View style={{width: '90%', height: '70%', marginTop: 80, backgroundColor: 'transparent'}}>
         
-      <Text style={styles.settingsText}>Change Display Name</Text>
-      <Text style={{fontFamily: 'Inter-SemiBold', color: '#4B00FF', paddingBottom: 10}}>Enter Password</Text>
+      <Text style={styles.settingsText}>Change Password</Text>
+      <Text style={{fontFamily: 'Inter-SemiBold', color: '#4B00FF', paddingBottom: 10}}>Current Password</Text>
       <TextInput
                     // onBlur={() => setFocused({ email: false, password: false })}
                     // onFocus={() => setFocused({ email: false, password: true })}
@@ -62,7 +62,7 @@ export default function Account() {
                     accessibilityElementsHidden={true}
                     caretHidden={true}
                     contextMenuHidden={true}
-                    placeholder="Password"
+                    placeholder="Current Password"
                     placeholderTextColor="#85ACD6"
                     style={{
                         // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
@@ -83,7 +83,7 @@ export default function Account() {
                         marginTop: 0
                     }} />
 
-<Text style={{fontFamily: 'Inter-SemiBold', color: '#4B00FF', marginTop: 25}}>New Display Name</Text>
+<Text style={{fontFamily: 'Inter-SemiBold', color: '#4B00FF', marginTop: 25}}>New Password</Text>
 
 <TextInput
                     // onBlur={() => setFocused({ email: false, password: false })}
@@ -95,7 +95,7 @@ export default function Account() {
                     accessibilityElementsHidden={true}
                     caretHidden={true}
                     contextMenuHidden={true}
-                    placeholder="Display Name"
+                    placeholder="New Password"
                     placeholderTextColor="#85ACD6"
                     style={{
                         // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
