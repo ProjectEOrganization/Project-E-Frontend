@@ -224,7 +224,7 @@ function handleHelpPress() {
 const styles = StyleSheet.create({
   overallContainer: {
     //overall container
-    height: 580,
+    height: 600,
     width: 330,
     backgroundColor: '#fff',
     borderRadius: 40,

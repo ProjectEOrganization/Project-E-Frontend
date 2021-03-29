@@ -13,6 +13,7 @@ import { initQueue } from '../store/reducers/chat';
 import { LogBox } from 'react-native';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
 import {api} from '../services/api';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function RandomChatScreen() {
   const auth = useAuth();
@@ -45,7 +46,8 @@ export default function RandomChatScreen() {
     const random1 = colors[random]
 
     async function leaveQueue() {
-      await api.get('/leave_queue');
+      await api.get('/leave_queue')
+        .catch(error => console.log(error));
       navigation.navigate('Friends');
     }
 
@@ -62,9 +64,10 @@ export default function RandomChatScreen() {
   <Text style={{ fontFamily:'Inter-Bold', fontSize: 13, marginTop: 25, color: 'white' }}>In the meantime, say Hello to Wocto</Text>
   <Text style={{ fontSize: 35, marginTop: 10}}>🐙</Text>
     </View>
-
-    <Text onPress={leaveQueue} style={{fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 30,fontSize: 16}}> Leave Queue </Text>
     
+    <TouchableOpacity onPress={leaveQueue}>
+      <Text style={{fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 30,fontSize: 16}}> Leave Queue </Text>
+    </TouchableOpacity>
       </View>
     )
   }

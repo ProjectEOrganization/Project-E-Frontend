@@ -32,7 +32,8 @@ export default function TabTwoScreen() {
   });
 
   function anonymousSignin() {
-    auth.signInAnonymously();
+    auth.signInAnonymously()
+      .catch(error => console.log(error));
     navigation.navigate('Settings');
   }
 
