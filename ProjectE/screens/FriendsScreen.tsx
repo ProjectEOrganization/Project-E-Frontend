@@ -44,12 +44,13 @@ export default function FriendsScreen() {
     else if (route === 'friends') scrollRef.current?.scrollTo({ x: width, animated: true })
   }, [route])
   
-  React.useEffect(() => {
-    console.log(auth.user)
-    if (!auth.user) {
-      navigation.navigate('LoginModal');
-    }  
-  })
+  // React.useEffect(() => {
+  //   console.log(auth.user)
+  //   if (!auth.user) {
+  //     navigation.navigate('RandomChat');
+  //     navigation.navigate('LoginModal');
+  //   }  
+  // })
 
   if (!fontsLoaded) {
     return <View />;

@@ -3,6 +3,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { useAuth } from '../services/auth';
+import { useNavigation } from '@react-navigation/native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -14,6 +16,7 @@ import { View } from '../components/Themed';
 import NextPart from '../screens/NextPart';
 import Settings from '../screens/Settings';
 import FriendsScreen from '../screens/FriendsScreen';
+import LoginModal from '../components/Modals/LoginModal';
 import Account from '../screens/SettingsScreens/Account';
 import Notifications from '../screens/SettingsScreens/Notifications';
 import Security from '../screens/SettingsScreens/Security'
@@ -23,12 +26,36 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { store } from '../store';
 import { joinQueue } from '../store/reducers/chat';
 import { useSelector } from '../hooks';
-import { Pressable } from 'react-native';
+import { Pressable, Text } from 'react-native';
 import { navigationRef } from '.';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
+
 function BottomTabNavigator() {
+  const navigation = useNavigation();
+  const auth = useAuth();
+  function FontAwesome(props: {
+    name: React.ComponentProps<typeof FontAwesome5>['name'];
+    color: string;
+  }) {
+    return (
+    <>
+      <FontAwesome5 onPress={checkAuth} size={25} style={{marginTop: 25}} {...props} />
+      <Text style={{marginTop:5, color: props.color, fontSize:10}}>Friends</Text>
+    </>
+    );
+  }
+  
+  function checkAuth() {
+    if (!auth.user) {
+      navigation.navigate('LoginModal');
+    } else {
+      // navigation.navigate('Friends');
+      navigationRef.current?.navigate('Friends')
+      console.log('logged in')
+    }
+  }
   return (
     <BottomTab.Navigator
       initialRouteName='Friends'
@@ -36,6 +63,7 @@ function BottomTabNavigator() {
         activeTintColor: '#00DBD0',
         style: { height: 90 },
         inactiveTintColor: '#5C626E',
+        showLabel: false
       }}
     >
 
@@ -95,7 +123,7 @@ function Icon() {
   }
 
   return (
-    <TouchableOpacity onPress={onPress} style={{ marginBottom: -25, backgroundColor: 'transparent' }}>
+    <TouchableOpacity onPress={onPress} style={{ marginBottom: -20, backgroundColor: 'transparent' }}>
       <SvgComponentNav />
     </TouchableOpacity>
   );
@@ -105,14 +133,12 @@ function TabBarIcon(props: {
   name: React.ComponentProps<typeof Ionicons>['name'];
   color: string;
 }) {
-  return <Ionicons size={25} style={{ marginBottom: -20 }} {...props} />;
-}
-
-function FontAwesome(props: {
-  name: React.ComponentProps<typeof FontAwesome5>['name'];
-  color: string;
-}) {
-  return <FontAwesome5 size={25} style={{ marginBottom: -20 }} {...props} />;
+  return(
+    <>
+    <Ionicons size={25} style={{ marginTop: 25 }} {...props} />
+    <Text style={{marginTop:5, color: props.color, fontSize:10}}>Friends</Text>
+    </>
+  );
 }
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
