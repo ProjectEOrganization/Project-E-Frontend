@@ -31,12 +31,12 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
     async function fetchData() {
       const newUser = await AsyncStorage.getItem('newUser');
       if (newUser == "true") {
-        // await AsyncStorage.clear()
+        // await AsyncStorage.clear();
         console.log("true!!");
       } else {
+        navigationRef.current?.navigate('Onboarding');
         console.log("false!!");
         await AsyncStorage.setItem('newUser', 'true');
-        navigationRef.current?.navigate('Onboarding');
       }
     }
     fetchData();

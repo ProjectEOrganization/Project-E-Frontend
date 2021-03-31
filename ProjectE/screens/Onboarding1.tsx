@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
@@ -57,14 +57,16 @@ export default function TabTwoScreen() {
        
         </Text >  
       </View>
-        
-      <SvgComponent1 />
+      
+      <TouchableOpacity onPress={anonymousSignin}>
+        <SvgComponent1/>
+      </TouchableOpacity>
 
       <View style={styles.container3}>
       <Text style={styles.title4}>
         Already have an account?
         <Text onPress={() => navigation.navigate('Settings')} style={{fontFamily: 'Inter-SemiBold', color: '#4B00FF'}}> Log in </Text>
-        <Text onPress={anonymousSignin} style={{fontFamily: 'Inter-SemiBold', color: '#4B00FF'}}> Log in as a guest</Text>
+        {/* <Text onPress={anonymousSignin} style={{fontFamily: 'Inter-SemiBold', color: '#4B00FF'}}> Log in as a guest</Text> */}
         </Text >  
       </View>
 
