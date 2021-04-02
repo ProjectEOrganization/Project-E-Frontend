@@ -12,16 +12,37 @@ import { Text, View, TextInput, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { api } from '../services/api';
 import { useNavigation } from '@react-navigation/core';
+import {useEffect, useRef} from 'react';
+import { Tooltip } from 'react-native-elements';
 
 export default function RandomChatTopBar({ user }) {
   const { top } = useSafeAreaInsets();
 
   const navigation = useNavigation();
 
+  const friendRef = useRef(null);
+
   const sendFriendRequest = () => {
     api.post(`/friends/add/${user?.uid}`)
       .then(() => navigation.navigate('FriendRequestSentModal'))
   }
+
+  useEffect(() => {
+    async function fetchData() {
+      const newFriendRef = await AsyncStorage.getItem('newFriendRef');
+      if (newFriendRef == "true") {
+        console.log("friendRef true");
+        // await AsyncStorage.clear()
+        //   .catch(error => console.log(error));
+      } else {
+        console.log("friendRef false");
+        friendRef.current?.toggleTooltip();
+        await AsyncStorage.setItem('newFriendRef', 'true')
+          .catch(error => console.log(error));
+      }
+    }
+    fetchData();
+  })
 
   return (
     <View style={[styles.topBar, { paddingTop: top + 10 }]}>
@@ -36,35 +57,13 @@ export default function RandomChatTopBar({ user }) {
       </View>
       <View>
         <TouchableOpacity onPress={sendFriendRequest} style={styles.loginButton}>
-          <RandomChatTopBarSvgComponent />
-          <Text style={styles.loginText}>Let's be Friends</Text>
+          <Tooltip ref={friendRef} popover={<Text>Send friend request</Text>}>
+            <RandomChatTopBarSvgComponent />
+            <Text style={styles.loginText}>Let's be Friends</Text>
+          </Tooltip>
         </TouchableOpacity>
       </View>
     </View>
-
-    // <View>
-    //   {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
-    // </View>
-
-    // {/* <View
-    //   style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
-    //   >
-    //   <MonoText>{path}</MonoText>
-    // </View> */}
-
-    //   {/* <Text
-    //     style={styles.getStartedText}
-    //     >
-    //     Change any of the text, save the file, and your app will automatically update.
-    //   </Text>
-    // </View>
-
-    // <View style={styles.helpContainer}>
-    //   <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-    //     <Text style={styles.helpLinkText} >
-    //       Tap here if your app doesn't automatically update after making changes
-    //     </Text>
-    //   </TouchableOpacity> */}
   );
 }
 

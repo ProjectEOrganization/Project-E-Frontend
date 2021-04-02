@@ -27,23 +27,49 @@ import { store } from '../store';
 import { joinQueue } from '../store/reducers/chat';
 import { useSelector } from '../hooks';
 import { Pressable, Text } from 'react-native';
+import { Tooltip } from 'react-native-elements';
 import { navigationRef } from '.';
+import {useEffect, useRef} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
-
 
 function BottomTabNavigator() {
   const navigation = useNavigation();
   const auth = useAuth();
+
+  const skipRef = useRef(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      const newSkipRef = await AsyncStorage.getItem('newSkipRef');
+      if (newSkipRef == "true") {
+        console.log("skipRef true");
+        // await AsyncStorage.clear()
+        //   .catch(error => console.log(error));
+      } else {
+        console.log("skipRef false");
+        skipRef.current?.toggleTooltip();
+        await AsyncStorage.setItem('newSkipRef', 'true')
+          .catch(error => console.log(error));
+      }
+    }
+    fetchData();
+  })
+
+  // useEffect(() => {
+  //   skipRef.current?.toggleTooltip();
+  // }, []);
+
   function FontAwesome(props: {
     name: React.ComponentProps<typeof FontAwesome5>['name'];
     color: string;
   }) {
     return (
-    <>
-      <FontAwesome5 onPress={checkAuth} size={25} style={{marginTop: 25}} {...props} />
-      <Text style={{marginTop:5, color: props.color, fontSize:10}}>Friends</Text>
-    </>
+      <TouchableOpacity onPress={checkAuth}>
+        <FontAwesome5 size={25} style={{marginTop: 25}} {...props} />
+        <Text style={{marginTop:5, color: props.color, fontSize:10}}>Friends</Text>
+      </TouchableOpacity>
     );
   }
   
@@ -56,9 +82,32 @@ function BottomTabNavigator() {
       console.log('logged in')
     }
   }
+
+  function Icon() {
+    const queue = useSelector(state => state.chat.queue);
+    const onPress = () => {
+      if (queue.status === 'found') {
+        navigationRef.current?.navigate('SkipConfirmationModal')
+      }
+      else {
+        store.dispatch(joinQueue())
+      }
+    }
+  
+    return (
+      <>
+      <TouchableOpacity style={{ marginBottom: -20, backgroundColor: 'transparent' }}>
+        <Tooltip ref={skipRef} onPress={onPress} popover={<Text>Skip this person</Text>}>
+          <SvgComponentNav />
+        </Tooltip>
+      </TouchableOpacity>
+      </>
+    );
+  }
+
   return (
     <BottomTab.Navigator
-      initialRouteName='Friends'
+      initialRouteName='RandomChat'
       tabBarOptions={{
         activeTintColor: '#00DBD0',
         style: { height: 90 },
@@ -82,7 +131,6 @@ function BottomTabNavigator() {
         component={RandomChatScreen}
         options={{
           tabBarIcon: Icon,
-          tabBarLabel: ''
         }}
       />
 
@@ -111,23 +159,6 @@ function BottomTabNavigator() {
 
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
-function Icon() {
-  const queue = useSelector(state => state.chat.queue);
-  const onPress = () => {
-    if (queue.status === 'found') {
-      navigationRef.current?.navigate('SkipConfirmationModal')
-    }
-    else {
-      store.dispatch(joinQueue())
-    }
-  }
-
-  return (
-    <TouchableOpacity onPress={onPress} style={{ marginBottom: -20, backgroundColor: 'transparent' }}>
-      <SvgComponentNav />
-    </TouchableOpacity>
-  );
-}
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof Ionicons>['name'];
@@ -136,7 +167,7 @@ function TabBarIcon(props: {
   return(
     <>
     <Ionicons size={25} style={{ marginTop: 25 }} {...props} />
-    <Text style={{marginTop:5, color: props.color, fontSize:10}}>Friends</Text>
+    <Text style={{marginTop:5, color: props.color, fontSize:10}}>Settings</Text>
     </>
   );
 }

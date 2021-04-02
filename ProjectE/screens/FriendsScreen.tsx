@@ -16,12 +16,19 @@ import FriendsMessagesCard from '../components/Friends/FriendsMessagesCard';
 import IndividualFriendChat from '../components/Friends/IndividualFriendChat';
 import FriendsChatList from '../components/Friends/FriendsChatList';
 import navigationRef from '../navigation/index';
-
+import { Tooltip } from 'react-native-elements';
+import {useRef, useEffect} from 'react';
 
 const { width } = Dimensions.get('screen');
 
 export default function FriendsScreen() {
   let username = 'Anonymous';
+
+  const tooltipRef = useRef(null);
+  
+  useEffect(() => {
+    tooltipRef.current?.toggleTooltip();
+  }, );
 
   let [fontsLoaded] = useFonts({
     'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
@@ -44,14 +51,6 @@ export default function FriendsScreen() {
     else if (route === 'friends') scrollRef.current?.scrollTo({ x: width, animated: true })
   }, [route])
   
-  // React.useEffect(() => {
-  //   console.log(auth.user)
-  //   if (!auth.user) {
-  //     navigation.navigate('RandomChat');
-  //     navigation.navigate('LoginModal');
-  //   }  
-  // })
-
   if (!fontsLoaded) {
     return <View />;
   } else {
