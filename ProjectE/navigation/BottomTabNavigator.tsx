@@ -12,6 +12,7 @@ import TabOneScreen from '../screens/FriendsScreen';
 import RandomChatScreen from '../screens/RandomChatScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
 import SvgComponentNav from '../assets/svgComponentNav.js';
+import HomeButtonTipSvg from '../assets/HomeButtonTipSvg.js'
 import { View } from '../components/Themed';
 import NextPart from '../screens/NextPart';
 import Settings from '../screens/Settings';
