@@ -12,7 +12,7 @@ import { store } from '../store';
 import { initQueue } from '../store/reducers/chat';
 import { LogBox } from 'react-native';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
-import {api} from '../services/api';
+import { api } from '../services/api';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -59,7 +59,7 @@ export default function RandomChatScreen() {
       '#2D7CDB',
       '#BA2DDB',
       '#2DDBC0'
-     
+
     ];
 
     const random = Math.floor(Math.random() * colors.length);
@@ -72,32 +72,34 @@ export default function RandomChatScreen() {
     }
 
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor:'#F1F6FC' }}>
-        {queue.status === 'searching' && <ActivityIndicator size="small" color="black" />}
-        <View style={{width:'100%',backgroundColor: random1,height:190,shadowOffset: { width: 0, height: 2 },
-    shadowColor: random1,
-    shadowOpacity: 1, alignItems:'center' }}>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#F1F6FC' }}>
+        <View style={{
+          width: '100%', backgroundColor: random1, height: 190, shadowOffset: { width: 0, height: 2 },
+          shadowColor: random1,
+          shadowOpacity: 1, alignItems: 'center'
+        }}>
 
-  <Text style={{ fontFamily:'Inter-Bold', fontSize: 20, marginTop: 25, color: 'white',marginBottom: -10 }}>{queue.status=="joining"? "Finding Someone Awesome": queue.status}</Text>
-  <AnimatedEllipsis style={{fontSize: 40, color: 'white'}} />
+          <Text style={{ fontFamily: 'Inter-Bold', fontSize: 20, marginTop: 25, color: 'white', marginBottom: -10 }}>{queue.status == "searching" ? "Finding Someone Awesome" : queue.status}</Text>
+          <AnimatedEllipsis style={{ fontSize: 40, color: 'white' }} />
 
-  <Text style={{ fontFamily:'Inter-Bold', fontSize: 13, marginTop: 25, color: 'white' }}>In the meantime, say Hello to Wocto</Text>
-  <Text style={{ fontSize: 35, marginTop: 10}}>🐙</Text>
-    </View>
-    
-    <TouchableOpacity onPress={leaveQueue}>
-      <Text style={{fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 30,fontSize: 16}}> Leave Queue </Text>
-    </TouchableOpacity>
+          <Text style={{ fontFamily: 'Inter-Bold', fontSize: 13, marginTop: 25, color: 'white' }}>In the meantime, say Hello to Wocto</Text>
+          <Text style={{ fontSize: 35, marginTop: 10 }}>🐙</Text>
+        </View>
+
+        <TouchableOpacity onPress={leaveQueue}>
+          <Text style={{ fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 30, fontSize: 16 }}> Leave Queue </Text>
+        </TouchableOpacity>
       </View>
     )
   }
 
-  
+
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
       <RandomChatTopBar user={queue.user} />
+      {/* <Text>{JSON.stringify(queue.user)}</Text> */}
       <FriendsChatBox messages={reversed} />
-      <FriendsChatScreenBottomBar chatId={queue?.chatId} recipientId={queue.user.uid} isQueue={true} />
+      <FriendsChatScreenBottomBar chatId={queue?.chatId} recipientId={queue.user?.uid} isQueue={true} />
     </KeyboardAvoidingView>
   );
 }

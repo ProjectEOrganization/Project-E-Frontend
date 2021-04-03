@@ -24,7 +24,6 @@ export default function useCachedResources() {
         });
         console.log('your fonts loaded!')
       } catch (e) {
-        alert("err")
         // We might want to provide this error information to an error reporting service
         console.warn(e);
       } finally {

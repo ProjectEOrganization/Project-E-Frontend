@@ -27,25 +27,24 @@ export const navigationRef = React.createRef<NavigationContainerRef>();
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
 const Navigation = (props: { colorScheme: ColorSchemeName }) => {
-  // const navigation = useNavigation();
-
-  // React.useEffect(() => {
-  //   async function fetchData() {
-  //     const newUser = await AsyncStorage.getItem('newUser');
-  //     if (newUser == "true") {
-  //       console.log("true!!");
-  //       // await AsyncStorage.clear()
-  //       //   .catch(error => console.log(error));
-  //     } else {
-  //       console.log("false!!");
-  //       navigationRef.current?.navigate('Onboarding');
-  //       // navigation.navigate('Onboarding');
-  //       // await AsyncStorage.setItem('newUser', 'true')
-  //       //   .catch(error => console.log(error));
-  //     }
-  //   }
-  //   fetchData();
-  // }, [])
+  React.useEffect(() => {
+    async function fetchData() {
+      const newUser = await AsyncStorage.getItem('newUser');
+      if (newUser == "true") {
+        console.log("true!!");
+        // await AsyncStorage.clear()
+        //   .catch(error => console.log(error));
+      } else {
+        console.log("false!!");
+        navigationRef.current?.navigate('Onboarding');
+        await AsyncStorage.setItem('newUser', 'true')
+          .catch(error => console.log(error));
+      }
+    }
+    setTimeout(() => {
+      fetchData();
+    }, 10)
+  }, [])
   return (
     <NavigationContainer
       ref={navigationRef}

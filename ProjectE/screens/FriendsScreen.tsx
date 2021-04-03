@@ -17,7 +17,7 @@ import IndividualFriendChat from '../components/Friends/IndividualFriendChat';
 import FriendsChatList from '../components/Friends/FriendsChatList';
 import navigationRef from '../navigation/index';
 import { Tooltip } from 'react-native-elements';
-import {useRef, useEffect} from 'react';
+import { useRef, useEffect } from 'react';
 
 const { width } = Dimensions.get('screen');
 
@@ -25,10 +25,10 @@ export default function FriendsScreen() {
   let username = 'Anonymous';
 
   const tooltipRef = useRef(null);
-  
+
   useEffect(() => {
     tooltipRef.current?.toggleTooltip();
-  }, );
+  });
 
   let [fontsLoaded] = useFonts({
     'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
@@ -50,7 +50,7 @@ export default function FriendsScreen() {
     if (route === 'messages') scrollRef.current?.scrollTo({ x: 0, animated: true })
     else if (route === 'friends') scrollRef.current?.scrollTo({ x: width, animated: true })
   }, [route])
-  
+
   if (!fontsLoaded) {
     return <View />;
   } else {
@@ -62,16 +62,17 @@ export default function FriendsScreen() {
             style={{
               marginTop: 80,
               backgroundColor: 'transparent',
-              flexDirection: 'row', 
+              flexDirection: 'row',
               marginLeft: 30
 
             }}
           >
             <ThreeDotsSvg />
             <TouchableOpacity onPress={() => navigation.navigate('SendFriendRequestModal')} >
-            <Text style={{marginLeft: 220, fontFamily: 'Inter-SemiBold',color: '#21293A'
-          }}>Add Friend +</Text>
-          </TouchableOpacity>
+              <Text style={{
+                marginLeft: 220, fontFamily: 'Inter-SemiBold', color: '#21293A'
+              }}>Add Friend +</Text>
+            </TouchableOpacity>
           </View>
 
           {(auth.user?.uid || auth.user?.isAnonymous) ?
@@ -99,7 +100,7 @@ export default function FriendsScreen() {
             >
               Hello {auth.user?.displayName || username}!
           </Text>
-            <Text>{auth?.user?.uid}</Text>
+            <Text selectable>{auth?.user?.uid}</Text>
             <FriendsPageSwitch onChange={(route) => setRoute(route)} />
           </View>
 

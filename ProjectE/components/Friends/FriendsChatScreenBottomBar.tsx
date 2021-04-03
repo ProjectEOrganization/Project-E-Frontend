@@ -27,6 +27,7 @@ export default function FriendsChatScreenBottomBar({ recipientId, isQueue, chatI
       isQueue,
       pending: true
     }))
+
     api.post('/message', {
       recipientId,
       message: content,

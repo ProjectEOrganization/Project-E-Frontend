@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React, { useState, useEffect, useContext, createContext } from "react";
-import { AsyncStorage } from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { api } from "./api";
 import { firebase } from "./firebase";
 
@@ -40,7 +40,6 @@ function useProvideAuth() {
             .auth()
             .signInAnonymously()
             .then(response => {
-                setUser(response.user);
                 return response.user;
             });
     };
@@ -54,7 +53,7 @@ function useProvideAuth() {
                 return response.user;
             })
             .then((user) => {
-                user.updateProfile({displayName: displayName})
+                user.updateProfile({ displayName: displayName })
             });
     };
 
@@ -95,23 +94,25 @@ function useProvideAuth() {
     // ... component that utilizes this hook to re-render with the ...
     // ... latest auth object.
 
+    const init = async (user) => {
+        const token = await user.getIdToken();
+        await AsyncStorage.setItem('token', token)
+        const res = await api.post('/auth', user);
+        const newUser: firebase.User = {
+            ...user,
+            ...res.data.user,
+            getIdToken: user.getIdToken
+        }
+        setUser(newUser);
+    }
+
     useEffect(() => {
         const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
-                await AsyncStorage.setItem('token', await user.getIdToken())
-                const res = await api.post('/auth', user);
-                const newUser: firebase.User = {
-                    ...user,
-                    ...res.data.user,
-                    getIdToken: user.getIdToken
-                }
-                setUser(newUser);
+                init(user)
             } else {
-                const token = await AsyncStorage.getItem('token')
-                if (!token) {
-                    signInAnonymously()
-                }
-                setUser();
+                const user = await signInAnonymously();
+                init(user)
             }
         });
 
