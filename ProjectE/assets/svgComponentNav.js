@@ -1,7 +1,7 @@
 import React from "react";
 import { SvgXml } from "react-native-svg";  
 export default function SvgComponentNav(){  
-  const svgMarkup = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="171.79" height="171.79" viewBox="0 0 171.79 171.79">
+  const svgMarkup = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="171.79" height="171.79" margin-top="-50" viewBox="0 0 171.79 171.79">
   <defs>
     <linearGradient id="linear-gradient" x1="0.237" y1="0.082" x2="0.829" y2="0.861" gradientUnits="objectBoundingBox">
       <stop offset="0" stop-color="#4b00ff"/>

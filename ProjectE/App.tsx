@@ -18,21 +18,6 @@ export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const newUser = await AsyncStorage.getItem('newUser');
-  //     if (newUser == "true") {
-  //       console.log("true!!");
-  //     } else {
-  //       // navigation.navigate('Onboarding');
-  //       // navigationRef.current?.navigate('RejectedModal', { uid: friendId.uid })
-  //       console.log("false!!");
-  //       await AsyncStorage.setItem('newUser', 'true');
-  //     }
-  //   }
-  //   fetchData();
-  // })
-
   if (!isLoadingComplete) {
     return null;
   } else {
