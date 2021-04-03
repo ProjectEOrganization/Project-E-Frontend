@@ -9,7 +9,7 @@ import { MonoText } from '../StyledText';
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput } from 'react-native'
 import { navigationRef } from '../../navigation/index';
-import { joinQueue } from '../../store/reducers/chat';
+import { joinQueue, skip } from '../../store/reducers/chat';
 import { store } from '../../store/store';
 import { api } from '../../services/api';
 
@@ -21,18 +21,20 @@ export default function SkipConfirmationAlert({ path }: { path: string }) {
     'Inter-ExtraBold': require('../../assets/fonts/Inter/Inter-ExtraBold.ttf'),
   });
 
-  const skip = () => {
-    navigationRef.current?.goBack();
+  const skipAction = () => {
+    navigationRef.current?.navigate('RandomChat');
     store.dispatch(joinQueue())
   }
 
   const dontSkip = () => {
-    navigationRef.current?.goBack();
+    navigationRef.current?.navigate('RandomChat');
   }
 
   async function leaveQueue() {
     await api.get('/leave_queue')
       .catch(error => console.log(error));
+
+    store.dispatch(skip())
     navigationRef.current?.goBack();
   }
 
@@ -56,7 +58,7 @@ export default function SkipConfirmationAlert({ path }: { path: string }) {
 
           <View style={{ flex: 1, flexDirection: 'row' }}>
 
-            <TouchableOpacity onPress={skip} style={styles.yesButton}>
+            <TouchableOpacity onPress={skipAction} style={styles.yesButton}>
               <Text style={styles.loginText} >
                 Yup
           </Text>
@@ -69,13 +71,13 @@ export default function SkipConfirmationAlert({ path }: { path: string }) {
           </Text>
             </TouchableOpacity>
 
-           
+
           </View>
 
-          
+
 
         </View>
-        <Text onPress={leaveQueue} style={{fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 140,fontSize: 16}}> Leave Queue </Text>
+        <Text onPress={leaveQueue} style={{ fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 140, fontSize: 16 }}> Leave Queue </Text>
 
 
         {/* <View
