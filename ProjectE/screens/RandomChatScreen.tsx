@@ -26,23 +26,23 @@ export default function RandomChatScreen() {
     LogBox.ignoreLogs(['Animated: `useNativeDriver`']);
   }, [])
   
-  useEffect(() => {
-    async function fetchData() {
-      const newUser = await AsyncStorage.getItem('newUser');
-      if (newUser == "true") {
-        console.log("true!!");
-        // await AsyncStorage.clear()
-        //   .catch(error => console.log(error));
-      } else {
-        console.log("false!!");
-        navigation.navigate('Onboarding');
-        // navigation.navigate('Onboarding');
-        await AsyncStorage.setItem('newUser', 'true')
-          .catch(error => console.log(error));
-      }
-    }
-    fetchData();
-  }, [])
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const newUser = await AsyncStorage.getItem('newUser');
+  //     if (newUser == "true") {
+  //       console.log("true!!");
+  //       // await AsyncStorage.clear()
+  //       //   .catch(error => console.log(error));
+  //     } else {
+  //       console.log("false!!");
+  //       navigation.navigate('Onboarding');
+  //       // navigation.navigate('Onboarding');
+  //       await AsyncStorage.setItem('newUser', 'true')
+  //         .catch(error => console.log(error));
+  //     }
+  //   }
+  //   fetchData();
+  // }, [])
 
   const queue = useSelector(state => state.chat.queue);
 
