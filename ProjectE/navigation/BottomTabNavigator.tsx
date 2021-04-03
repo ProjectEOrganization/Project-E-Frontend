@@ -22,11 +22,10 @@ import Notifications from '../screens/SettingsScreens/Notifications';
 import Security from '../screens/SettingsScreens/Security'
 import FriendsChatScreen from '../screens/FriendsChatScreen';
 import onBoarding1 from '../screens/Onboarding1';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { store } from '../store';
 import { joinQueue } from '../store/reducers/chat';
 import { useSelector } from '../hooks';
-import { Pressable, Text } from 'react-native';
+import { Pressable, Text, TouchableOpacity } from 'react-native';
 import { navigationRef } from '.';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -35,27 +34,28 @@ const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 function BottomTabNavigator() {
   const navigation = useNavigation();
   const auth = useAuth();
+
   function FontAwesome(props: {
     name: React.ComponentProps<typeof FontAwesome5>['name'];
     color: string;
   }) {
     return (
-    <>
-      <FontAwesome5 onPress={checkAuth} size={25} style={{marginTop: 25}} {...props} />
-      <Text style={{marginTop:5, color: props.color, fontSize:10}}>Friends</Text>
-    </>
+      <>
+        <FontAwesome5 size={25} style={{ marginTop: 25 }} {...props} />
+        <Text style={{ marginTop: 5, color: props.color, fontSize: 10 }}>Friends</Text>
+      </>
     );
   }
-  
+
   function checkAuth() {
     if (!auth.user) {
       navigation.navigate('LoginModal');
     } else {
-      // navigation.navigate('Friends');
       navigationRef.current?.navigate('Friends')
       console.log('logged in')
     }
   }
+
   return (
     <BottomTab.Navigator
       initialRouteName='Friends'
@@ -66,7 +66,6 @@ function BottomTabNavigator() {
         showLabel: false
       }}
     >
-
       <BottomTab.Screen
         name='Friends'
         component={FriendsScreen}
@@ -74,6 +73,11 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => (
             <FontAwesome name='user-friends' color={color} />
           ),
+          tabBarButton: props => {
+            return (
+              <Pressable {...props} onPress={checkAuth} />
+            )
+          }
         }}
       />
 
@@ -95,16 +99,6 @@ function BottomTabNavigator() {
           ),
         }}
       />
-
-      {/* <BottomTab.Screen
-        name="RegisterTesting"
-        component={RegisterTestingNavigator}
-        options={{
-          
-          tabBarVisible: false,
-        }}
-      />  */}
-
     </BottomTab.Navigator>
   );
 }
@@ -113,10 +107,11 @@ function BottomTabNavigator() {
 // https://icons.expo.fyi/
 function Icon() {
   const queue = useSelector(state => state.chat.queue);
-  const onPress = () => {
-    if (queue.status === 'found') {
-      navigationRef.current?.navigate('SkipConfirmationModal')
-    }
+  const auth = useAuth();
+
+  const onPress = async () => {
+    if (!auth.user) await auth.signInAnonymously();
+    if (queue.status === 'found') navigationRef.current?.navigate('SkipConfirmationModal')
     else {
       store.dispatch(joinQueue())
     }
@@ -133,10 +128,10 @@ function TabBarIcon(props: {
   name: React.ComponentProps<typeof Ionicons>['name'];
   color: string;
 }) {
-  return(
+  return (
     <>
-    <Ionicons size={25} style={{ marginTop: 25 }} {...props} />
-    <Text style={{marginTop:5, color: props.color, fontSize:10}}>Friends</Text>
+      <Ionicons size={25} style={{ marginTop: 25 }} {...props} />
+      <Text style={{ marginTop: 5, color: props.color, fontSize: 10 }}>Friends</Text>
     </>
   );
 }

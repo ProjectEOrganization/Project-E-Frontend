@@ -39,8 +39,10 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
         await AsyncStorage.setItem('newUser', 'true');
       }
     }
-    fetchData();
-  })
+    setTimeout(() => {
+      fetchData();
+    }, 10)
+  }, [])
   return (
     <NavigationContainer
       ref={navigationRef}

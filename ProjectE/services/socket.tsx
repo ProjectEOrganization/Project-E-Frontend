@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React, { useEffect, useState } from 'react'
-import { AsyncStorage } from 'react-native';
+
 import { io, Socket } from 'socket.io-client';
 import { useAuth } from './auth';
 import config from './config';
@@ -8,6 +8,7 @@ import config from './config';
 import { navigationRef } from '../navigation'
 import { store } from '../store';
 import { addChat, addMessage, changeIsActive, IChat, IisActiveEvent, initQueue } from '../store/reducers/chat';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SocketContext = React.createContext<Socket>();
 
@@ -29,7 +30,8 @@ function useProvideSocket(): Socket {
 
     useEffect(() => {
         const setup = async () => {
-            const token = await AsyncStorage.getItem('token')
+            const token = await AsyncStorage.getItem('token') || await auth.user.getIdToken();
+
             const socket = io(config.SOCKET_URL, {
                 transports: ["websocket"],
                 query: { token }
@@ -68,7 +70,6 @@ function useProvideSocket(): Socket {
             socket.on('friend_request_declined', (friendId) => {
                 navigationRef.current?.navigate('RejectedModal', { uid: friendId.uid })
             })
-
             setSocket(socket);
         }
         if (auth.user?.getIdToken) setup();

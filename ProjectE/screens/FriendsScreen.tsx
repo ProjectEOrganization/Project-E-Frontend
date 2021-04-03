@@ -43,7 +43,7 @@ export default function FriendsScreen() {
     if (route === 'messages') scrollRef.current?.scrollTo({ x: 0, animated: true })
     else if (route === 'friends') scrollRef.current?.scrollTo({ x: width, animated: true })
   }, [route])
-  
+
   // React.useEffect(() => {
   //   console.log(auth.user)
   //   if (!auth.user) {
@@ -63,16 +63,17 @@ export default function FriendsScreen() {
             style={{
               marginTop: 80,
               backgroundColor: 'transparent',
-              flexDirection: 'row', 
+              flexDirection: 'row',
               marginLeft: 30
 
             }}
           >
             <ThreeDotsSvg />
             <TouchableOpacity onPress={() => navigation.navigate('SendFriendRequestModal')} >
-            <Text style={{marginLeft: 220, fontFamily: 'Inter-SemiBold',color: '#21293A'
-          }}>Add Friend +</Text>
-          </TouchableOpacity>
+              <Text style={{
+                marginLeft: 220, fontFamily: 'Inter-SemiBold', color: '#21293A'
+              }}>Add Friend +</Text>
+            </TouchableOpacity>
           </View>
 
           {(auth.user?.uid || auth.user?.isAnonymous) ?
@@ -100,7 +101,7 @@ export default function FriendsScreen() {
             >
               Hello {auth.user?.displayName || username}!
           </Text>
-            <Text>{auth?.user?.uid}</Text>
+            <Text selectable>{auth?.user?.uid}</Text>
             <FriendsPageSwitch onChange={(route) => setRoute(route)} />
           </View>
 

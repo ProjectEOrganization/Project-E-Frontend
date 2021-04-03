@@ -1,5 +1,5 @@
 import * as WebBrowser from 'expo-web-browser';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import LoginSvgComponent from '../../assets/loginSvgComponent.js';
 
@@ -17,12 +17,11 @@ export default function SendFriendRequestAlertId() {
 
   async function sendRequest() {
     navigationRef.current?.goBack()
-    const friendId = await api.get('/friends/getFriendId/'+email)
+    const friendId = await (await api.get(`/friends/getFriendId/${email}`)).data
     await api.post('/friends/add/' + friendId);
   }
 
-
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState("martynas.alekna10@gmail.com")
 
   return (
     <View style={styles.overallContainer}>
@@ -38,9 +37,9 @@ export default function SendFriendRequestAlertId() {
           Enter their email to send them a friend request
         </Text>
 
-        <View style={{alignItems: 'center'}}>
+        <View style={{ alignItems: 'center' }}>
 
-          <TextInput onChangeText={setEmail} value={email} placeholder='Email' style={{backgroundColor: '#F1F6FC', height: 48, width: 150, borderWidth: 0, shadowOffset: { width: 0, height: 2 }, shadowColor: 'black', shadowOpacity: 0.16, borderRadius: 6, fontSize: 15, paddingHorizontal: 20, textAlign: 'left', marginTop: 35,}}/>
+          <TextInput onChangeText={setEmail} autoCapitalize="none" autoCorrect={false} value={email} placeholder='Email' style={{ backgroundColor: '#F1F6FC', height: 48, width: 150, borderWidth: 0, shadowOffset: { width: 0, height: 2 }, shadowColor: 'black', shadowOpacity: 0.16, borderRadius: 6, fontSize: 15, paddingHorizontal: 20, textAlign: 'left', marginTop: 35, }} />
           <TouchableOpacity onPress={sendRequest} style={styles.yesButton}>
             <Text style={styles.loginText}>
               SEND
@@ -111,7 +110,7 @@ const styles = StyleSheet.create({
 
   },
   loginText: {
-    
+
     color: 'white',
     textAlign: 'center',
     fontSize: 20,

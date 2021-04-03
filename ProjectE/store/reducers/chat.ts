@@ -71,7 +71,9 @@ export const fetchMessages = createAsyncThunk(
 export const joinQueue = createAsyncThunk(
     'chat/joinQueue',
     async (_, thunkAPI) => {
-        const response = await api.get('/join_queue');
+        navigationRef.current?.navigate('RandomChat')
+        const response = await api.get('/join_queue')
+
         if (response.data.status === 'found') {
             thunkAPI.dispatch(initQueue(response.data.uid))
         }
