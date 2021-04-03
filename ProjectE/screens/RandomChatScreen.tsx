@@ -77,7 +77,7 @@ export default function RandomChatScreen() {
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
       <RandomChatTopBar user={queue.user} />
-      <Text>{JSON.stringify(queue.user)}</Text>
+      {/* <Text>{JSON.stringify(queue.user)}</Text> */}
       <FriendsChatBox messages={reversed} />
       <FriendsChatScreenBottomBar chatId={queue?.chatId} recipientId={queue.user?.uid} isQueue={true} />
     </KeyboardAvoidingView>

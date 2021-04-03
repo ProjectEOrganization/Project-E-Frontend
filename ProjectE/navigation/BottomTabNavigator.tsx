@@ -95,10 +95,10 @@ function BottomTabNavigator() {
 
     return (
       <>
-        <TouchableOpacity style={{ marginBottom: -20, backgroundColor: 'transparent' }}>
-          <Tooltip ref={skipRef} onPress={onPress} popover={<Text>Skip this person</Text>}>
-            <SvgComponentNav />
-          </Tooltip>
+        <TouchableOpacity onPress={onPress} style={{ marginBottom: -20, backgroundColor: 'transparent' }}>
+          {/* <Tooltip ref={skipRef} onPress={onPress} popover={<Text>Skip this person</Text>}> */}
+          <SvgComponentNav />
+          {/* </Tooltip> */}
         </TouchableOpacity>
       </>
     );
