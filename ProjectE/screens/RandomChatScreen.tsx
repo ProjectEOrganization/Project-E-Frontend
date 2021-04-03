@@ -14,6 +14,8 @@ import { LogBox } from 'react-native';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
 import {api} from '../services/api';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function RandomChatScreen() {
   const auth = useAuth();
@@ -22,6 +24,24 @@ export default function RandomChatScreen() {
 
   useEffect(() => {
     LogBox.ignoreLogs(['Animated: `useNativeDriver`']);
+  }, [])
+  
+  useEffect(() => {
+    async function fetchData() {
+      const newUser = await AsyncStorage.getItem('newUser');
+      if (newUser == "true") {
+        console.log("true!!");
+        // await AsyncStorage.clear()
+        //   .catch(error => console.log(error));
+      } else {
+        console.log("false!!");
+        navigation.navigate('Onboarding');
+        // navigation.navigate('Onboarding');
+        await AsyncStorage.setItem('newUser', 'true')
+          .catch(error => console.log(error));
+      }
+    }
+    fetchData();
   }, [])
 
   const queue = useSelector(state => state.chat.queue);

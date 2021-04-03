@@ -14,6 +14,7 @@ import { api } from '../services/api';
 import { useNavigation } from '@react-navigation/core';
 import {useEffect, useRef} from 'react';
 import { Tooltip } from 'react-native-elements';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function RandomChatTopBar({ user }) {
   const { top } = useSafeAreaInsets();

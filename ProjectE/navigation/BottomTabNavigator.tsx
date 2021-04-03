@@ -23,12 +23,12 @@ import Notifications from '../screens/SettingsScreens/Notifications';
 import Security from '../screens/SettingsScreens/Security'
 import FriendsChatScreen from '../screens/FriendsChatScreen';
 import onBoarding1 from '../screens/Onboarding1';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity, TouchableHighlight, TouchableNativeFeedback } from 'react-native-gesture-handler';
 import { store } from '../store';
 import { joinQueue } from '../store/reducers/chat';
 import { useSelector } from '../hooks';
 import { Pressable, Text } from 'react-native';
-import { Tooltip } from 'react-native-elements';
+import { Tooltip, Button } from 'react-native-elements';
 import { navigationRef } from '.';
 import {useEffect, useRef} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -67,16 +67,19 @@ function BottomTabNavigator() {
     color: string;
   }) {
     return (
-      <TouchableOpacity onPress={checkAuth}>
-        <FontAwesome5 size={25} style={{marginTop: 25}} {...props} />
-        <Text style={{marginTop:5, color: props.color, fontSize:10}}>Friends</Text>
-      </TouchableOpacity>
+      <TouchableNativeFeedback onPress={checkAuth}>
+        <View style={{marginTop: 25}}>
+          <FontAwesome5 size={25} {...props} />
+          <Text style={{marginTop:5, color: props.color, fontSize:10}}>Friends</Text>
+        </View>
+      </TouchableNativeFeedback>
     );
   }
-  
+
   function checkAuth() {
     if (!auth.user) {
       navigation.navigate('LoginModal');
+      console.log('not logged in')
     } else {
       // navigation.navigate('Friends');
       navigationRef.current?.navigate('Friends')
@@ -97,7 +100,7 @@ function BottomTabNavigator() {
   
     return (
       <>
-      <TouchableOpacity style={{ marginBottom: -20, backgroundColor: 'transparent' }}>
+      <TouchableOpacity style={{ marginBottom: -25, backgroundColor: 'transparent' }}>
         <Tooltip ref={skipRef} onPress={onPress} popover={<Text>Skip this person</Text>}>
           <SvgComponentNav />
         </Tooltip>
