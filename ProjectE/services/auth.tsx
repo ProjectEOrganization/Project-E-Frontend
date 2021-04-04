@@ -1,5 +1,5 @@
 //@ts-nocheck
-import React, { useState, useEffect, useContext, createContext } from "react";
+import React, { useState, useEffect, useContext, createContext, useMemo } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { api } from "./api";
 import { firebase } from "./firebase";
@@ -89,10 +89,12 @@ function useProvideAuth() {
             });
     };
 
-    // Subscribe to user on mount
-    // Because this sets state in the callback it will cause any ...
-    // ... component that utilizes this hook to re-render with the ...
-    // ... latest auth object.
+    const loggedIn = useMemo(() => {
+        if (!user?.isAnonymous && user) {
+            return true
+        }
+        return false
+    }, [user])
 
     const init = async (user) => {
         const token = await user.getIdToken();
@@ -125,6 +127,7 @@ function useProvideAuth() {
     // Return the user object and auth methods
     return {
         user,
+        loggedIn,
         signin,
         signInAnonymously,
         signup,
