@@ -9,60 +9,46 @@ import { MonoText } from '../StyledText';
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput } from 'react-native'
 import { store } from '../../store/store';
-import { joinQueue, skip } from '../../store/reducers/chat';
+import { joinQueue, skip, skipQueue } from '../../store/reducers/chat';
 import { batch } from 'react-redux';
 import { navigationRef } from '../../navigation/index';
 
 export default function TheyHadToGoAlert({ path }: { path: string }) {
-  let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-ExtraBold': require('../../assets/fonts/Inter/Inter-ExtraBold.ttf'),
-  });
-
   const onPress = () => {
     navigationRef.current?.goBack();
-    batch(() => {
-      store.dispatch(skip())
-      store.dispatch(joinQueue())
-    })
+    store.dispatch(skipQueue())
   }
-
-  if (!fontsLoaded) {
-    return <View />;
-  } else {
-    return (
-      <View style={styles.overallContainer}>
+  return (
+    <View style={styles.overallContainer}>
 
 
-        <LoginSvgComponent />
-        <View style={{ width: 260, paddingTop: 30, alignItems: 'center' }}>
-          <Text style={styles.firstText}>
-            They had to go :(
+      <LoginSvgComponent />
+      <View style={{ width: 260, paddingTop: 30, alignItems: 'center' }}>
+        <Text style={styles.firstText}>
+          They had to go :(
         </Text>
 
-          {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
-          <Text style={styles.secondText}>
-            This person loved chatting with you, but they had to go do something else
+        {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
+        <Text style={styles.secondText}>
+          This person loved chatting with you, but they had to go do something else
         </Text>
 
 
-          <TouchableOpacity onPress={onPress} style={styles.loginButton}>
-            <Text style={styles.loginText} >
-              Next Person
+        <TouchableOpacity onPress={onPress} style={styles.loginButton}>
+          <Text style={styles.loginText} >
+            Next Person
           </Text>
-          </TouchableOpacity>
+        </TouchableOpacity>
 
-        </View>
+      </View>
 
-        {/* <View
+      {/* <View
           style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
           >
           <MonoText>{path}</MonoText>
         </View> */}
 
-        {/* <Text
+      {/* <Text
           style={styles.getStartedText}
           >
           Change any of the text, save the file, and your app will automatically update.
@@ -76,9 +62,8 @@ export default function TheyHadToGoAlert({ path }: { path: string }) {
           </Text>
         </TouchableOpacity> */}
 
-      </View>
-    );
-  }
+    </View>
+  );
 }
 
 function handleHelpPress() {
