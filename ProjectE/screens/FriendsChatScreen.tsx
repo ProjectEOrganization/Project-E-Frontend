@@ -32,20 +32,26 @@ export default function FriendsChatScreen() {
   const chatSelector = createSelector(
     (state: RootState) => state.chat.chats,
     chat => chat[route.params.id]
-  )
+  );
 
   const chat = useSelector(chatSelector);
+
+  const chatMessagesSelector = createSelector(
+    (state: RootState) => state.chat.chats[route.params.id],
+    (chat) => {
+      if (Array.isArray(chat.messages)) {
+        return chat.messages.reverse();
+      }
+      return []
+    }
+  )
+
+  const chatMessages = useSelector(chatMessagesSelector)
 
   useEffect(() => {
     store.dispatch(fetchMessages({ chatId: route.params.id, userId: route.params.user.uid }))
   }, [])
 
-  const reversed = React.useMemo(() => {
-    if (Array.isArray(chat?.messages)) {
-      return [...chat?.messages].reverse()
-    }
-    return [];
-  }, [chat?.messages])
 
   const Header = () => (
     <View
@@ -96,7 +102,7 @@ export default function FriendsChatScreen() {
   return (
     <KeyboardAvoidingView behavior="padding" style={[styles.container, { flex: 1, width: '100%', paddingTop: top, paddingBottom: 20 }]}>
       <Header />
-      {loading ? <LoadingScreen /> : <FriendsChatBox messages={reversed} />}
+      {loading ? <LoadingScreen /> : <FriendsChatBox messages={chatMessages} />}
       <FriendsChatScreenBottomBar chatId={chat?.id} recipientId={chat.user.uid} />
     </KeyboardAvoidingView>
 

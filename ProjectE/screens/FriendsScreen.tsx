@@ -42,7 +42,6 @@ export default function FriendsScreen() {
   const scrollRef = React.useRef<ScrollView | null>(null);
 
   const auth = useAuth();
-  const socket = useSocket();
 
   const [route, setRoute] = React.useState<"messages" | "friends">("messages")
 
