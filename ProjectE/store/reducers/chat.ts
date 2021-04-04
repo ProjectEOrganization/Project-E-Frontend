@@ -32,7 +32,7 @@ interface IChats {
 }
 
 interface IQueue {
-    status: 'joining' | 'searching' | 'connecting' | "found";
+    status: 'idle' | 'joining' | 'searching' | 'connecting' | "found";
     user: IUser;
     messages: Array<IMessage>;
     chatId: string;
@@ -60,6 +60,14 @@ export const fetchChats = createAsyncThunk(
     }
 )
 
+export const leaveQueue = createAsyncThunk(
+    'chat/leaveQueue',
+    async () => {
+        const response = await api.get('/leave_queue');
+        return response.data
+    }
+)
+
 export const fetchMessages = createAsyncThunk(
     'chat/fetchMessages',
     async ({ chatId, userId }) => {
@@ -81,6 +89,14 @@ export const joinQueue = createAsyncThunk(
     }
 )
 
+export const skipQueue = createAsyncThunk(
+    'chat/skipQueue',
+    (_, thunkAPI) => {
+        thunkAPI.dispatch(skip())
+        thunkAPI.dispatch(joinQueue())
+    }
+)
+
 export const initQueue = createAsyncThunk(
     'chat/initQueue',
     async (uid: string) => {
@@ -97,7 +113,7 @@ const chatSlice = createSlice({
         loadingChats: false,
         loadingMessages: false,
         queue: {
-            status: 'joining',
+            status: 'idle',
             user: {
                 uid: '',
                 displayName: '',
@@ -108,6 +124,7 @@ const chatSlice = createSlice({
     } as IState,
     reducers: {
         addMessage(state, action: { payload: IMessage }) {
+            console.log(action.payload)
             if (action.payload.isQueue) {
                 state.queue.messages.push(action.payload)
                 if (action.payload.chatId in state.chats) {
@@ -205,6 +222,14 @@ const chatSlice = createSlice({
             state.queue.messages = action.payload.messages || []
             state.queue.user = action.payload.user
             state.queue.chatId = action.payload.chatId
+        },
+        [leaveQueue.fulfilled]: (state, action) => {
+            state.queue.status = 'idle'
+            state.queue.user = {
+                uid: '',
+                displayName: ''
+            }
+            state.queue.messages = []
         }
     }
 });
