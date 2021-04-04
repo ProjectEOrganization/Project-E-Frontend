@@ -1,9 +1,9 @@
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
 import LoginSvgComponent from '../assets/loginSvgComponent.js';
 import RandomChatTopBarSvgComponent from '../assets/randomChatTopBarSvgComponent.js';
-
+const { width, height } = Dimensions.get('screen')
 import Colors from '../../constants/Colors';
 import { MonoText } from '../StyledText';
 // import { Text, View } from './Themed';
@@ -12,11 +12,15 @@ import { Text, View, TextInput, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { api } from '../services/api';
 import { useNavigation } from '@react-navigation/core';
-import {useEffect, useRef} from 'react';
+import { useEffect, useRef } from 'react';
 import { Tooltip } from 'react-native-elements';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useAuth } from '../services/auth';
 
 export default function RandomChatTopBar({ user }) {
   const { top } = useSafeAreaInsets();
+
+  const auth = useAuth();
 
   const navigation = useNavigation();
 
@@ -32,8 +36,6 @@ export default function RandomChatTopBar({ user }) {
       const newFriendRef = await AsyncStorage.getItem('newFriendRef');
       if (newFriendRef == "true") {
         console.log("friendRef true");
-        // await AsyncStorage.clear()
-        //   .catch(error => console.log(error));
       } else {
         console.log("friendRef false");
         friendRef.current?.toggleTooltip();
@@ -52,24 +54,20 @@ export default function RandomChatTopBar({ user }) {
       />
       <View style={styles.userNameText}>
         <Text style={styles.secondText}>You are chatting with</Text>
-        <Text style={styles.firstText}>{user?.displayName}</Text>
+        <Text numberOfLines={1} adjustsFontSizeToFit style={styles.firstText}>{user?.displayName}</Text>
         <Text style={[{ color: user?.isActive == true ? 'green' : 'red' }]}>{user?.isActive == 1 ? 'Active' : 'Offline'}</Text>
       </View>
-      <View>
+
+      <View style={{ width: 120 }}>
         <TouchableOpacity onPress={sendFriendRequest} style={styles.loginButton}>
-          <Tooltip ref={friendRef} popover={<Text>Send friend request</Text>}>
-            <RandomChatTopBarSvgComponent />
-            <Text style={styles.loginText}>Let's be Friends</Text>
-          </Tooltip>
+          {/* <Tooltip ref={friendRef} popover={<Text>Send friend request</Text>}> */}
+          <RandomChatTopBarSvgComponent />
+          <Text style={styles.loginText}>Let's be Friends</Text>
+          {/* </Tooltip> */}
         </TouchableOpacity>
       </View>
-    </View>
-  );
-}
 
-function handleHelpPress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet'
+    </View>
   );
 }
 
@@ -80,15 +78,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 30,
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'center',
     shadowOffset: { width: 0, height: 6 },
     shadowColor: '#000000',
     shadowOpacity: 0.05,
   },
   userNameText: {
-    marginRight: 15,
+    flexShrink: 1,
     marginTop: 10,
+    marginHorizontal: 15,
+    width: width - 60 - 120,
   },
   firstText: {
     fontSize: 20,
