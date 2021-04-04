@@ -30,175 +30,166 @@ export default function Register({ path }: { path: string }) {
   };
 
 
-  let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-ExtraBold': require('../../assets/fonts/Inter/Inter-ExtraBold.ttf'),
-  });
 
-  if (!fontsLoaded) {
-    return <View />;
-  } else {
-    return (
-      <View style={styles.overallContainer}>
-        <LoginSvgComponent />
-        <View style={{ width: 260, paddingTop: 30 }}>
-          <Text style={styles.firstText}>Create a New Account</Text>
+  return (
+    <View style={styles.overallContainer}>
+      <LoginSvgComponent />
+      <View style={{ width: 260, paddingTop: 30 }}>
+        <Text style={styles.firstText}>Create a New Account</Text>
 
-          {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
-          <Text style={styles.secondText}>
-            Login or create an account to add friends and chat with them
+        {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
+        <Text style={styles.secondText}>
+          Login or create an account to add friends and chat with them
           </Text>
-          <TextInput
-            // onBlur={() => setFocused({ email: false, password: false })}
-            // onFocus={() => setFocused({ email: false, password: true })}
-            // onChangeText={text => setPassword(text)}
-            autoCapitalize={'none'}
-            autoCorrect={false}
-            secureTextEntry={false}
-            accessibilityElementsHidden={true}
-            caretHidden={true}
-            contextMenuHidden={true}
-            placeholder='Email'
-            onChangeText={(text) => setEmail(text)}
-            placeholderTextColor='#85ACD6'
-            style={{
-              // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
-              // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
-              backgroundColor: '#F1F6FC',
+        <TextInput
+          // onBlur={() => setFocused({ email: false, password: false })}
+          // onFocus={() => setFocused({ email: false, password: true })}
+          // onChangeText={text => setPassword(text)}
+          autoCapitalize={'none'}
+          autoCorrect={false}
+          secureTextEntry={false}
+          accessibilityElementsHidden={true}
+          caretHidden={true}
+          contextMenuHidden={true}
+          placeholder='Email'
+          onChangeText={(text) => setEmail(text)}
+          placeholderTextColor='#85ACD6'
+          style={{
+            // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
+            // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
+            backgroundColor: '#F1F6FC',
 
-              height: 48,
-              // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
-              borderWidth: 0,
-              shadowOffset: { width: 0, height: 2 },
-              shadowColor: 'black',
-              shadowOpacity: 0.16,
-              // height: 44,
-              width: '100%',
-              borderRadius: 6,
-              fontSize: 15,
-              paddingHorizontal: 20,
-              textAlign: 'left',
-              marginTop: 35,
-            }}
-          />
-          
-          <TextInput
-            // onBlur={() => setFocused({ email: false, password: false })}
-            // onFocus={() => setFocused({ email: false, password: true })}
-            // onChangeText={text => setPassword(text)}
-            autoCapitalize={'none'}
-            autoCorrect={false}
-            secureTextEntry={true}
-            accessibilityElementsHidden={true}
-            caretHidden={true}
-            contextMenuHidden={true}
-            onChangeText={(text) => setPassword(text)}
-            placeholder='Password'
-            placeholderTextColor='#85ACD6'
-            style={{
-              // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
-              // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
-              backgroundColor: '#F1F6FC',
+            height: 48,
+            // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
+            borderWidth: 0,
+            shadowOffset: { width: 0, height: 2 },
+            shadowColor: 'black',
+            shadowOpacity: 0.16,
+            // height: 44,
+            width: '100%',
+            borderRadius: 6,
+            fontSize: 15,
+            paddingHorizontal: 20,
+            textAlign: 'left',
+            marginTop: 35,
+          }}
+        />
 
-              height: 48,
-              // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
-              borderWidth: 0,
-              shadowOffset: { width: 0, height: 2 },
-              shadowColor: 'black',
-              shadowOpacity: 0.16,
-              // height: 44,
-              width: '100%',
-              borderRadius: 6,
-              fontSize: 15,
-              paddingHorizontal: 20,
-              textAlign: 'left',
-              marginTop: 15,
-            }}
-          />
-       
-      
-            <Text style={{fontFamily: 'Inter-SemiBold', fontSize: 15, marginTop: 25, color:'#4957FF' }}> What do your friends call you?</Text>
-          <TextInput
-            // onBlur={() => setFocused({ email: false, password: false })}
-            // onFocus={() => setFocused({ email: false, password: true })}
-            // onChangeText={text => setPassword(text)}
-            autoCapitalize={'none'}
-            autoCorrect={false}
-            secureTextEntry={false}
-            accessibilityElementsHidden={true}
-            caretHidden={true}
-            contextMenuHidden={true}
-            placeholder='Display Name'
-            onChangeText={(text) => setDisplayName(text)}
-            placeholderTextColor='#85ACD6'
-            style={{
-              // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
-              // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
-              backgroundColor: '#F1F6FC',
+        <TextInput
+          // onBlur={() => setFocused({ email: false, password: false })}
+          // onFocus={() => setFocused({ email: false, password: true })}
+          // onChangeText={text => setPassword(text)}
+          autoCapitalize={'none'}
+          autoCorrect={false}
+          secureTextEntry={true}
+          accessibilityElementsHidden={true}
+          caretHidden={true}
+          contextMenuHidden={true}
+          onChangeText={(text) => setPassword(text)}
+          placeholder='Password'
+          placeholderTextColor='#85ACD6'
+          style={{
+            // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
+            // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
+            backgroundColor: '#F1F6FC',
 
-              height: 48,
-              // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
-              borderWidth: 0,
-              shadowOffset: { width: 0, height: 2 },
-              shadowColor: 'black',
-              shadowOpacity: 0.16,
-              // height: 44,
-              width: '100%',
-              borderRadius: 6,
-              fontSize: 15,
-              paddingHorizontal: 20,
-              textAlign: 'left',
-              marginTop: 15,
-            }}
-          />
+            height: 48,
+            // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
+            borderWidth: 0,
+            shadowOffset: { width: 0, height: 2 },
+            shadowColor: 'black',
+            shadowOpacity: 0.16,
+            // height: 44,
+            width: '100%',
+            borderRadius: 6,
+            fontSize: 15,
+            paddingHorizontal: 20,
+            textAlign: 'left',
+            marginTop: 15,
+          }}
+        />
 
-          <TouchableOpacity style={styles.loginButton} onPress={onRegister}>
-            <Text style={styles.loginText}>Create Account</Text>
-          </TouchableOpacity>
 
-          <Text
-            style={{
-              fontSize: 10,
-              color: '#A9ACB0',
-              marginTop: 40,
-              fontFamily: 'Inter-Medium',
-            }}
-          >
-            By signing up, you agree to our Terms of Service and acknowledge
-            that you read our Privacy Policy
+        <Text style={{ fontFamily: 'Inter-SemiBold', fontSize: 15, marginTop: 25, color: '#4957FF' }}> What do your friends call you?</Text>
+        <TextInput
+          // onBlur={() => setFocused({ email: false, password: false })}
+          // onFocus={() => setFocused({ email: false, password: true })}
+          // onChangeText={text => setPassword(text)}
+          autoCapitalize={'none'}
+          autoCorrect={false}
+          secureTextEntry={false}
+          accessibilityElementsHidden={true}
+          caretHidden={true}
+          contextMenuHidden={true}
+          placeholder='Display Name'
+          onChangeText={(text) => setDisplayName(text)}
+          placeholderTextColor='#85ACD6'
+          style={{
+            // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
+            // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
+            backgroundColor: '#F1F6FC',
+
+            height: 48,
+            // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
+            borderWidth: 0,
+            shadowOffset: { width: 0, height: 2 },
+            shadowColor: 'black',
+            shadowOpacity: 0.16,
+            // height: 44,
+            width: '100%',
+            borderRadius: 6,
+            fontSize: 15,
+            paddingHorizontal: 20,
+            textAlign: 'left',
+            marginTop: 15,
+          }}
+        />
+
+        <TouchableOpacity style={styles.loginButton} onPress={onRegister}>
+          <Text style={styles.loginText}>Create Account</Text>
+        </TouchableOpacity>
+
+        <Text
+          style={{
+            fontSize: 10,
+            color: '#A9ACB0',
+            marginTop: 40,
+            fontFamily: 'Inter-Medium',
+          }}
+        >
+          By signing up, you agree to our Terms of Service and acknowledge
+          that you read our Privacy Policy
           </Text>
 
-          <Text
-            onPress={() => {
-              navigation.goBack();
-              setTimeout(() => {
-                navigation.navigate('LoginModal')
-              }, 300)
-            }}
-            style={{
-              fontSize: 15,
-              color: '#A9ACB0',
-              marginTop: 25,
-              marginLeft: 15,
-              fontFamily: 'Inter-Medium',
-            }}
-          >
-            Already have an account?{' '}
-            <Text style={{ color: '#4B00FF', fontFamily: 'Inter-SemiBold' }}>
-              Log in
+        <Text
+          onPress={() => {
+            navigation.goBack();
+            setTimeout(() => {
+              navigation.navigate('LoginModal')
+            }, 300)
+          }}
+          style={{
+            fontSize: 15,
+            color: '#A9ACB0',
+            marginTop: 25,
+            marginLeft: 15,
+            fontFamily: 'Inter-Medium',
+          }}
+        >
+          Already have an account?{' '}
+          <Text style={{ color: '#4B00FF', fontFamily: 'Inter-SemiBold' }}>
+            Log in
             </Text>
-          </Text>
-        </View>
+        </Text>
+      </View>
 
-        {/* <View
+      {/* <View
           style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
           >
           <MonoText>{path}</MonoText>
         </View> */}
 
-        {/* <Text
+      {/* <Text
           style={styles.getStartedText}
           >
           Change any of the text, save the file, and your app will automatically update.
@@ -211,9 +202,8 @@ export default function Register({ path }: { path: string }) {
             Tap here if your app doesn't automatically update after making changes
           </Text>
         </TouchableOpacity> */}
-      </View>
-    );
-  }
+    </View>
+  );
 }
 
 function handleHelpPress() {

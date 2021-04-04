@@ -11,47 +11,35 @@ import { Text, View, TextInput } from 'react-native'
 import { navigationRef } from '../../navigation/index';
 
 export default function FriendRequestSentAlert({ path }: { path: string }) {
-  let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-ExtraBold': require('../../assets/fonts/Inter/Inter-ExtraBold.ttf'),
-  });
-
-  if (!fontsLoaded) {
-    return <View />;
-  } else {
-    return (
-      <View style={styles.overallContainer}>
-
-
-        <LoginSvgComponent />
-        <View style={{ width: 260, paddingTop: 30, alignItems: 'center' }}>
-          <Text style={styles.firstText}>
-            Friend Request Sent!
+  return (
+    <View style={styles.overallContainer}>
+      <LoginSvgComponent />
+      <View style={{ width: 260, paddingTop: 30, alignItems: 'center' }}>
+        <Text style={styles.firstText}>
+          Friend Request Sent!
         </Text>
 
-          {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
-          <Text style={styles.secondText}>
-            Once they accept your friend request, you can chat with them in the friends tab by swiping left
+        {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
+        <Text style={styles.secondText}>
+          Once they accept your friend request, you can chat with them in the friends tab by swiping left
         </Text>
 
 
-          <TouchableOpacity onPress={() => navigationRef.current?.goBack()} style={styles.loginButton}>
-            <Text style={styles.loginText} >
-              Sweet!
+        <TouchableOpacity onPress={() => navigationRef.current?.goBack()} style={styles.loginButton}>
+          <Text style={styles.loginText} >
+            Sweet!
           </Text>
-          </TouchableOpacity>
+        </TouchableOpacity>
 
-        </View>
+      </View>
 
-        {/* <View
+      {/* <View
           style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
           >
           <MonoText>{path}</MonoText>
         </View> */}
 
-        {/* <Text
+      {/* <Text
           style={styles.getStartedText}
           >
           Change any of the text, save the file, and your app will automatically update.
@@ -65,14 +53,7 @@ export default function FriendRequestSentAlert({ path }: { path: string }) {
           </Text>
         </TouchableOpacity> */}
 
-      </View>
-    );
-  }
-}
-
-function handleHelpPress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet'
+    </View>
   );
 }
 

@@ -9,18 +9,11 @@ import { MonoText } from '../StyledText';
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput } from 'react-native'
 import { navigationRef } from '../../navigation/index';
-import { joinQueue, skip } from '../../store/reducers/chat';
+import { joinQueue, leaveQueue, skip } from '../../store/reducers/chat';
 import { store } from '../../store/store';
 import { api } from '../../services/api';
 
 export default function SkipConfirmationAlert({ path }: { path: string }) {
-  let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-ExtraBold': require('../../assets/fonts/Inter/Inter-ExtraBold.ttf'),
-  });
-
   const skipAction = () => {
     navigationRef.current?.navigate('RandomChat');
     store.dispatch(joinQueue())
@@ -30,63 +23,57 @@ export default function SkipConfirmationAlert({ path }: { path: string }) {
     navigationRef.current?.navigate('RandomChat');
   }
 
-  async function leaveQueue() {
-    await api.get('/leave_queue')
-      .catch(error => console.log(error));
-
-    store.dispatch(skip())
+  async function leaveQueueAction() {
+    store.dispatch(leaveQueue())
     navigationRef.current?.goBack();
   }
 
-  if (!fontsLoaded) {
-    return <View />;
-  } else {
-    return (
-      <View style={styles.overallContainer}>
+  return (
+    <View style={styles.overallContainer}>
 
 
-        <LoginSvgComponent />
-        <View style={{ width: 260, paddingTop: 30, alignItems: 'center' }}>
-          <Text style={styles.firstText}>
-            Are you sure you{"\n"}want to skip?
+      <LoginSvgComponent />
+      <View style={{ width: 260, paddingTop: 30, alignItems: 'center' }}>
+        <Text style={styles.firstText}>
+          Are you sure you{"\n"}want to skip?
         </Text>
 
-          {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
-          <Text style={styles.secondText}>
-            You will probably never talk to this person ever again.
+        {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
+        <Text style={styles.secondText}>
+          You will probably never talk to this person ever again.
         </Text>
 
-          <View style={{ flex: 1, flexDirection: 'row' }}>
+        <View style={{ flex: 1, flexDirection: 'row' }}>
 
-            <TouchableOpacity onPress={skipAction} style={styles.yesButton}>
-              <Text style={styles.loginText} >
-                Yup
+          <TouchableOpacity onPress={skipAction} style={styles.yesButton}>
+            <Text style={styles.loginText} >
+              Yup
           </Text>
-            </TouchableOpacity>
+          </TouchableOpacity>
 
 
-            <TouchableOpacity onPress={dontSkip} style={styles.noButton}>
-              <Text style={styles.loginText} >
-                Nah
+          <TouchableOpacity onPress={dontSkip} style={styles.noButton}>
+            <Text style={styles.loginText} >
+              Nah
           </Text>
-            </TouchableOpacity>
-
-
-          </View>
-
+          </TouchableOpacity>
 
 
         </View>
-        <Text onPress={leaveQueue} style={{ fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 140, fontSize: 16 }}> Leave Queue </Text>
 
 
-        {/* <View
+
+      </View>
+      <Text onPress={leaveQueueAction} style={{ fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 140, fontSize: 16 }}> Leave Queue </Text>
+
+
+      {/* <View
           style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
           >
           <MonoText>{path}</MonoText>
         </View> */}
 
-        {/* <Text
+      {/* <Text
           style={styles.getStartedText}
           >
           Change any of the text, save the file, and your app will automatically update.
@@ -100,9 +87,8 @@ export default function SkipConfirmationAlert({ path }: { path: string }) {
           </Text>
         </TouchableOpacity> */}
 
-      </View>
-    );
-  }
+    </View>
+  );
 }
 
 function handleHelpPress() {
