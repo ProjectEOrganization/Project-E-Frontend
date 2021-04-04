@@ -23,7 +23,7 @@ export default function SvgComponentNav(){
   <path id="Icon_metro-spinner4" data-name="Icon metro-spinner4" d="M25.453,1.928A22.882,22.882,0,0,0,2.577,24.273C2.842,13.464,11.062,4.788,21.163,4.788c10.268,0,18.592,8.964,18.592,20.022a4.29,4.29,0,1,0,8.581,0A22.882,22.882,0,0,0,25.453,1.928Zm0,45.765A22.882,22.882,0,0,0,48.329,25.348c-.265,10.809-8.484,19.485-18.585,19.485-10.268,0-18.592-8.964-18.592-20.022a4.29,4.29,0,1,0-8.581,0A22.882,22.882,0,0,0,25.453,47.693Z" transform="translate(60.442 56.085)" fill="#fff"/>
 </svg>
 `;
-  const SvgImage = () => <SvgXml xml={svgMarkup} width="89  px"/>;  
+  const SvgImage = () => <SvgXml xml={svgMarkup} width="140  px"/>;  
 
   return <SvgImage />;
 }

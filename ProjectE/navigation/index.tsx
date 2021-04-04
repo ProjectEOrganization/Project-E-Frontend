@@ -20,7 +20,7 @@ import { popupEffect } from './effects/popupEffect';
 import LinkingConfiguration from './LinkingConfiguration';
 import SendFriendRequestAlertId from '../components/Alerts/SendFriendRequestAlert';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { useNavigation } from '@react-navigation/core';
 
 export const navigationRef = React.createRef<NavigationContainerRef>();
 
