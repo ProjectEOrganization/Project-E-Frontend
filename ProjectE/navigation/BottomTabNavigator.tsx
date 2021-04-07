@@ -74,7 +74,7 @@ function BottomTabNavigator() {
   }
 
   function checkAuth() {
-    if (!auth.user) {
+    if (!auth.user || auth.user.isAnonymous) {
       navigation.navigate('LoginModal');
       console.log('not logged in')
     } else {

@@ -6,38 +6,26 @@ import { useFonts } from 'expo-font';
 import { Text, View, TextInput, Image } from 'react-native';
 
 export default function FriendsPageSwitch({ onChange }: { onChange: () => void }) {
-
-  let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-ExtraBold': require('../../assets/fonts/Inter/Inter-ExtraBold.ttf'),
-  });
-
-  if (!fontsLoaded) {
-    return <View />;
-  } else {
-    return (
-      <View style={styles.overallContainer}>
-        <SwitchSelector
-          initial={0}
-          onPress={(value: string) => onChange(value)}
-          textColor={'#21293A'} //'#7a44cf'
-          selectedColor={'#FFFFFF'}
-          buttonColor={'#4B00FF'}
-          borderColor={'transparent'}
-          height={50}
-          textStyle={{ fontSize: 12, fontFamily: 'Inter-SemiBold' }}
-          selectedTextStyle={{ fontSize: 12, fontFamily: 'Inter-SemiBold' }}
-          hasPadding
-          options={[
-            { label: 'Messages', value: 'messages' },
-            { label: 'Friends', value: 'friends' },
-          ]}
-        />
-      </View>
-    );
-  }
+  return (
+    <View style={styles.overallContainer}>
+      <SwitchSelector
+        initial={0}
+        onPress={(value: string) => onChange(value)}
+        textColor={'#21293A'} //'#7a44cf'
+        selectedColor={'#FFFFFF'}
+        buttonColor={'#4B00FF'}
+        borderColor={'transparent'}
+        height={50}
+        textStyle={{ fontSize: 12, fontFamily: 'Inter-SemiBold' }}
+        selectedTextStyle={{ fontSize: 12, fontFamily: 'Inter-SemiBold' }}
+        hasPadding
+        options={[
+          { label: 'Messages', value: 'messages' },
+          { label: 'Friends', value: 'friends' },
+        ]}
+      />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

@@ -39,14 +39,11 @@ export default function FriendsChatBox({ messages }: { messages: Array<IMessage>
         <ChatBubble
           {...item}
           content={item.content}
-          user={auth.user.uid !== item.sentBy ? 'opposingUser' : 'currentUser'}
+          user={auth.user?.uid !== item.sentBy ? 'opposingUser' : 'currentUser'}
           pending={item?.pending}
         />
       )}
       onEndReachedThreshold={0.1}
-      onEndReached={() => {
-        console.log('load more messages')
-      }}
       keyExtractor={item => (`message-${item?.id || item.sentAt}`)}
     />
   );

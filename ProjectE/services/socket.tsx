@@ -24,8 +24,10 @@ export const useSocket = () => {
     return React.useContext(SocketContext);
 };
 
-function useProvideSocket(): Socket {
+function useProvideSocket() {
     const [socket, setSocket] = useState<Socket>(null);
+    const [connected, setConnected] = useState(false);
+
     const auth = useAuth();
 
     useEffect(() => {
@@ -38,7 +40,11 @@ function useProvideSocket(): Socket {
             })
 
             socket.on('connect', () => {
-                console.log('connected')
+                setConnected(true);
+            })
+
+            socket.on('disconnect', () => {
+                setConnected(false)
             })
 
             socket.on('friend_request', (user) => {
@@ -47,6 +53,7 @@ function useProvideSocket(): Socket {
             })
 
             socket.on('message', (msg: IMessage) => {
+                console.log('socket addMessage')
                 store.dispatch(addMessage(msg))
             })
 
@@ -81,5 +88,8 @@ function useProvideSocket(): Socket {
         }
     }, [auth, navigationRef, store]);
 
-    return socket
+    return {
+        socket,
+        connected
+    }
 }

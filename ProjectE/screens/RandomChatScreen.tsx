@@ -2,75 +2,61 @@ import React, { useEffect } from 'react';
 import { ActivityIndicator, Button, KeyboardAvoidingView, StyleSheet } from 'react-native';
 import { Text, View } from '../components/Themed';
 import RandomChatTopBar from '../components/RandomChatTopBar';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useNavigationState } from '@react-navigation/native';
 import FriendsChatScreenBottomBar from '../components/Friends/FriendsChatScreenBottomBar';
 import FriendsChatBox from '../components/Friends/FriendsChatBox';
 import { useAuth } from '../services/auth';
 import { useSocket } from '../services/socket';
 import { useSelector } from '../hooks';
-import { store } from '../store';
-import { initQueue } from '../store/reducers/chat';
+import { RootState, store } from '../store';
+import { initQueue, joinQueue, leaveQueue } from '../store/reducers/chat';
 import { LogBox } from 'react-native';
 import AnimatedEllipsis from 'react-native-animated-ellipsis';
 import { api } from '../services/api';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createSelector } from 'reselect';
 
+LogBox.ignoreLogs(['Animated: `useNativeDriver`']);
 
 export default function RandomChatScreen() {
   const auth = useAuth();
   const navigation = useNavigation();
-  const socket = useSocket();
-
-  useEffect(() => {
-    LogBox.ignoreLogs(['Animated: `useNativeDriver`']);
-  }, [])
-  
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const newUser = await AsyncStorage.getItem('newUser');
-  //     if (newUser == "true") {
-  //       console.log("true!!");
-  //       // await AsyncStorage.clear()
-  //       //   .catch(error => console.log(error));
-  //     } else {
-  //       console.log("false!!");
-  //       navigation.navigate('Onboarding');
-  //       // navigation.navigate('Onboarding');
-  //       await AsyncStorage.setItem('newUser', 'true')
-  //         .catch(error => console.log(error));
-  //     }
-  //   }
-  //   fetchData();
-  // }, [])
+  const { connected } = useSocket();
 
   const queue = useSelector(state => state.chat.queue);
 
-  const reversed = React.useMemo(() => {
-    if (Array.isArray(queue?.messages)) {
-      return [...queue?.messages].reverse()
+  const queueMessagesSelector = createSelector(
+    (state: RootState) => state.chat.queue,
+    (queue) => {
+      if (Array.isArray(queue.messages)) {
+        return queue.messages.reverse();
+      }
+      return []
     }
-    return []
-  }, [queue?.messages])
+  )
+
+  const queueMessages = useSelector(queueMessagesSelector)
+
+  useEffect(() => {
+    if (connected === true) {
+      store.dispatch(joinQueue())
+    }
+  }, [connected, auth])
+
+  function leaveQueueAction() {
+    store.dispatch(leaveQueue())
+  }
+
+  const colors = [
+    '#2D7CDB',
+    '#BA2DDB',
+    '#2DDBC0'
+  ];
+
+  const random = Math.floor(Math.random() * colors.length);
+  const random1 = colors[random]
 
   if (queue.status !== 'found') {
-
-    const colors = [
-      '#2D7CDB',
-      '#BA2DDB',
-      '#2DDBC0'
-
-    ];
-
-    const random = Math.floor(Math.random() * colors.length);
-    const random1 = colors[random]
-
-    async function leaveQueue() {
-      await api.get('/leave_queue')
-        .catch(error => console.log(error));
-      navigation.navigate('Friends');
-    }
-
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#F1F6FC' }}>
         <View style={{
@@ -86,19 +72,17 @@ export default function RandomChatScreen() {
           <Text style={{ fontSize: 35, marginTop: 10 }}>🐙</Text>
         </View>
 
-        <TouchableOpacity onPress={leaveQueue}>
+        <TouchableOpacity onPress={leaveQueueAction}>
           <Text style={{ fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 30, fontSize: 16 }}> Leave Queue </Text>
         </TouchableOpacity>
       </View>
     )
   }
 
-
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
       <RandomChatTopBar user={queue.user} />
-      {/* <Text>{JSON.stringify(queue.user)}</Text> */}
-      <FriendsChatBox messages={reversed} />
+      <FriendsChatBox messages={queueMessages} />
       <FriendsChatScreenBottomBar chatId={queue?.chatId} recipientId={queue.user?.uid} isQueue={true} />
     </KeyboardAvoidingView>
   );
