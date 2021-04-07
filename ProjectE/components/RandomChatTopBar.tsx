@@ -58,10 +58,10 @@ export default function RandomChatTopBar({ user }) {
       </View>
       <View>
         <TouchableOpacity onPress={sendFriendRequest} style={styles.loginButton}>
-          <Tooltip ref={friendRef} popover={<Text>Send friend request</Text>}>
+          {/* <Tooltip ref={friendRef} popover={<Text>Send friend request</Text>}> */}
             <RandomChatTopBarSvgComponent />
             <Text style={styles.loginText}>Let's be Friends</Text>
-          </Tooltip>
+          {/* </Tooltip> */}
         </TouchableOpacity>
       </View>
     </View>
