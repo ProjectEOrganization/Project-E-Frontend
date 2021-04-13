@@ -125,8 +125,8 @@ const chatSlice = createSlice({
     } as IState,
     reducers: {
         addMessage(state, action: { payload: IMessage }) {
-            if (action.payload.isQueue) {
-                state.queue.messages.push(action.payload)
+            if (action.payload.isQueue === true) {
+                state.queue.messages.unshift(action.payload)
                 if (action.payload.chatId in state.chats) {
                     state.chats[action.payload.chatId].content = action.payload.content;
                     state.chats[action.payload.chatId].sentAt = action.payload.sentAt;
@@ -137,7 +137,7 @@ const chatSlice = createSlice({
                 if (routeName !== 'FriendsChatScreen') {
                     state.chats[action.payload.chatId].missed += 1;
                 }
-                state.chats[action.payload.chatId].messages.push(action.payload);
+                state.chats[action.payload.chatId].messages.unshift(action.payload);
                 state.chats[action.payload.chatId].content = action.payload.content;
                 state.chats[action.payload.chatId].sentAt = action.payload.sentAt;
             }

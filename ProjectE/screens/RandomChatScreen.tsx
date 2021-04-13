@@ -18,20 +18,20 @@ import { createSelector } from 'reselect';
 
 LogBox.ignoreLogs(['Animated: `useNativeDriver`']);
 
+const queueMessagesSelector = createSelector(
+  (state: RootState) => state.chat.queue,
+  (queue) => {
+    if (Array.isArray(queue.messages)) {
+      return queue.messages
+    }
+    return []
+  }
+)
+
 export default function RandomChatScreen() {
   const auth = useAuth();
   const navigation = useNavigation();
   const { connected } = useSocket();
-
-  const queueMessagesSelector = createSelector(
-    (state: RootState) => state.chat.queue,
-    (queue) => {
-      if (Array.isArray(queue.messages)) {
-        return queue.messages
-      }
-      return []
-    }
-  )
 
   const queue = useSelector(state => state.chat.queue);
 
@@ -87,7 +87,7 @@ export default function RandomChatScreen() {
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
       <RandomChatTopBar user={queue.user} />
       <Text>{auth.user?.uid}</Text>
-      <FriendsChatBox messages={[...queueMessages].reverse()} />
+      <FriendsChatBox messages={queueMessages} />
       <FriendsChatScreenBottomBar chatId={queue?.chatId} recipientId={queue.user?.uid} isQueue={true} />
     </KeyboardAvoidingView>
   );

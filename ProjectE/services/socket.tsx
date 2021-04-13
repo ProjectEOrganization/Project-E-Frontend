@@ -26,14 +26,22 @@ export const useSocket = () => {
 
 function useProvideSocket() {
     const [socket, setSocket] = useState<Socket>(null);
+    const [token, setToken] = useState(null);
     const [connected, setConnected] = useState(false);
 
     const auth = useAuth();
 
     useEffect(() => {
-        const setup = async () => {
-            const token = await AsyncStorage.getItem('token') || await auth.user.getIdToken();
+        (async () => {
+            if (auth.user.getIdToken) {
+                const token = await AsyncStorage.getItem('token') || await auth.user.getIdToken();
+                setToken(token)
+            }
+        })()
+    }, [auth, navigationRef])
 
+    useEffect(() => {
+        if (token) {
             const socket = io(config.SOCKET_URL, {
                 transports: ["websocket"],
                 query: { token }
@@ -53,6 +61,7 @@ function useProvideSocket() {
             })
 
             socket.on('message', (msg: IMessage) => {
+                alert('add')
                 store.dispatch(addMessage(msg))
             })
 
@@ -78,14 +87,18 @@ function useProvideSocket() {
             })
             setSocket(socket);
         }
-        if (auth.user?.getIdToken) setup();
         return () => {
+            socket?.off('connect')
+            socket?.off('disconnect')
+            socket?.off('friend_request')
             socket?.off('message')
+            socket?.off('isActive')
             socket?.off('skip')
             socket?.off('queue')
-            socket?.close();
+            socket?.off('friend_request_accepted')
+            socket?.off('friend_request_declined')
         }
-    }, [auth, navigationRef, store]);
+    }, [token]);
 
     return {
         socket,

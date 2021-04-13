@@ -27,8 +27,6 @@ export default function FriendsChatBox({ messages }: { messages: Array<IMessage>
     )
   }
 
-  // console.log(messages)
-
   return (
     <FlatList
       style={[styles.container]}

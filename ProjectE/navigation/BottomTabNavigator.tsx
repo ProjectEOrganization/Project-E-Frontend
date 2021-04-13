@@ -55,7 +55,7 @@ function BottomTabNavigator() {
       }
     }
     fetchData();
-  })
+  }, [])
 
   // useEffect(() => {
   //   skipRef.current?.toggleTooltip();

@@ -17,6 +17,7 @@ import { useAuth } from '../../services/auth';
 export default function FriendsChatScreenBottomBar({ recipientId, isQueue, chatId }: { recipientId: string, isQueue?: boolean, chatId: string }) {
   const [message, setMessage] = useState("");
   const auth = useAuth();
+
   const onSend = (content: any) => {
     const sentAt = Date.now();
     store.dispatch(addMessage({
