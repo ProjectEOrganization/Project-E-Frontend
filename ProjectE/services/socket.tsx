@@ -53,7 +53,6 @@ function useProvideSocket() {
             })
 
             socket.on('message', (msg: IMessage) => {
-                console.log('socket addMessage')
                 store.dispatch(addMessage(msg))
             })
 

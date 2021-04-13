@@ -1,5 +1,6 @@
 //@ts-nocheck
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { Alert } from "react-native";
 import { navigationRef } from "../../navigation";
 import { api } from "../../services/api";
 import { store } from "../store";
@@ -124,7 +125,6 @@ const chatSlice = createSlice({
     } as IState,
     reducers: {
         addMessage(state, action: { payload: IMessage }) {
-            console.log(action.payload)
             if (action.payload.isQueue) {
                 state.queue.messages.push(action.payload)
                 if (action.payload.chatId in state.chats) {
@@ -145,7 +145,7 @@ const chatSlice = createSlice({
         setMessageDelivered(state, action: { payload: IMessage }) {
             if (action.payload.isQueue === true) {
                 const index = state.queue.messages.findIndex(item => item.sentAt === action.payload.sentAt);
-                if (index !== 1) {
+                if (index !== -1) {
                     state.queue.messages[index] = action.payload
                 }
             }

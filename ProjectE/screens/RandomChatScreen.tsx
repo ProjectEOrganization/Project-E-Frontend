@@ -23,25 +23,25 @@ export default function RandomChatScreen() {
   const navigation = useNavigation();
   const { connected } = useSocket();
 
-  const queue = useSelector(state => state.chat.queue);
-
   const queueMessagesSelector = createSelector(
     (state: RootState) => state.chat.queue,
     (queue) => {
       if (Array.isArray(queue.messages)) {
-        return queue.messages.reverse();
+        return queue.messages
       }
       return []
     }
   )
 
+  const queue = useSelector(state => state.chat.queue);
+
   const queueMessages = useSelector(queueMessagesSelector)
 
   useEffect(() => {
-    if (connected === true) {
+    if (connected === true && queue.status === 'idle') {
       store.dispatch(joinQueue())
     }
-  }, [connected, auth])
+  }, [connected, auth, queue])
 
   function leaveQueueAction() {
     store.dispatch(leaveQueue())
@@ -66,15 +66,19 @@ export default function RandomChatScreen() {
         }}>
 
           <Text style={{ fontFamily: 'Inter-Bold', fontSize: 20, marginTop: 25, color: 'white', marginBottom: -10 }}>{queue.status == "searching" ? "Finding Someone Awesome" : queue.status}</Text>
-          <AnimatedEllipsis style={{ fontSize: 40, color: 'white' }} />
+          {queue.status !== 'idle' && (
+            <AnimatedEllipsis style={{ fontSize: 40, color: 'white' }} />
+          )}
 
           <Text style={{ fontFamily: 'Inter-Bold', fontSize: 13, marginTop: 25, color: 'white' }}>In the meantime, say Hello to Wocto</Text>
           <Text style={{ fontSize: 35, marginTop: 10 }}>🐙</Text>
         </View>
 
-        <TouchableOpacity onPress={leaveQueueAction}>
-          <Text style={{ fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 30, fontSize: 16 }}> Leave Queue </Text>
-        </TouchableOpacity>
+        {queue.status === 'searching' && (
+          <TouchableOpacity onPress={leaveQueueAction}>
+            <Text style={{ fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 30, fontSize: 16 }}> Leave Queue </Text>
+          </TouchableOpacity>
+        )}
       </View>
     )
   }
@@ -82,7 +86,8 @@ export default function RandomChatScreen() {
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
       <RandomChatTopBar user={queue.user} />
-      <FriendsChatBox messages={queueMessages} />
+      <Text>{auth.user?.uid}</Text>
+      <FriendsChatBox messages={[...queueMessages].reverse()} />
       <FriendsChatScreenBottomBar chatId={queue?.chatId} recipientId={queue.user?.uid} isQueue={true} />
     </KeyboardAvoidingView>
   );

@@ -40,7 +40,7 @@ export default function FriendsChatScreen() {
     (state: RootState) => state.chat.chats[route.params.id],
     (chat) => {
       if (Array.isArray(chat.messages)) {
-        return chat.messages.reverse();
+        return chat.messages
       }
       return []
     }
@@ -102,7 +102,7 @@ export default function FriendsChatScreen() {
   return (
     <KeyboardAvoidingView behavior="padding" style={[styles.container, { flex: 1, width: '100%', paddingTop: top, paddingBottom: 20 }]}>
       <Header />
-      {loading ? <LoadingScreen /> : <FriendsChatBox messages={chatMessages} />}
+      {loading ? <LoadingScreen /> : <FriendsChatBox messages={[...chatMessages].reverse()} />}
       <FriendsChatScreenBottomBar chatId={chat?.id} recipientId={chat.user.uid} />
     </KeyboardAvoidingView>
 
