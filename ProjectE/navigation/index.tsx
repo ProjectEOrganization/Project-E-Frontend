@@ -11,6 +11,8 @@ import TheyHadToGoModal from '../components/Modals/TheyHadToGoModal';
 import YouAreNowFriendsModal from '../components/Modals/YouAreNowFriendsModal';
 import FriendRequestSentModal from '../components/Modals/FriendRequestSentModal';
 import SendFriendRequestModal from '../components/Modals/SendFriendRequestModal'
+import ReferralModal from '../components/Modals/ReferralModal'
+import ChillzoneModal from '../components/Modals/ChillzoneModal'
 import Onboarding1 from '../screens/Onboarding1'
 
 import NotFoundScreen from '../screens/NotFoundScreen';
@@ -54,6 +56,16 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
         <Stack.Screen
           name='LoginModal'
           component={LoginModal}
+          options={{ ...popupEffect }}
+        />
+         <Stack.Screen
+          name='ReferralModal'
+          component={ReferralModal}
+          options={{ ...popupEffect }}
+        />
+        <Stack.Screen
+          name='ChillzoneModal'
+          component={ChillzoneModal}
           options={{ ...popupEffect }}
         />
         <Stack.Screen

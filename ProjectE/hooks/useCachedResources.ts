@@ -21,6 +21,7 @@ export default function useCachedResources() {
           'Inter-Bold': require('../assets/fonts/Inter/Inter-Bold.ttf'),
           'Inter-Regular': require('../assets/fonts/Inter/Inter-Regular.ttf'),
           'Inter-SemiBold': require('../assets/fonts/Inter/Inter-SemiBold.ttf'),
+          'Inter-ExtraBold': require('../assets/fonts/Inter/Inter-ExtraBold.ttf'),
         });
         console.log('your fonts loaded!')
       } catch (e) {

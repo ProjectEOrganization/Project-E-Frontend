@@ -83,6 +83,10 @@ export default function Settings() {
             <Text style={styles.settingsText} onPress={() => Linking.openURL('http://rapidapp.live/support')} >Support</Text>
           </TouchableOpacity>
 
+          <TouchableOpacity onPress={() => navigation.navigate('ReferralModal')}>
+            <Text style={styles.settingsText} >Referrals</Text>
+          </TouchableOpacity>
+
           {/* <Text style={styles.settingsText}>Customization</Text>
           <SettingsPageSwitch /> */}
 

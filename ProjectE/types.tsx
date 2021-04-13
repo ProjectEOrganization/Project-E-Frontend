@@ -2,6 +2,8 @@ export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
   LoginModal: undefined;
+  ReferralModal: undefined;
+  ChillzoneModal: undefined;
   RegisterModal: undefined;
   FriendRequestReceivedModal: undefined;
 };
