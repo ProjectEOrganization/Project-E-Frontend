@@ -11,15 +11,17 @@ import { useAuth } from '../../services/auth';
 import { api } from '../../services/api';
 import { useSocket } from '../../services/socket';
 import { useNavigation } from '@react-navigation/core';
+import ChillzoneModal from '../Modals/ChillzoneModal.js';
 export default function Referral({ path }: { path?: string }) {
   const auth = useAuth();
+  const navigation = useNavigation();
 
   const [input, setInput] = useState('');
 
 
   const onCheck = () => {
     if (input === "chillzone"){
-        //navigate to next modal
+        navigation.navigate('ChillzoneModal');
         console.log('ok')
     }else{
         console.log('notok')
@@ -27,7 +29,6 @@ export default function Referral({ path }: { path?: string }) {
     }
 
   };
-  const navigation = useNavigation();
   return (
     <View style={styles.overallContainer}>
       <LoginSvgComponent />

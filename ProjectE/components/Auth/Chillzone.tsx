@@ -11,23 +11,31 @@ import { useAuth } from '../../services/auth';
 import { api } from '../../services/api';
 import { useSocket } from '../../services/socket';
 import { useNavigation } from '@react-navigation/core';
+
 export default function Chillzone({ path }: { path?: string }) {
   const auth = useAuth();
+  const navigation = useNavigation();
 
   const [input, setInput] = useState('');
 
 
-  const onCheck = () => {
-    if (input === "chillzone"){
-        //navigate to next modal
-        console.log('ok')
-    }else{
-        console.log('notok')
-        //display error message to user
-    }
-
+  async function activate() {
+    const response = await fetch('https://8xur9vaqxj.execute-api.us-east-2.amazonaws.com/prod', {
+      method: 'POST',
+      mode: 'cors', // no-cors, *cors, same-origin
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'same-origin', // include, *same-origin, omit
+      headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: 'follow', // manual, *follow, error
+      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify({UID: input})
+    });
+    console.log(response.json());
   };
-  const navigation = useNavigation();
+
   return (
     <View style={styles.overallContainer}>
       <LoginSvgComponent />
@@ -71,33 +79,12 @@ export default function Chillzone({ path }: { path?: string }) {
             marginTop: 35,
           }}
         />
-
         
-
-        <TouchableOpacity onPress={onCheck} style={styles.loginButton}>
+        <TouchableOpacity onPress={activate} style={styles.loginButton}>
           <Text style={styles.loginText}>Activate</Text>
         </TouchableOpacity>
       </View>
 
-      {/* <View
-          style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
-          >
-          <MonoText>{path}</MonoText>
-        </View> */}
-
-      {/* <Text
-          style={styles.getStartedText}
-          >
-          Change any of the text, save the file, and your app will automatically update.
-        </Text>
-      </View>
-​
-      <View style={styles.helpContainer}>
-        <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-          <Text style={styles.helpLinkText} >
-            Tap here if your app doesn't automatically update after making changes
-          </Text>
-        </TouchableOpacity> */}
     </View>
   );
 }
