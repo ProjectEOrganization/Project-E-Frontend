@@ -20,7 +20,7 @@ export default function Chillzone({ path }: { path?: string }) {
 
 
   async function activate() {
-    const response = await fetch('https://8xur9vaqxj.execute-api.us-east-2.amazonaws.com/prod', {
+    fetch('https://8xur9vaqxj.execute-api.us-east-2.amazonaws.com/prod', {
       method: 'POST',
       mode: 'cors', // no-cors, *cors, same-origin
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -32,8 +32,9 @@ export default function Chillzone({ path }: { path?: string }) {
       redirect: 'follow', // manual, *follow, error
       referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
       body: JSON.stringify({UID: input})
-    });
-    console.log(response.json());
+    })
+    .then(response => response.json())
+    .then(data => console.log(data));;
   };
 
   return (
