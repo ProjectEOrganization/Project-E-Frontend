@@ -11,7 +11,7 @@ import FriendsMessagesCard from './FriendsMessagesCard'
 
 const chatsSelector = createSelector(
     (state: RootState) => state.chat.chats,
-    chats => Object.values(chats)
+    chats => Object.values(chats).sort((a, b) => b.sentAt - a.sentAt)
 )
 
 export default function FriendsChatList() {
