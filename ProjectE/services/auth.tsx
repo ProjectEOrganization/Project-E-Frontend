@@ -90,7 +90,7 @@ function useProvideAuth() {
     };
 
     const loggedIn = useMemo(() => {
-        if (!user?.isAnonymous && user) {
+        if (!user?.isAnonymous && !!user) {
             return true
         }
         return false
