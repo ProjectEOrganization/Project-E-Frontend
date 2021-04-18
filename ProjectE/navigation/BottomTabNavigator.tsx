@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useAuth } from '../services/auth';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useNavigationState } from '@react-navigation/native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -85,8 +85,15 @@ function BottomTabNavigator() {
 
   function Icon() {
     const queue = useSelector(state => state.chat.queue);
+    const state = useNavigationState(state => state.index)
     const onPress = () => {
-      if (queue.status === 'found') {
+      if (state !== 1 && queue.status === 'idle') {
+        store.dispatch(joinQueue())
+      }
+      else if (state !== 1) {
+        navigation.navigate('RandomChat')
+      }
+      else if (queue.status === 'found') {
         navigationRef.current?.navigate('SkipConfirmationModal')
       }
       else {

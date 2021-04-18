@@ -8,21 +8,35 @@ import { MonoText } from '../StyledText';
 // import { Text, View } from './Themed';
 import { useFonts } from 'expo-font';
 import { api } from '../../services/api';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { Text, View, TextInput } from 'react-native'
 import { navigationRef } from '../../navigation';
 import { store } from '../../store/store';
-import { addChat } from '../../store/reducers/chat';
+import { addChat, makeFriends } from '../../store/reducers/chat';
+import { useAuth } from '../../services/auth';
 
 export default function FriendRequestReceivedAlert({ friendId }) {
-
+  const navigation = useNavigation();
+  const auth = useAuth();
   async function acceptRequest() {
     navigationRef.current?.goBack()
-    api.post('/friends/accept/' + friendId).then((res) => {
-      console.log(res.data.chat)
-      store.dispatch(addChat(res.data.chat))
-    });
+    if (auth.user.isAnonymous) {
+      navigation.navigate('LoginModal', {
+        actionAfter: {
+          name: 'accept_friends_request',
+          data: {
+            uid: friendId
+          }
+        }
+      })
+    }
+    else {
+      api.post('/friends/accept/' + friendId).then((res) => {
+        store.dispatch(addChat(res.data.chat))
+        store.dispatch(makeFriends())
+      });
+    }
   }
   async function rejectRequest() {
     navigationRef.current?.goBack()

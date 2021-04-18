@@ -16,11 +16,12 @@ import { useEffect, useRef } from 'react';
 import { Tooltip } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuth } from '../services/auth';
+import { useSelector } from '../hooks/useSelector';
 
-export default function RandomChatTopBar({ user }) {
+export default function RandomChatTopBar() {
   const { top } = useSafeAreaInsets();
 
-  const auth = useAuth();
+  const user = useSelector(state => state.chat.queue.user);
 
   const navigation = useNavigation();
 
@@ -59,15 +60,19 @@ export default function RandomChatTopBar({ user }) {
       </View>
 
       <View style={{ width: 120 }}>
-        <TouchableOpacity onPress={sendFriendRequest} style={styles.loginButton}>
-          {/* <Tooltip ref={friendRef} popover={<Text>Send friend request</Text>}> */}
-          <RandomChatTopBarSvgComponent />
-          <Text style={styles.loginText}>Let's be Friends</Text>
-          {/* </Tooltip> */}
-        </TouchableOpacity>
+        {user?.isFriends ? null : (
+          <>
+            <TouchableOpacity onPress={sendFriendRequest} style={styles.loginButton}>
+              {/* <Tooltip ref={friendRef} popover={<Text>Send friend request</Text>}> */}
+              <RandomChatTopBarSvgComponent />
+              <Text style={styles.loginText}>Let's be Friends</Text>
+              {/* </Tooltip> */}
+            </TouchableOpacity>
+          </>
+        )}
       </View>
 
-    </View>
+    </View >
   );
 }
 

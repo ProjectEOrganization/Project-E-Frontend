@@ -70,7 +70,6 @@ export default function RandomChatScreen() {
           <Text style={{ fontFamily: 'Inter-Bold', fontSize: 13, marginTop: 25, color: 'white' }}>In the meantime, say Hello to Wocto</Text>
           <Text style={{ fontSize: 35, marginTop: 10 }}>🐙</Text>
 
-          {queue.status === 'idle' && <Button color="red" title="Join the queue" onPress={() => store.dispatch(joinQueue())} />}
         </View>
 
         {queue.status === 'searching' && (
@@ -78,7 +77,13 @@ export default function RandomChatScreen() {
             <Text style={{ fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 30, fontSize: 16 }}> Leave Queue </Text>
           </TouchableOpacity>
         )}
-      </View>
+        {queue.status === 'idle' && (
+          <TouchableOpacity onPress={() => store.dispatch(joinQueue())}>
+            <Text style={{ fontFamily: 'Inter-SemiBold', color: 'red', marginTop: 30, fontSize: 16 }}>Join the queue</Text>
+          </TouchableOpacity>
+        )
+        }
+      </View >
     )
   }
 

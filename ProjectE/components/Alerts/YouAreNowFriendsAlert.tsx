@@ -14,7 +14,6 @@ export default function YouAreNowFriendsAlert({ path }: { path: string }) {
   return (
     <View style={styles.overallContainer}>
 
-
       <LoginSvgComponent />
       <View style={{ width: 260, paddingTop: 30, alignItems: 'center' }}>
         <Text style={styles.firstText}>

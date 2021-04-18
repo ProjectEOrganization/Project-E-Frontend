@@ -7,7 +7,7 @@ import config from './config';
 
 import { navigationRef } from '../navigation'
 import { store } from '../store';
-import { addChat, addMessage, changeIsActive, IChat, IisActiveEvent, initQueue } from '../store/reducers/chat';
+import { addChat, addMessage, changeIsActive, IChat, IisActiveEvent, initQueue, makeFriends } from '../store/reducers/chat';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SocketContext = React.createContext<Socket>();
@@ -78,6 +78,7 @@ function useProvideSocket() {
 
             socket.on('friend_request_accepted', ({ uid, chat }: { uid: string, chat: IChat }) => {
                 store.dispatch(addChat(chat))
+                store.dispatch(makeFriends())
                 navigationRef.current?.navigate('YouAreNowFriendsModal', { uid })
             })
 

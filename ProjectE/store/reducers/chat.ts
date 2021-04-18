@@ -17,6 +17,7 @@ interface IUser {
     displayName: string;
     uid: string;
     isActive?: boolean;
+    isFriends: boolean;
 }
 export interface IChat {
     content: string;
@@ -117,7 +118,8 @@ const chatSlice = createSlice({
             user: {
                 uid: '',
                 displayName: '',
-                isActive: true
+                isActive: true,
+                isFriends: false
             },
             chatId: ''
         }
@@ -125,7 +127,9 @@ const chatSlice = createSlice({
     reducers: {
         addMessage(state, action: { payload: IMessage }) {
             if (action.payload.isQueue === true) {
-                state.queue.messages.unshift(action.payload)
+                if (state.queue.messages.findIndex(item => item.id === action.payload.id) === -1) {
+                    state.queue.messages.unshift(action.payload)
+                }
                 if (action.payload.chatId in state.chats) {
                     state.chats[action.payload.chatId].content = action.payload.content;
                     state.chats[action.payload.chatId].sentAt = action.payload.sentAt;
@@ -136,7 +140,9 @@ const chatSlice = createSlice({
                 if (routeName !== 'FriendsChatScreen') {
                     state.chats[action.payload.chatId].missed += 1;
                 }
-                state.chats[action.payload.chatId].messages.unshift(action.payload);
+                if (state.chats[action.payload.chatId].messages.findIndex(item => item.id === action.payload.id) === -1) {
+                    state.chats[action.payload.chatId].messages.unshift(action.payload);
+                }
                 state.chats[action.payload.chatId].content = action.payload.content;
                 state.chats[action.payload.chatId].sentAt = action.payload.sentAt;
             }
@@ -155,6 +161,9 @@ const chatSlice = createSlice({
                 }
             }
 
+        },
+        makeFriends(state) {
+            state.queue.user.isFriends = true;
         },
         changeIsActive(state, action: { payload: IisActiveEvent }) {
             if (state.queue.user.uid === action.payload.uid) {
@@ -241,7 +250,8 @@ export const {
     skip,
     setMessageDelivered,
     changeIsActive,
-    addChat
+    addChat,
+    makeFriends
 } = chatSlice.actions;
 
 export default chatSlice.reducer;

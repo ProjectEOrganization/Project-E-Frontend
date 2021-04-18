@@ -18,6 +18,8 @@ import FriendsChatList from '../components/Friends/FriendsChatList';
 import navigationRef from '../navigation/index';
 import { Tooltip } from 'react-native-elements';
 import { useRef, useEffect } from 'react';
+import { store } from '../store';
+import { leaveQueue } from '../store/reducers/chat';
 
 const { width } = Dimensions.get('screen');
 
@@ -28,13 +30,6 @@ export default function FriendsScreen() {
 
   useEffect(() => {
     tooltipRef.current?.toggleTooltip();
-  });
-
-  let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-SemiBold': require('../assets/fonts/Inter/Inter-SemiBold.ttf'),
   });
 
   const navigation = useNavigation();
@@ -50,71 +45,74 @@ export default function FriendsScreen() {
     else if (route === 'friends') scrollRef.current?.scrollTo({ x: width, animated: true })
   }, [route])
 
-  if (!fontsLoaded) {
-    return <View />;
-  } else {
-    return (
-      <View style={styles.container}>
-        <ScrollView>
-
-          <View
-            style={{
-              marginTop: 80,
-              backgroundColor: 'transparent',
-              flexDirection: 'row',
-              marginLeft: 30
-
-            }}
-          >
-            <ThreeDotsSvg />
-            <TouchableOpacity onPress={() => navigation.navigate('SendFriendRequestModal')} >
-              <Text style={{
-                marginLeft: 220, fontFamily: 'Inter-SemiBold', color: '#21293A'
-              }}>Add Friend +</Text>
-            </TouchableOpacity>
-          </View>
-
-          {(auth.user?.uid || auth.user?.isAnonymous) ?
-            <Button title="Log out" onPress={auth.signout} />
-            : (
-              <>
-                <Button title="Sign in" onPress={() => navigation.navigate('LoginModal')} />
-                <Button title="Sign up" onPress={() => navigation.navigate('RegisterModal')} />
-              </>
-            )}
-
-          <View
-            style={{
-              marginTop: 60,
-              backgroundColor: 'transparent',
-              paddingHorizontal: 35,
-            }}
-          >
-            <Text
-              style={{
-                fontFamily: 'Inter-SemiBold',
-                fontSize: 25,
-                color: '#21293A',
-              }}
-            >
-              Hello {auth.user?.displayName || username}!
-          </Text>
-            <FriendsPageSwitch onChange={(route) => setRoute(route)} />
-          </View>
-
-          <ScrollView ref={scrollRef} scrollEnabled={false} horizontal pagingEnabled contentContainerStyle={{ flexDirection: 'row', width: width * 2, marginTop: 35, }}>
-            <View style={{ backgroundColor: 'transparent', width, paddingLeft: (width * 0.15) / 2 }}>
-              <FriendsChatList />
-            </View>
-            <View style={{ backgroundColor: 'transparent', width, paddingHorizontal: 35 }}>
-              <FriendsChat />
-            </View>
-          </ScrollView>
-
-        </ScrollView>
-      </View>
-    );
+  const logout = () => {
+    store.dispatch(leaveQueue())
+    setTimeout(() => {
+      auth.signout()
+    }, 500)
   }
+
+  return (
+    <View style={styles.container}>
+      <ScrollView>
+
+        <View
+          style={{
+            marginTop: 80,
+            backgroundColor: 'transparent',
+            flexDirection: 'row',
+            marginLeft: 30
+
+          }}
+        >
+          <ThreeDotsSvg />
+          <TouchableOpacity onPress={() => navigation.navigate('SendFriendRequestModal')} >
+            <Text style={{
+              marginLeft: 220, fontFamily: 'Inter-SemiBold', color: '#21293A'
+            }}>Add Friend +</Text>
+          </TouchableOpacity>
+        </View>
+
+        {(auth.user?.uid || auth.user?.isAnonymous) ?
+          <Button title="Log out" onPress={logout} />
+          : (
+            <>
+              <Button title="Sign in" onPress={() => navigation.navigate('LoginModal')} />
+              <Button title="Sign up" onPress={() => navigation.navigate('RegisterModal')} />
+            </>
+          )}
+
+        <View
+          style={{
+            marginTop: 60,
+            backgroundColor: 'transparent',
+            paddingHorizontal: 35,
+          }}
+        >
+          <Text
+            style={{
+              fontFamily: 'Inter-SemiBold',
+              fontSize: 25,
+              color: '#21293A',
+            }}
+          >
+            Hello {auth.user?.displayName || username}!
+          </Text>
+          <FriendsPageSwitch onChange={(route) => setRoute(route)} />
+        </View>
+
+        <ScrollView ref={scrollRef} scrollEnabled={false} horizontal pagingEnabled contentContainerStyle={{ flexDirection: 'row', width: width * 2, marginTop: 35, }}>
+          <View style={{ backgroundColor: 'transparent', width, paddingLeft: (width * 0.15) / 2 }}>
+            <FriendsChatList />
+          </View>
+          <View style={{ backgroundColor: 'transparent', width, paddingHorizontal: 35 }}>
+            <FriendsChat />
+          </View>
+        </ScrollView>
+
+      </ScrollView>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
