@@ -46,12 +46,15 @@ export default function FriendsChatScreenBottomBar({ recipientId, isQueue, chatI
         placeholderTextColor='#85ACD6'
         onChangeText={text => setMessage(text)}
         value={message}
+        multiline
         style={{
           backgroundColor: '#F1F6FC',
           borderWidth: 0,
           width: '85%',
-          height: 40,
+          minHeight: 40,
           borderRadius: 30,
+          paddingTop: 15,
+          paddingBottom: 15,
           fontSize: 15,
           paddingHorizontal: 20,
           textAlign: 'left',
@@ -76,7 +79,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    height: 90,
+    minHeight: 90,
+    maxHeight: 180,
     flexDirection: 'row',
     // justifyContent: 'space-around',
     // alignItems: 'center',

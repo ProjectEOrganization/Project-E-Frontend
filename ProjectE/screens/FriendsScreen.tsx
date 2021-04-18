@@ -89,7 +89,7 @@ export default function FriendsScreen() {
           >
             Hello {auth.user?.displayName || username}!
           </Text>
-          <Text selectable>{auth.user.uid}</Text>
+          <Text selectable>{auth.user?.uid}</Text>
           <FriendsPageSwitch onChange={(route) => setRoute(route)} />
         </View>
 
