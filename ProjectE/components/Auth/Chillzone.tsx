@@ -59,7 +59,6 @@ export default function Chillzone({ path }: { path?: string }) {
           secureTextEntry={false}
           accessibilityElementsHidden={true}
           selectTextOnFocus={true}
-          caretHidden={true}
           contextMenuHidden={true}
           placeholder='Discord ID'
           placeholderTextColor='#85ACD6'
