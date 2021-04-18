@@ -32,7 +32,13 @@ export default function Login({ path }: { path?: string }) {
         console.log(email, password, 'Account is not found. NOT authenticated');
       });
   };
+
   const navigation = useNavigation();
+
+  const navigateRegister = () => {
+    navigation.navigate('RegisterModal');
+  }
+
   return (
     <View style={styles.overallContainer}>
       <LoginSvgComponent />
@@ -111,6 +117,27 @@ export default function Login({ path }: { path?: string }) {
         <TouchableOpacity onPress={onLogin} style={styles.loginButton}>
           <Text style={styles.loginText}>Login</Text>
         </TouchableOpacity>
+        <View style={{paddingBottom: 20, paddingTop: 20}}>
+        <Text
+          onPress={() => {
+            navigation.goBack();
+            setTimeout(() => {
+              navigation.navigate('RegisterModal')
+            }, 300)
+          }}
+          style={{
+            fontSize: 15,
+            color: '#A9ACB0',
+            marginLeft: 10,
+            fontFamily: 'Inter-Medium',
+          }}
+        >
+          Don't have an account?{' '}
+          <Text style={{ color: '#4B00FF', fontFamily: 'Inter-SemiBold' }}>
+            Register
+            </Text>
+        </Text>
+        </View>
       </View>
 
       {/* <View
@@ -145,7 +172,7 @@ function handleHelpPress() {
 const styles = StyleSheet.create({
   overallContainer: {
     //overall container
-    height: 400,
+    height: 430,
     width: 330,
     backgroundColor: '#fff',
     borderRadius: 40,

@@ -75,7 +75,7 @@ function BottomTabNavigator() {
 
   function checkAuth() {
     if (!auth.user || auth.user.isAnonymous) {
-      navigation.navigate('LoginModal');
+      navigation.navigate('RegisterModal');
       console.log('not logged in')
     } else {
       navigationRef.current?.navigate('Friends')

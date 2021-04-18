@@ -34,7 +34,8 @@ export default function Chillzone({ path }: { path?: string }) {
       body: JSON.stringify({UID: input})
     })
     .then(response => response.json())
-    .then(data => console.log(data));;
+    .then(data => console.log(data));
+    navigation.goBack();
   };
 
   return (

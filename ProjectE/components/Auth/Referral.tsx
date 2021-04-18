@@ -21,7 +21,10 @@ export default function Referral({ path }: { path?: string }) {
 
   const onCheck = () => {
     if (input === "chillzone"){
-        navigation.navigate('ChillzoneModal');
+        navigation.goBack();
+            setTimeout(() => {
+              navigation.navigate('ChillzoneModal')
+            }, 300)
         console.log('ok')
     }else{
         console.log('notok')
