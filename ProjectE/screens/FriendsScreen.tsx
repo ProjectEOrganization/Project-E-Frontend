@@ -45,12 +45,7 @@ export default function FriendsScreen() {
     else if (route === 'friends') scrollRef.current?.scrollTo({ x: width, animated: true })
   }, [route])
 
-  const logout = () => {
-    store.dispatch(leaveQueue())
-    setTimeout(() => {
-      auth.signout()
-    }, 500)
-  }
+
 
   return (
     <View style={styles.container}>
@@ -89,7 +84,7 @@ export default function FriendsScreen() {
           >
             Hello {auth.user?.displayName || username}!
           </Text>
-          <Text selectable>{auth.user.uid}</Text>
+          <Text selectable>{auth.user?.uid}</Text>
           <FriendsPageSwitch onChange={(route) => setRoute(route)} />
         </View>
 

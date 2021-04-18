@@ -31,11 +31,13 @@ export default function Chillzone({ path }: { path?: string }) {
       },
       redirect: 'follow', // manual, *follow, error
       referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      body: JSON.stringify({UID: input})
+      body: JSON.stringify({ UID: input })
     })
-    .then(response => response.json())
-    .then(data => console.log(data));
-    navigation.goBack();
+      .then(response => response.json())
+      .then((response) => {
+        if (response.statusCode === 200) navigation.navigate('Settings')
+      })
+
   };
 
   return (
@@ -81,7 +83,7 @@ export default function Chillzone({ path }: { path?: string }) {
             marginTop: 35,
           }}
         />
-        
+
         <TouchableOpacity onPress={activate} style={styles.loginButton}>
           <Text style={styles.loginText}>Activate</Text>
         </TouchableOpacity>

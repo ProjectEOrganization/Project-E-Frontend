@@ -40,24 +40,30 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
 
   const [ready, setReady] = React.useState(false);
 
+  // React.useEffect(() => {
+  //   async function fetchData() {
+  //     const newUser = await AsyncStorage.getItem('newUser');
+  //     if (newUser == "true") {
+  //       console.log("true!!");
+  //       // await AsyncStorage.clear()
+  //       //   .catch(error => console.log(error));
+  //     } else {
+  //       console.log("false!!");
+  //       navigationRef.current?.navigate('Onboarding');
+  //       await AsyncStorage.setItem('newUser', 'true')
+  //         .catch(error => console.log(error));
+  //     }
+  //   }
+  //   setTimeout(() => {
+  //     fetchData();
+  //   }, 10)
+  // }, [])
+
   React.useEffect(() => {
-    async function fetchData() {
-      const newUser = await AsyncStorage.getItem('newUser');
-      if (newUser == "true") {
-        console.log("true!!");
-        // await AsyncStorage.clear()
-        //   .catch(error => console.log(error));
-      } else {
-        console.log("false!!");
-        navigationRef.current?.navigate('Onboarding');
-        await AsyncStorage.setItem('newUser', 'true')
-          .catch(error => console.log(error));
-      }
+    if (auth.loggedIn === false) {
+      navigationRef.current?.navigate('Onboarding');
     }
-    setTimeout(() => {
-      fetchData();
-    }, 10)
-  }, [])
+  }, [auth])
 
   const registerPush = async () => {
     if (auth.user?.uid) {

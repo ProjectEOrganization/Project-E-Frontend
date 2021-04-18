@@ -22,6 +22,9 @@ export default function Login({ path }: { path?: string }) {
       .signin(email, password)
       .then(() => {
         navigation.goBack()
+        navigation.navigate('Root', {
+          screen: 'Friends'
+        })
         console.log(
           email,
           password,
