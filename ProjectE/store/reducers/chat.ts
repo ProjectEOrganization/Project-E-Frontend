@@ -1,6 +1,5 @@
 //@ts-nocheck
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Alert } from "react-native";
 import { navigationRef } from "../../navigation";
 import { api } from "../../services/api";
 import { store } from "../store";
@@ -207,6 +206,9 @@ const chatSlice = createSlice({
         },
         [joinQueue.pending]: (state) => {
             state.queue.status = 'joining'
+        },
+        [joinQueue.rejected]: (state) => {
+            state.queue.status = 'error'
         },
         [joinQueue.fulfilled]: (state, action: { payload: { status: 'searching' | 'waiting' | 'found', uid: string } }) => {
             state.queue.status = 'connecting'

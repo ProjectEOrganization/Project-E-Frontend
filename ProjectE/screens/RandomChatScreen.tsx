@@ -30,18 +30,15 @@ const queueMessagesSelector = createSelector(
 
 export default function RandomChatScreen() {
   const auth = useAuth();
-  const navigation = useNavigation();
-  const { connected } = useSocket();
-
   const queue = useSelector(state => state.chat.queue);
 
   const queueMessages = useSelector(queueMessagesSelector)
 
-  useEffect(() => {
-    if (connected === true && queue.status === 'idle') {
-      store.dispatch(joinQueue())
-    }
-  }, [connected, auth, queue])
+  // useEffect(() => {
+  //   if (connected === true && queue.status === 'idle') {
+  //     store.dispatch(joinQueue())
+  //   }
+  // }, [connected, auth, queue])
 
   function leaveQueueAction() {
     store.dispatch(leaveQueue())
@@ -72,6 +69,8 @@ export default function RandomChatScreen() {
 
           <Text style={{ fontFamily: 'Inter-Bold', fontSize: 13, marginTop: 25, color: 'white' }}>In the meantime, say Hello to Wocto</Text>
           <Text style={{ fontSize: 35, marginTop: 10 }}>🐙</Text>
+
+          {queue.status === 'idle' && <Button color="red" title="Join the queue" onPress={() => store.dispatch(joinQueue())} />}
         </View>
 
         {queue.status === 'searching' && (
@@ -86,7 +85,6 @@ export default function RandomChatScreen() {
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
       <RandomChatTopBar user={queue.user} />
-      <Text>{auth.user?.uid}</Text>
       <FriendsChatBox messages={queueMessages} />
       <FriendsChatScreenBottomBar chatId={queue?.chatId} recipientId={queue.user?.uid} isQueue={true} />
     </KeyboardAvoidingView>
