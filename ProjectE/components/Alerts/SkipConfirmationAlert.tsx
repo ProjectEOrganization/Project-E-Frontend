@@ -27,6 +27,7 @@ export default function SkipConfirmationAlert({ path }: { path: string }) {
     store.dispatch(leaveQueue())
     navigationRef.current?.goBack();
   }
+  <Text onPress={leaveQueueAction} style={{ fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 140, fontSize: 16 }}> Leave Queue </Text>
 
   return (
     <View style={styles.overallContainer}>

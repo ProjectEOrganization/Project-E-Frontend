@@ -9,7 +9,7 @@ import { MonoText } from '../StyledText';
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput } from 'react-native'
 import { store } from '../../store/store';
-import { joinQueue, skip, skipQueue } from '../../store/reducers/chat';
+import { joinQueue, leaveQueue, skip, skipQueue } from '../../store/reducers/chat';
 import { batch } from 'react-redux';
 import { navigationRef } from '../../navigation/index';
 
@@ -18,12 +18,18 @@ export default function TheyHadToGoAlert({ path }: { path: string }) {
     navigationRef.current?.goBack();
     store.dispatch(skipQueue())
   }
+
+  async function leaveQueueAction() {
+    store.dispatch(leaveQueue())
+    navigationRef.current?.goBack();
+  }
+
   return (
     <View style={styles.overallContainer}>
 
 
       <LoginSvgComponent />
-      <View style={{ width: 260, paddingTop: 30, alignItems: 'center' }}>
+      <View style={{ width: 260, paddingTop: 30, alignItems: 'center', flexGrow: 1 }}>
         <Text style={styles.firstText}>
           They had to go :(
         </Text>
@@ -34,12 +40,17 @@ export default function TheyHadToGoAlert({ path }: { path: string }) {
         </Text>
 
 
+
+
         <TouchableOpacity onPress={onPress} style={styles.loginButton}>
           <Text style={styles.loginText} >
             Next Person
           </Text>
         </TouchableOpacity>
 
+        <View style={{ justifyContent: 'center', flexGrow: 1 }}>
+          <Text onPress={leaveQueueAction} style={{ fontFamily: 'Inter-SemiBold', color: '#250D4F', fontSize: 16 }}> Leave Queue </Text>
+        </View>
       </View>
 
       {/* <View
@@ -74,7 +85,7 @@ function handleHelpPress() {
 
 const styles = StyleSheet.create({
   overallContainer: { //overall container
-    height: 250,
+    height: 280,
     width: 330,
     backgroundColor: '#fff',
     borderRadius: 40,
