@@ -6,6 +6,7 @@ import { api } from '../../services/api'
 import { useAuth } from '../../services/auth'
 import { RootState, store } from '../../store'
 import { fetchChats } from '../../store/reducers/chat'
+import { fetchFriends } from '../../store/reducers/friends'
 import FriendsMessagesCard from './FriendsMessagesCard'
 
 const chatsSelector = createSelector(

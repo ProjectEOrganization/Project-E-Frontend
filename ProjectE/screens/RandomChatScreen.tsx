@@ -79,7 +79,7 @@ export default function RandomChatScreen() {
         )}
         {queue.status === 'idle' && (
           <TouchableOpacity onPress={() => store.dispatch(joinQueue())}>
-            <Text style={{ fontFamily: 'Inter-SemiBold', color: 'red', marginTop: 30, fontSize: 16 }}>Join the queue</Text>
+            <Text style={{ fontFamily: 'Inter-SemiBold', color: 'red', marginTop: 30, fontSize: 16 }}>Join Queue</Text>
           </TouchableOpacity>
         )
         }

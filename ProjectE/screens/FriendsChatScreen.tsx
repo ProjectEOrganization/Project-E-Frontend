@@ -16,6 +16,8 @@ import { RootState, store } from '../store';
 import { fetchMessages, IChat, IMessage } from '../store/reducers/chat';
 import { useSelector } from '../hooks';
 import { createSelector } from 'reselect';
+import { fetchFriends } from '../store/reducers/friends';
+import { batch } from 'react-redux';
 
 const { width, height } = Dimensions.get('screen')
 

@@ -73,15 +73,6 @@ export default function FriendsScreen() {
           </TouchableOpacity>
         </View>
 
-        {(auth.user?.uid || auth.user?.isAnonymous) ?
-          <Button title="Log out" onPress={logout} />
-          : (
-            <>
-              <Button title="Sign in" onPress={() => navigation.navigate('LoginModal')} />
-              <Button title="Sign up" onPress={() => navigation.navigate('RegisterModal')} />
-            </>
-          )}
-
         <View
           style={{
             marginTop: 60,
@@ -98,10 +89,11 @@ export default function FriendsScreen() {
           >
             Hello {auth.user?.displayName || username}!
           </Text>
+          <Text selectable>{auth.user.uid}</Text>
           <FriendsPageSwitch onChange={(route) => setRoute(route)} />
         </View>
 
-        <ScrollView ref={scrollRef} scrollEnabled={false} horizontal pagingEnabled contentContainerStyle={{ flexDirection: 'row', width: width * 2, marginTop: 35, }}>
+        <ScrollView ref={scrollRef} scrollEnabled={false} horizontal pagingEnabled contentContainerStyle={{ flexDirection: 'row', width: width * 2, marginTop: 35, paddingBottom: 45 }}>
           <View style={{ backgroundColor: 'transparent', width, paddingLeft: (width * 0.15) / 2 }}>
             <FriendsChatList />
           </View>

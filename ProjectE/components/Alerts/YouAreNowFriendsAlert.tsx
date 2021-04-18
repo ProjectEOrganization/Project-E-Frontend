@@ -9,6 +9,7 @@ import { MonoText } from '../StyledText';
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput } from 'react-native'
 import { navigationRef } from '../../navigation';
+import { useRoute } from '@react-navigation/core';
 
 export default function YouAreNowFriendsAlert({ path }: { path: string }) {
   return (

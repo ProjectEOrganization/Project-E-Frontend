@@ -1,35 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
-// import { Text, View } from './Themed';
-import { useFonts } from 'expo-font';
-import { Text, View } from 'react-native';
-import FriendsMessagesCard from './FriendsMessagesCard';
-import { api } from '../../services/api';
+import React, { useEffect } from 'react';
+import { ActivityIndicator, Text, View } from 'react-native';
 import { useAuth } from '../../services/auth';
-import IndividualFriendChat from './IndividualFriendChat';
-import FriendsChatBox from './FriendsChatBox';
+import { useSelector } from '../../hooks';
+import { store } from '../../store';
+import { fetchFriends } from '../../store/reducers/friends';
 
 export default function FriendsChat() {
-  const [friends, setFriends] = useState([]);
-
   const auth = useAuth();
+  const friends = useSelector(state => state.friends)
 
   useEffect(() => {
-    if (auth.user) {
-      api.post('/friends/add/');
+    store.dispatch(fetchFriends())
+  }, [auth])
 
-      api
-        .get('/friends')
-        .then((res) => {
-          setFriends(res.data);
-        })
-        .catch(() => {
-          setFriends([]);
-        });
-    }
-  }, [auth.user]);
-
-  if (friends.length === 0) {
+  if (friends.loading) return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <ActivityIndicator />
+    </View>
+  )
+  if (friends.list.length === 0) {
     return (
       <View style={{ alignItems: 'center', justifyContent: 'center' }}>
         <Text>No friends</Text>
@@ -39,8 +28,7 @@ export default function FriendsChat() {
 
   return (
     <View>
-      <Text>Friends</Text>
-      {friends.map((friend) => {
+      {friends.list.map((friend) => {
         return <Text key={friend.id}>{friend.username}</Text>;
       })}
     </View>

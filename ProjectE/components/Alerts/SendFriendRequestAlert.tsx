@@ -39,7 +39,7 @@ export default function SendFriendRequestAlertId() {
 
         <View style={{ alignItems: 'center' }}>
 
-          <TextInput onChangeText={setEmail} autoCapitalize="none" autoCorrect={false} value={email} placeholder='Email' style={{ backgroundColor: '#F1F6FC', height: 48, width: 150, borderWidth: 0, shadowOffset: { width: 0, height: 2 }, shadowColor: 'black', shadowOpacity: 0.16, borderRadius: 6, fontSize: 15, paddingHorizontal: 20, textAlign: 'left', marginTop: 35, }} />
+          <TextInput onChangeText={setEmail} autoCapitalize="none" autoCorrect={false} value={email} placeholder='Email' style={{ backgroundColor: '#F1F6FC', height: 48, width: 270, borderWidth: 0, shadowOffset: { width: 0, height: 2 }, shadowColor: 'black', shadowOpacity: 0.16, borderRadius: 6, fontSize: 15, paddingHorizontal: 20, textAlign: 'left', marginTop: 35, }} />
           <TouchableOpacity onPress={sendRequest} style={styles.yesButton}>
             <Text style={styles.loginText}>
               SEND

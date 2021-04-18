@@ -15,6 +15,7 @@ import { navigationRef } from '../../navigation';
 import { store } from '../../store/store';
 import { addChat, makeFriends } from '../../store/reducers/chat';
 import { useAuth } from '../../services/auth';
+import { addFriend } from '../../store/reducers/friends';
 
 export default function FriendRequestReceivedAlert({ friendId }) {
   const navigation = useNavigation();
@@ -35,6 +36,7 @@ export default function FriendRequestReceivedAlert({ friendId }) {
       api.post('/friends/accept/' + friendId).then((res) => {
         store.dispatch(addChat(res.data.chat))
         store.dispatch(makeFriends())
+        store.dispatch(addFriend(friendId))
       });
     }
   }
