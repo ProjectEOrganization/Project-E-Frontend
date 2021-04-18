@@ -45,7 +45,7 @@ export default function RandomChatTopBar() {
       }
     }
     fetchData();
-  })
+  }, [])
 
   return (
     <View style={[styles.topBar, { paddingTop: top + 10 }]}>

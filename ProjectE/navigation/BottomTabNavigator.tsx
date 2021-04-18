@@ -114,7 +114,7 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName='RandomChat'
+      initialRouteName={auth.loggedIn ? "Friends" : "RandomChat"}
       tabBarOptions={{
         activeTintColor: '#00DBD0',
         style: { height: 90 },

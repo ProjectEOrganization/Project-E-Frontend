@@ -20,15 +20,26 @@ import { RootStackParamList } from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import { popupEffect } from './effects/popupEffect';
 import LinkingConfiguration from './LinkingConfiguration';
-import SendFriendRequestAlertId from '../components/Alerts/SendFriendRequestAlert';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/core';
+import { useAuth } from '../services/auth';
+import * as Notifications from 'expo-notifications';
+import { api } from '../services/api';
+import { setNotificationHandler } from 'expo-notifications';
+import { store } from '../store';
+import { loadChat } from '../store/reducers/chat';
 
 export const navigationRef = React.createRef<NavigationContainerRef>();
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
 const Navigation = (props: { colorScheme: ColorSchemeName }) => {
+
+  const auth = useAuth();
+
+  const [ready, setReady] = React.useState(false);
+
   React.useEffect(() => {
     async function fetchData() {
       const newUser = await AsyncStorage.getItem('newUser');
@@ -47,10 +58,50 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
       fetchData();
     }, 10)
   }, [])
+
+  const registerPush = async () => {
+    if (auth.user?.uid) {
+      await Notifications.requestPermissionsAsync()
+      const expoPushToken = await Notifications.getExpoPushTokenAsync();
+
+      if (expoPushToken?.data) {
+        api.post('/push', { token: expoPushToken.data })
+      }
+    }
+  }
+
+  React.useEffect(() => {
+    if (ready === false) return
+    const subscription = Notifications.addNotificationReceivedListener(notification => {
+      setNotificationHandler({
+        handleNotification: async () => ({
+          shouldPlaySound: false,
+          shouldSetBadge: true,
+          shouldShowAlert: true,
+        })
+      })
+    });
+
+    const subscription2 = Notifications.addNotificationResponseReceivedListener(async (response) => {
+      if (response.notification.request.content.data.type === 'dm') {
+        const chat = await store.dispatch(loadChat(response.notification.request.content.data.uid));
+        navigationRef.current.navigate('FriendsChatScreen', chat.payload)
+      }
+    });
+
+    registerPush();
+    return () => {
+      subscription.remove();
+      subscription2.remove();
+    }
+  }, [auth, ready])
+
+
   return (
     <NavigationContainer
       ref={navigationRef}
       linking={LinkingConfiguration}
+      onReady={() => setReady(true)}
       theme={props.colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack.Navigator initialRouteName="Root" screenOptions={{ headerShown: false, cardOverlayEnabled: true }}>
         <Stack.Screen
@@ -58,7 +109,7 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
           component={LoginModal}
           options={{ ...popupEffect }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name='ReferralModal'
           component={ReferralModal}
           options={{ ...popupEffect }}

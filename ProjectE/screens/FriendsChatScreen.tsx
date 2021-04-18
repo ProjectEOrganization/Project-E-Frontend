@@ -39,7 +39,7 @@ export default function FriendsChatScreen() {
   const chatMessagesSelector = createSelector(
     (state: RootState) => state.chat.chats[route.params.id],
     (chat) => {
-      if (Array.isArray(chat.messages)) {
+      if (Array.isArray(chat?.messages)) {
         return chat.messages
       }
       return []
@@ -99,11 +99,12 @@ export default function FriendsChatScreen() {
   )
 
   const { top } = useSafeAreaInsets()
+  if (!chat) return null
   return (
     <KeyboardAvoidingView behavior="padding" style={[styles.container, { flex: 1, width: '100%', paddingTop: top, paddingBottom: 20 }]}>
       <Header />
       {loading ? <LoadingScreen /> : <FriendsChatBox messages={chatMessages} />}
-      <FriendsChatScreenBottomBar chatId={chat?.id} recipientId={chat.user.uid} />
+      <FriendsChatScreenBottomBar chatId={chat?.id} recipientId={chat.user?.uid} />
     </KeyboardAvoidingView>
 
   );

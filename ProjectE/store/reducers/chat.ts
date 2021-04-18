@@ -90,6 +90,14 @@ export const joinQueue = createAsyncThunk(
     }
 )
 
+export const loadChat = createAsyncThunk(
+    'chat/loadChat',
+    async (uid, thunkAPI) => {
+        const response = await api.get(`/chatSingle/${uid}`).catch((err) => alert(JSON.stringify(err)))
+        return response.data
+    }
+)
+
 export const skipQueue = createAsyncThunk(
     'chat/skipQueue',
     (_, thunkAPI) => {
@@ -136,6 +144,7 @@ const chatSlice = createSlice({
                 }
             }
             else {
+                if (!(action.payload.chatId in state.chats)) return
                 const routeName = navigationRef.current?.getCurrentRoute()?.name;
                 if (routeName !== 'FriendsChatScreen') {
                     state.chats[action.payload.chatId].missed += 1;
@@ -241,6 +250,14 @@ const chatSlice = createSlice({
                 displayName: ''
             }
             state.queue.messages = []
+        },
+        [loadChat.fulfilled]: (state, action) => {
+
+            state.chats[action.payload.id] = {
+                ...state.chats[action.payload.id],
+                ...action.payload,
+                messages: state.chats[action.payload.id]?.messages
+            }
         }
     }
 });
