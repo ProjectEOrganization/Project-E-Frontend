@@ -17,19 +17,7 @@ import { useAuth } from '../services/auth';
 
 
 export default function TabTwoScreen() {
-
-  let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-SemiBold': require('../assets/fonts/Inter/Inter-SemiBold.ttf'),
-  });
-
   const auth = useAuth();
-
-  useEffect(() => {
-
-  });
 
   async function anonymousSignin() {
     await auth.signInAnonymously()
@@ -38,42 +26,38 @@ export default function TabTwoScreen() {
 
   const navigation = useNavigation();
 
-  if (!fontsLoaded) {
-    return <View />;
-  } else {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.title1}>Welcome to</Text>
-        <Text style={styles.title2}>Rapid</Text>
-        <SvgComponent />
-        {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
-        {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
-        <View style={styles.container2}>
-          <Text style={styles.title3}>
-            Chat with random people and create
-            everlasting friendships,
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title1}>Welcome to</Text>
+      <Text style={styles.title2}>Rapid</Text>
+      <SvgComponent />
+      {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
+      {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
+      <View style={styles.container2}>
+        <Text style={styles.title3}>
+          Chat with random people and create
+          everlasting friendships,
         <Text style={{ fontWeight: 'bold' }}> click below </Text>
 
-          </Text >
-        </View>
-
-        <TouchableOpacity onPress={anonymousSignin}>
-          <SvgComponent1 />
-        </TouchableOpacity>
-
-        <View style={styles.container3}>
-          <Text style={styles.title4}>
-            Already have an account?
-        <Text onPress={() => navigation.navigate('RandomChat')} style={{ fontFamily: 'Inter-SemiBold', color: '#4B00FF' }}> Log in </Text>
-            {/* <Text onPress={anonymousSignin} style={{fontFamily: 'Inter-SemiBold', color: '#4B00FF'}}> Log in as a guest</Text> */}
-          </Text >
-        </View>
-
-
-
+        </Text >
       </View>
-    );
-  }
+
+      <TouchableOpacity onPress={anonymousSignin}>
+        {/* <SvgComponent1 /> */}
+      </TouchableOpacity>
+
+      <View style={styles.container3}>
+        <Text style={styles.title4}>
+          Already have an account?
+        <Text onPress={() => navigation.navigate('LoginModal')} style={{ fontFamily: 'Inter-SemiBold', color: '#4B00FF' }}> Log in </Text>
+          {/* <Text onPress={anonymousSignin} style={{fontFamily: 'Inter-SemiBold', color: '#4B00FF'}}> Log in as a guest</Text> */}
+        </Text >
+      </View>
+
+
+
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
