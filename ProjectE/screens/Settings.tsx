@@ -18,96 +18,96 @@ import { useAuth } from '../services/auth';
 
 
 import Register from '../components/Auth/Register'
+import { leaveQueue } from '../store/reducers/chat';
+import { store } from '../store';
 
 // import * as yourModuleName from 'module-name';
 
 
 
 export default function Settings() {
-  let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-SemiBold': require('../assets/fonts/Inter/Inter-SemiBold.ttf'),
-  });
 
   const navigation = useNavigation();
 
   const auth = useAuth();
 
-  if (!fontsLoaded) {
-    return <View />;
-  } else {
-    return (
+  const logout = async () => {
+    await store.dispatch(leaveQueue())
+    setTimeout(() => {
+      auth.signout()
+    }, 500)
+  }
 
-      <View style={styles.container}>
-        {/* <View style={{width: 300, backgroundColor: 'rgba(52, 52, 52, 0.0)', }}> */}
-        {/* onPress={() => navigation.navigate('TabTwoScreen')} */}
-        {/* <TouchableOpacity onPress={() => navigation.navigate('TabTwo')} >
+  return (
+
+    <View style={styles.container}>
+      {/* <View style={{width: 300, backgroundColor: 'rgba(52, 52, 52, 0.0)', }}> */}
+      {/* onPress={() => navigation.navigate('TabTwoScreen')} */}
+      {/* <TouchableOpacity onPress={() => navigation.navigate('TabTwo')} >
         <BackArrowSvgComponent />
         </TouchableOpacity> */}
 
-        {/* DEELETE FOR PRODUCTION */}
-        {/* <TouchableOpacity onPress={() => navigation.navigate('RegisterTesting')} >
+      {/* DEELETE FOR PRODUCTION */}
+      {/* <TouchableOpacity onPress={() => navigation.navigate('RegisterTesting')} >
         <Text> TESTING REGISTER COMPONENT</Text>
         </TouchableOpacity> */}
 
 
-        {/* </View> */}
+      {/* </View> */}
 
-        <Text style={styles.title1}>Settings</Text>
-
-
-        {/* <Register /> */}
-        {/* Settings text */}
-        <View style={{ width: '90%', height: '70%', marginTop: 80, backgroundColor: 'transparent' }}>
-          <TouchableOpacity onPress={() => navigation.navigate('Account')}>
-            <Text style={[styles.settingsText]}>Account</Text>
-          </TouchableOpacity>
+      <Text style={styles.title1}>Settings</Text>
 
 
-          <TouchableOpacity onPress={() => navigation.navigate('Security')}>
-            <Text style={[styles.settingsText]}>Security</Text>
-          </TouchableOpacity>
+      {/* <Register /> */}
+      {/* Settings text */}
+      <View style={{ width: '90%', height: '70%', marginTop: 80, backgroundColor: 'transparent' }}>
+        <TouchableOpacity onPress={() => navigation.navigate('Account')}>
+          <Text style={[styles.settingsText]}>Account</Text>
+        </TouchableOpacity>
 
-          {/* <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
+
+        <TouchableOpacity onPress={() => navigation.navigate('Security')}>
+          <Text style={[styles.settingsText]}>Security</Text>
+        </TouchableOpacity>
+
+        {/* <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
             <Text style={styles.settingsText}>Notifications</Text>
           </TouchableOpacity> */}
 
-          <TouchableOpacity>
-            <Text style={styles.settingsText}  onPress={() => Linking.openURL('http://rapidapp.live/report')}>Report a Problem</Text>
-          </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={styles.settingsText} onPress={() => Linking.openURL('http://rapidapp.live/report')}>Report a Problem</Text>
+        </TouchableOpacity>
 
 
-          <TouchableOpacity>
-            <Text style={styles.settingsText} onPress={() => Linking.openURL('http://rapidapp.live/support')} >Support</Text>
-          </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={styles.settingsText} onPress={() => Linking.openURL('http://rapidapp.live/support')} >Support</Text>
+        </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate('ReferralModal')}>
-            <Text style={styles.settingsText} >Referrals</Text>
-          </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('ReferralModal')}>
+          <Text style={styles.settingsText} >Referrals</Text>
+        </TouchableOpacity>
 
-          {/* <Text style={styles.settingsText}>Customization</Text>
+        {/* <Text style={styles.settingsText}>Customization</Text>
           <SettingsPageSwitch /> */}
 
 
 
-          <TouchableOpacity>
-            <Text style={[styles.settingsText, styles.text1]}  onPress={() => Linking.openURL('http://rapidapp.live/terms')}>Terms and Policy</Text>
-          </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={[styles.settingsText, styles.text1]} onPress={() => Linking.openURL('http://rapidapp.live/terms')}>Terms and Policy</Text>
+        </TouchableOpacity>
 
-          
 
-          <TouchableOpacity>
-            {auth.user?.uid && <Text onPress={auth.signout} style={[styles.settingsText, styles.text2]}>Log Out</Text>}
-          </TouchableOpacity>
 
-        </View>
+        <TouchableOpacity>
+          {auth.user?.uid && <Text onPress={logout} style={[styles.settingsText, styles.text2]}>Log Out</Text>}
+        </TouchableOpacity>
 
-        {/* Login Component  */}
-        {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
-        {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
-        {/* <View style={styles.container2}>
+      </View>
+
+      {/* Login Component  */}
+      {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
+      {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
+      {/* <View style={styles.container2}>
       <Text style={styles.title3}>
         Chat with random people and create 
         everlasting friendships, 
@@ -116,11 +116,11 @@ export default function Settings() {
         </Text >  
       </View> */}
 
-        {/* <SvgComponent1 /> */}
+      {/* <SvgComponent1 /> */}
 
 
-        {/* <Image style={{marginTop: 40 ,height: 138, width: 138, transform: [{ rotate: '25deg'}]}} source={require('../assets/images/peace-sign-emoji-by-google.png')}/> */}
-        {/* <View style={styles.container3}>
+      {/* <Image style={{marginTop: 40 ,height: 138, width: 138, transform: [{ rotate: '25deg'}]}} source={require('../assets/images/peace-sign-emoji-by-google.png')}/> */}
+      {/* <View style={styles.container3}>
       <Text style={styles.title4}>
         Already have an account?
         <Text onPress={() => navigation.navigate(TabOneScreen)} style={{fontFamily: 'Inter-SemiBold', color: '#4B00FF'}}> Log in </Text>
@@ -130,9 +130,8 @@ export default function Settings() {
 
 
 
-      </View>
-    );
-  }
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

@@ -45,12 +45,7 @@ export default function FriendsScreen() {
     else if (route === 'friends') scrollRef.current?.scrollTo({ x: width, animated: true })
   }, [route])
 
-  const logout = () => {
-    store.dispatch(leaveQueue())
-    setTimeout(() => {
-      auth.signout()
-    }, 500)
-  }
+
 
   return (
     <View style={styles.container}>
