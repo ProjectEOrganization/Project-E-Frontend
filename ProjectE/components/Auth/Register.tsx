@@ -49,7 +49,6 @@ export default function Register({ path }: { path: string }) {
           autoCorrect={false}
           secureTextEntry={false}
           accessibilityElementsHidden={true}
-          caretHidden={true}
           contextMenuHidden={true}
           placeholder='Email'
           onChangeText={(text) => setEmail(text)}
@@ -83,7 +82,6 @@ export default function Register({ path }: { path: string }) {
           autoCorrect={false}
           secureTextEntry={true}
           accessibilityElementsHidden={true}
-          caretHidden={true}
           contextMenuHidden={true}
           onChangeText={(text) => setPassword(text)}
           placeholder='Password'
@@ -119,7 +117,6 @@ export default function Register({ path }: { path: string }) {
           autoCorrect={false}
           secureTextEntry={false}
           accessibilityElementsHidden={true}
-          caretHidden={true}
           contextMenuHidden={true}
           placeholder='Display Name'
           onChangeText={(text) => setDisplayName(text)}

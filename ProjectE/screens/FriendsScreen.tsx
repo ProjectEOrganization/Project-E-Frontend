@@ -85,7 +85,7 @@ export default function FriendsScreen() {
             Hello {auth.user?.displayName || username}!
           </Text>
           <Text selectable>{auth.user?.uid}</Text>
-          <FriendsPageSwitch onChange={(route) => setRoute(route)} />
+          {/* <FriendsPageSwitch onChange={(route) => setRoute(route)} /> */}
         </View>
 
         <ScrollView ref={scrollRef} scrollEnabled={false} horizontal pagingEnabled contentContainerStyle={{ flexDirection: 'row', width: width * 2, marginTop: 35, paddingBottom: 45 }}>
