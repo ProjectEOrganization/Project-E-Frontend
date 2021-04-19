@@ -18,9 +18,10 @@ export default function Register({ path }: { path: string }) {
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
 
-  const onRegister = () => {
+  const onRegister = async () => {
     if (email !== '' && password !== '' && displayName !== '') {
-      auth.signup(email, password, displayName);
+      await auth.signup(email, password, displayName);
+      navigation.goBack();
       console.log(
         `${email}: ${password} has signed up. You can now login and authenticate with this user.`
       );

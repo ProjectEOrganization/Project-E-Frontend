@@ -24,7 +24,7 @@ import Security from '../screens/SettingsScreens/Security'
 import FriendsChatScreen from '../screens/FriendsChatScreen';
 import onBoarding1 from '../screens/Onboarding1';
 import { store } from '../store';
-import { joinQueue } from '../store/reducers/chat';
+import { fetchChats, joinQueue } from '../store/reducers/chat';
 import { useSelector } from '../hooks';
 import { Pressable, Text, TouchableOpacity } from 'react-native';
 import { Tooltip } from 'react-native-elements';
@@ -79,16 +79,18 @@ function BottomTabNavigator() {
       console.log('not logged in')
     } else {
       navigationRef.current?.navigate('Friends')
-      console.log('logged in')
+      store.dispatch(fetchChats({ loading: false }))
     }
   }
 
   function Icon() {
     const queue = useSelector(state => state.chat.queue);
     const state = useNavigationState(state => state.index)
+
     const onPress = () => {
       if (state !== 1 && queue.status === 'idle') {
         store.dispatch(joinQueue())
+        navigation.navigate('RandomChat')
       }
       else if (state !== 1) {
         navigation.navigate('RandomChat')

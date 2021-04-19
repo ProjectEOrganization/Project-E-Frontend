@@ -97,7 +97,7 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
     const subscription2 = Notifications.addNotificationResponseReceivedListener(async (response) => {
       if (response.notification.request.content.data.type === 'dm') {
         const chat = await store.dispatch(loadChat(response.notification.request.content.data.uid));
-        navigationRef.current.navigate('FriendsChatScreen', chat.payload)
+        navigationRef.current?.navigate('FriendsChatScreen', chat.payload)
       }
       else if (response.notification.request.content.data.type === 'friend_request') {
         navigationRef.current?.navigate('FriendRequestReceivedModal', { uid: response.notification.request.content.data.uid })

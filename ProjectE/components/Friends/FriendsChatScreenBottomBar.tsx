@@ -33,6 +33,7 @@ export default function FriendsChatScreenBottomBar({ recipientId, isQueue, chatI
       recipientId,
       message: content,
       isQueue,
+      chatId: chatId,
       sentAt
     }).then((res) => {
       store.dispatch(setMessageDelivered(res.data.message))

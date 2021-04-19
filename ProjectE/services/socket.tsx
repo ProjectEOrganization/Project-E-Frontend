@@ -7,9 +7,10 @@ import config from './config';
 
 import { navigationRef } from '../navigation'
 import { store } from '../store';
-import { addChat, addMessage, changeIsActive, IChat, IisActiveEvent, initQueue, makeFriends } from '../store/reducers/chat';
+import { addChat, addMessage, changeIsActive, IChat, IisActiveEvent, IMessage, initQueue, makeFriends } from '../store/reducers/chat';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { addFriend } from '../store/reducers/friends';
+import { api } from './api';
 
 const SocketContext = React.createContext<Socket>();
 
@@ -34,8 +35,8 @@ function useProvideSocket() {
 
     useEffect(() => {
         (async () => {
-            if (auth.user.getIdToken) {
-                const token = await AsyncStorage.getItem('token') || await auth.user.getIdToken();
+            if (auth.user?.getIdToken) {
+                const token = await auth.user.getIdToken();
                 setToken(token)
             }
         })()
@@ -70,7 +71,7 @@ function useProvideSocket() {
             })
 
             socket.on('skip', () => {
-                navigationRef.current.navigate('TheyHadToGoModal')
+                navigationRef.current?.navigate('TheyHadToGoModal')
             })
 
             socket.on('queue', (msg) => {
