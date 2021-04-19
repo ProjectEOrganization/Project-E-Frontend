@@ -96,14 +96,14 @@ function useProvideAuth() {
         return false
     }, [user])
 
-    const init = async (user) => {
+    const init = async (user: firebase.User) => {
         const token = await user.getIdToken();
         await AsyncStorage.setItem('token', token)
         const res = await api.post('/auth', user);
         const newUser: firebase.User = {
             ...user,
             ...res.data.user,
-            getIdToken: user.getIdToken
+            getIdToken: user.getIdToken,
         }
         setUser(newUser);
     }
@@ -133,6 +133,7 @@ function useProvideAuth() {
         signup,
         signout,
         sendPasswordResetEmail,
-        confirmPasswordReset
+        confirmPasswordReset,
+        init
     };
 }

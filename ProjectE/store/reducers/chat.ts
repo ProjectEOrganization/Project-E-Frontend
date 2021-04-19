@@ -1,5 +1,6 @@
 //@ts-nocheck
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { batch } from "react-redux";
 import { navigationRef } from "../../navigation";
 import { api } from "../../services/api";
 import { store } from "../store";
@@ -38,6 +39,9 @@ interface IQueue {
     user: IUser;
     messages: Array<IMessage>;
     chatId: string;
+    topic?: {
+        text: string;
+    }
 }
 interface IState {
     chats: IChats;
@@ -82,7 +86,10 @@ export const joinQueue = createAsyncThunk(
         const response = await api.get('/join_queue');
 
         if (response.data.status === 'found') {
-            thunkAPI.dispatch(initQueue(response.data.uid))
+            batch(() => {
+                thunkAPI.dispatch(addTopic(response.data.topic))
+                thunkAPI.dispatch(initQueue(response.data.uid))
+            })
         }
         return response.data;
     }
@@ -114,7 +121,7 @@ export const skipQueue = createAsyncThunk(
 export const initQueue = createAsyncThunk(
     'chat/initQueue',
     async (uid: string) => {
-        const response = await api.get(`/chat/${uid}`)
+        const response = await api.get(`/chat/${uid}?isQueue=true`)
         navigationRef.current?.navigate('RandomChat')
         return response.data;
     }
@@ -197,6 +204,11 @@ const chatSlice = createSlice({
                 displayName: ''
             }
             state.queue.messages = []
+        },
+        addTopic(state, action) {
+            if (action.payload) {
+                state.queue.topic = action.payload
+            }
         }
     },
     extraReducers: {
@@ -284,7 +296,8 @@ export const {
     setMessageDelivered,
     changeIsActive,
     addChat,
-    makeFriends
+    makeFriends,
+    addTopic
 } = chatSlice.actions;
 
 export default chatSlice.reducer;
