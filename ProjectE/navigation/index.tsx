@@ -59,12 +59,6 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
   //   }, 10)
   // }, [])
 
-  React.useEffect(() => {
-    if (auth.loggedIn === false) {
-      navigationRef.current?.navigate('Onboarding');
-    }
-  }, [auth])
-
   const registerPush = async () => {
     if (auth.user?.uid) {
       await Notifications.requestPermissionsAsync()
@@ -76,8 +70,20 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
     }
   }
 
+
+  const fetchToken = async () => {
+    const token = await AsyncStorage.getItem('token')
+
+    if (!token) {
+      navigationRef.current?.navigate('Onboarding');
+    }
+  }
+
   React.useEffect(() => {
     if (ready === false) return
+
+    fetchToken()
+
     const subscription = Notifications.addNotificationReceivedListener(notification => {
       setNotificationHandler({
         handleNotification: async () => ({
@@ -91,7 +97,7 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
     const subscription2 = Notifications.addNotificationResponseReceivedListener(async (response) => {
       if (response.notification.request.content.data.type === 'dm') {
         const chat = await store.dispatch(loadChat(response.notification.request.content.data.uid));
-        navigationRef.current.navigate('FriendsChatScreen', chat.payload)
+        navigationRef.current?.navigate('FriendsChatScreen', chat.payload)
       }
       else if (response.notification.request.content.data.type === 'friend_request') {
         navigationRef.current?.navigate('FriendRequestReceivedModal', { uid: response.notification.request.content.data.uid })
@@ -104,7 +110,6 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
       subscription2.remove();
     }
   }, [auth, ready])
-
 
   return (
     <NavigationContainer

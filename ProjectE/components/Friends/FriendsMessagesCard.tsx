@@ -1,18 +1,29 @@
 import React from 'react';
-import { Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
+import { Alert, Dimensions, Pressable, StyleSheet, TouchableOpacity } from 'react-native';
 import Colors from '../../constants/Colors';
 import { MonoText } from '../StyledText';
 const { width } = Dimensions.get('screen')
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput, Image } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { IChat } from '../../store/reducers/chat';
+import { deleteChat, IChat } from '../../store/reducers/chat';
+import { api } from '../../services/api';
+import { store } from '../../store';
 
 export default function FriendsMessagesCard(props: IChat) {
   const navigation = useNavigation();
 
+  const deleteChatAction = async () => {
+    Alert.alert(`Are you sure?`, `Delete chat with ${props.user.displayName}`, [
+      { text: 'Cancel' },
+      { text: 'Delete', style: "destructive", onPress: () => store.dispatch(deleteChat(props.id)) }
+    ])
+  }
+
   return (
-    <TouchableOpacity
+    <Pressable
+      delayLongPress={1000}
+      onLongPress={deleteChatAction}
       onPress={() => navigation.navigate('FriendsChatScreen', props)}
     >
       <View style={styles.topBar}>
@@ -32,7 +43,7 @@ export default function FriendsMessagesCard(props: IChat) {
         </View>}
 
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 

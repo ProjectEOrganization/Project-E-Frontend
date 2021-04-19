@@ -24,13 +24,15 @@ import Security from '../screens/SettingsScreens/Security'
 import FriendsChatScreen from '../screens/FriendsChatScreen';
 import onBoarding1 from '../screens/Onboarding1';
 import { store } from '../store';
-import { joinQueue } from '../store/reducers/chat';
+import { fetchChats, joinQueue } from '../store/reducers/chat';
 import { useSelector } from '../hooks';
 import { Pressable, Text, TouchableOpacity } from 'react-native';
 import { Tooltip } from 'react-native-elements';
 import { navigationRef } from '.';
 import { useEffect, useRef } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import LottieView from 'lottie-react-native';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -79,18 +81,20 @@ function BottomTabNavigator() {
       navigation.navigate('RegisterModal');
       console.log('not logged in');
     } else {
-      navigationRef.current?.navigate('Friends');
-      console.log('logged in');
+      navigationRef.current?.navigate('Friends')
+      store.dispatch(fetchChats({ loading: false }))
     }
     console.log(state, "Friends");
   }
 
-  function Icon() {
+  const Icon = () => {
     const queue = useSelector(state => state.chat.queue);
-    const state = useNavigationState(state => state.index);
+    const state = useNavigationState(state => state.index)
+
     const onPress = () => {
       if (state !== 1 && queue.status === 'idle') {
         store.dispatch(joinQueue())
+        navigation.navigate('RandomChat')
       }
       else if (state !== 1) {
         navigation.navigate('RandomChat')
@@ -104,11 +108,30 @@ function BottomTabNavigator() {
       console.log(state, "RandomChat");
     }
 
+    const animation = useRef<LottieView | null>();
+
+    useEffect(() => {
+      if (queue.status === 'searching') {
+        animation.current?.play()
+      }
+      else animation.current?.reset()
+    }, [queue?.status])
+
     return (
       <>
-        <TouchableOpacity onPress={onPress} style={{ marginBottom: -75, backgroundColor: 'transparent' }}>
+        <TouchableOpacity onPress={onPress} style={{ marginBottom: -20, backgroundColor: 'transparent', }}>
           {/* <Tooltip ref={skipRef} onPress={onPress} popover={<Text>Skip this person</Text>}> */}
-          <SvgComponentNav />
+          {/* <SvgComponentNav /> */}
+
+          <LottieView
+            ref={animation}
+            style={{
+              width: 100,
+              height: 100,
+              marginBottom: 30
+            }}
+            source={require('../assets/animations/button.json')}
+          />
           {/* </Tooltip> */}
         </TouchableOpacity>
       </>
@@ -247,3 +270,4 @@ export default function FriendsStackScreen() {
     </FriendsStack.Navigator>
   );
 }
+

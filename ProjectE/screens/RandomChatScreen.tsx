@@ -15,6 +15,7 @@ import AnimatedEllipsis from 'react-native-animated-ellipsis';
 import { api } from '../services/api';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { createSelector } from 'reselect';
+import TopicStarter from '../components/TopicStarter';
 
 LogBox.ignoreLogs(['Animated: `useNativeDriver`']);
 
@@ -90,6 +91,11 @@ export default function RandomChatScreen() {
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
       <RandomChatTopBar user={queue.user} />
+      {queue.topic && (
+        <View style={{ position: 'relative', backgroundColor: 'transparent', top: 20, zIndex: 999 }}>
+          <TopicStarter topic={queue.topic} colors={queue.topic.colors} />
+        </View>
+      )}
       <FriendsChatBox messages={queueMessages} />
       <FriendsChatScreenBottomBar chatId={queue?.chatId} recipientId={queue.user?.uid} isQueue={true} />
     </KeyboardAvoidingView>

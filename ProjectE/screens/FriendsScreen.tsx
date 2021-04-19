@@ -89,7 +89,7 @@ export default function FriendsScreen() {
           <Text selectable>{auth.user?.uid}</Text>
           {/* <FriendsPageSwitch onChange={(route) => setRoute(route)} /> */}
           <View style={{marginTop: 10}}>
-          <SearchBar placeholder="Filter Friends..." onChangeText={setSearch} value={search} lightTheme={true}/>
+            <SearchBar placeholder="Filter Friends..." onChangeText={setSearch} value={search} lightTheme={true}/>
           </View>
         </View>
 

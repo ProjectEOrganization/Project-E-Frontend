@@ -59,7 +59,6 @@ export default function Login({ path }: { path?: string }) {
           autoCorrect={false}
           secureTextEntry={false}
           accessibilityElementsHidden={true}
-          caretHidden={true}
           contextMenuHidden={true}
           placeholder='Email'
           placeholderTextColor='#85ACD6'
@@ -92,7 +91,6 @@ export default function Login({ path }: { path?: string }) {
           autoCorrect={false}
           secureTextEntry={true}
           accessibilityElementsHidden={true}
-          caretHidden={true}
           contextMenuHidden={true}
           placeholder='Password'
           placeholderTextColor='#85ACD6'

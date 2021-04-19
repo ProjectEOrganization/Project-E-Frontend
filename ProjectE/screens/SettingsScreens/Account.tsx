@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 
 import { Text, View } from '../../components/Themed';
@@ -9,113 +9,117 @@ import Register from '../../components/Auth/Register';
 import { useNavigation } from '@react-navigation/native';
 import BackArrowSvgComponent from '../../assets/backArrowSvgComponent.js';
 import { ScrollView } from 'react-native';
-
-// import * as yourModuleName from 'module-name';
+import { useAuth } from '../../services/auth';
 
 export default function Account() {
-  let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-SemiBold': require('../../assets/fonts/Inter/Inter-SemiBold.ttf'),
-  });
+  const [username, setName] = useState("")
+  const [password, setPassword] = useState("")
+
+  const auth = useAuth();
 
   const navigation = useNavigation();
 
-  if (!fontsLoaded) {
-    return <View />;
-  } else {
-    return (
-      <ScrollView style={styles.container}>
-        {/* <View style={{width: 300, backgroundColor: 'rgba(52, 52, 52, 0.0)', }}> */}
-        {/* onPress={() => navigation.navigate('TabTwoScreen')} */}
-        {/* <TouchableOpacity onPress={() => navigation.navigate('TabTwo')} >
+  const change = async () => {
+    if (!!username) {
+      await auth.user.updateProfile({
+        displayName: username
+      })
+      setName("")
+    }
+  }
+
+  return (
+    <ScrollView style={styles.container}>
+      {/* <View style={{width: 300, backgroundColor: 'rgba(52, 52, 52, 0.0)', }}> */}
+      {/* onPress={() => navigation.navigate('TabTwoScreen')} */}
+      {/* <TouchableOpacity onPress={() => navigation.navigate('TabTwo')} >
         <BackArrowSvgComponent />
         </TouchableOpacity> */}
 
-        {/* DEELETE FOR PRODUCTION */}
-        {/* <TouchableOpacity onPress={() => navigation.navigate('RegisterTesting')} >
+      {/* DEELETE FOR PRODUCTION */}
+      {/* <TouchableOpacity onPress={() => navigation.navigate('RegisterTesting')} >
         <Text> TESTING REGISTER COMPONENT</Text>
         </TouchableOpacity> */}
 
-        {/* </View> */}
-        <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
-          <BackArrowSvgComponent />
-        </TouchableOpacity>
-        <Text style={styles.title1}>Account</Text>
+      {/* </View> */}
+      <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
+        <BackArrowSvgComponent />
+      </TouchableOpacity>
+      <Text style={styles.title1}>Account</Text>
 
-        {/* <Login />
+      {/* <Login />
         <Register /> */}
 
-        {/* Settings text */}
-        <View style={{width: '90%', height: '70%', marginTop: 80, backgroundColor: 'transparent'}}>
-        
-      <Text style={styles.settingsText}>Change Display Name</Text>
-      <Text style={{fontFamily: 'Inter-SemiBold', color: '#4B00FF', paddingBottom: 10}}>Enter Password</Text>
-      <TextInput
-                    // onBlur={() => setFocused({ email: false, password: false })}
-                    // onFocus={() => setFocused({ email: false, password: true })}
-                    // onChangeText={text => setPassword(text)}
-                    autoCapitalize={"none"}
-                    autoCorrect={false}
-                    secureTextEntry={true}
-                    accessibilityElementsHidden={true}
-                    caretHidden={true}
-                    contextMenuHidden={true}
-                    placeholder="Password"
-                    placeholderTextColor="#85ACD6"
-                    style={{
-                        // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
-                        // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
-                        backgroundColor: '#FFFFFF',
-                        height: 48,
-                        // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
-                        borderWidth: 0,
-                        shadowOffset:{ width: 0, height: 2},
-                        shadowColor: 'black',
-                        shadowOpacity: 0.16,
-                        // height: 44,
-                        width: '70%',
-                        borderRadius: 6,
-                        fontSize: 13,
-                        paddingHorizontal: 20,
-                        textAlign: 'left',
-                        marginTop: 0
-                    }} />
+      {/* Settings text */}
+      <View style={{ width: '90%', height: '70%', marginTop: 80, backgroundColor: 'transparent' }}>
 
-<Text style={{fontFamily: 'Inter-SemiBold', color: '#4B00FF', marginTop: 25}}>New Display Name</Text>
+        <Text style={styles.settingsText}>Change Display Name</Text>
+        <Text style={{ fontFamily: 'Inter-SemiBold', color: '#4B00FF', paddingBottom: 10 }}>Enter Password</Text>
+        <TextInput
+          // onBlur={() => setFocused({ email: false, password: false })}
+          // onFocus={() => setFocused({ email: false, password: true })}
+          // onChangeText={text => setPassword(text)}
+          autoCapitalize={"none"}
+          autoCorrect={false}
+          secureTextEntry={true}
+          accessibilityElementsHidden={true}
+          contextMenuHidden={true}
+          placeholder="Password"
+          value={password}
+          placeholderTextColor="#85ACD6"
+          onChangeText={password => setPassword(password)}
+          style={{
+            // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
+            // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
+            backgroundColor: '#FFFFFF',
+            height: 48,
+            // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
+            borderWidth: 0,
+            shadowOffset: { width: 0, height: 2 },
+            shadowColor: 'black',
+            shadowOpacity: 0.16,
+            // height: 44,
+            width: '70%',
+            borderRadius: 6,
+            fontSize: 13,
+            paddingHorizontal: 20,
+            textAlign: 'left',
+            marginTop: 0
+          }} />
 
-<TextInput
-                    // onBlur={() => setFocused({ email: false, password: false })}
-                    // onFocus={() => setFocused({ email: false, password: true })}
-                    // onChangeText={text => setPassword(text)}
-                    autoCapitalize={"none"}
-                    autoCorrect={false}
-                    secureTextEntry={true}
-                    accessibilityElementsHidden={true}
-                    caretHidden={true}
-                    contextMenuHidden={true}
-                    placeholder="Display Name"
-                    placeholderTextColor="#85ACD6"
-                    style={{
-                        // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
-                        // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
-                        backgroundColor: '#FFFFFF',
-                        height: 48,
-                        // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
-                        borderWidth: 0,
-                        shadowOffset:{ width: 0, height: 2},
-                        shadowColor: 'black',
-                        shadowOpacity: 0.16,
-                        // height: 44,
-                        width: '70%',
-                        borderRadius: 6,
-                        fontSize: 13,
-                        paddingHorizontal: 20,
-                        textAlign: 'left',
-                        marginTop: 10
-                    }} />
-<TouchableOpacity style={styles.loginButton}>
+        <Text style={{ fontFamily: 'Inter-SemiBold', color: '#4B00FF', marginTop: 25 }}>New Display Name</Text>
+
+        <TextInput
+          // onBlur={() => setFocused({ email: false, password: false })}
+          // onFocus={() => setFocused({ email: false, password: true })}
+          // onChangeText={text => setPassword(text)}
+          autoCapitalize={"none"}
+          autoCorrect={false}
+          accessibilityElementsHidden={true}
+          contextMenuHidden={true}
+          placeholder="Display Name"
+          value={username}
+          onChangeText={name => setName(name)}
+          placeholderTextColor="#85ACD6"
+          style={{
+            // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
+            // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
+            backgroundColor: '#FFFFFF',
+            height: 48,
+            // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
+            borderWidth: 0,
+            shadowOffset: { width: 0, height: 2 },
+            shadowColor: 'black',
+            shadowOpacity: 0.16,
+            // height: 44,
+            width: '70%',
+            borderRadius: 6,
+            fontSize: 13,
+            paddingHorizontal: 20,
+            textAlign: 'left',
+            marginTop: 10
+          }} />
+        <TouchableOpacity style={styles.loginButton} onPress={change}>
           <Text style={styles.loginText} >
             Change
           </Text>
@@ -123,10 +127,10 @@ export default function Account() {
 
       </View>
 
-        {/* Login Component  */}
-        {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
-        {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
-        {/* <View style={styles.container2}>
+      {/* Login Component  */}
+      {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
+      {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
+      {/* <View style={styles.container2}>
       <Text style={styles.title3}>
         Chat with random people and create 
         everlasting friendships, 
@@ -135,19 +139,18 @@ export default function Account() {
         </Text >  
       </View> */}
 
-        {/* <SvgComponent1 /> */}
+      {/* <SvgComponent1 /> */}
 
-        {/* <Image style={{marginTop: 40 ,height: 138, width: 138, transform: [{ rotate: '25deg'}]}} source={require('../assets/images/peace-sign-emoji-by-google.png')}/> */}
-        {/* <View style={styles.container3}>
+      {/* <Image style={{marginTop: 40 ,height: 138, width: 138, transform: [{ rotate: '25deg'}]}} source={require('../assets/images/peace-sign-emoji-by-google.png')}/> */}
+      {/* <View style={styles.container3}>
       <Text style={styles.title4}>
         Already have an account?
         <Text onPress={() => navigation.navigate(TabOneScreen)} style={{fontFamily: 'Inter-SemiBold', color: '#4B00FF'}}> Log in </Text>
        
         </Text >  
       </View> */}
-      </ScrollView>
-    );
-  }
+    </ScrollView>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -195,7 +198,7 @@ const styles = StyleSheet.create({
     color: '#59606E',
     paddingBottom: 30,
   },
-  
+
   text1: {
     color: '#6F8BA4',
     fontSize: 14,

@@ -20,15 +20,15 @@ export default function Referral({ path }: { path?: string }) {
 
 
   const onCheck = () => {
-    if (input === "chillzone"){
-        navigation.goBack();
-            setTimeout(() => {
-              navigation.navigate('ChillzoneModal')
-            }, 300)
-        console.log('ok')
-    }else{
-        console.log('notok')
-        //display error message to user
+    if (input === "chillzone") {
+      navigation.goBack();
+      setTimeout(() => {
+        navigation.navigate('ChillzoneModal')
+      }, 300)
+      console.log('ok')
+    } else {
+      console.log('notok')
+      //display error message to user
     }
 
   };
@@ -51,7 +51,6 @@ export default function Referral({ path }: { path?: string }) {
           secureTextEntry={false}
           accessibilityElementsHidden={true}
           selectTextOnFocus={true}
-          caretHidden={true}
           contextMenuHidden={true}
           placeholder='Code'
           placeholderTextColor='#85ACD6'
@@ -76,12 +75,12 @@ export default function Referral({ path }: { path?: string }) {
           }}
         />
 
-        
+
 
         <TouchableOpacity onPress={onCheck} style={styles.loginButton}>
-            {/* IF input === chillzone, then onPress goes to () => navigation.navigate('ChillzoneModal') */}
+          {/* IF input === chillzone, then onPress goes to () => navigation.navigate('ChillzoneModal') */}
           <Text style={styles.loginText}>Activate</Text>
-          
+
         </TouchableOpacity>
       </View>
 

@@ -43,7 +43,7 @@ export default function TabTwoScreen() {
       </View>
 
       <TouchableOpacity onPress={anonymousSignin}>
-        {/* <SvgComponent1 /> */}
+        <SvgComponent1 />
       </TouchableOpacity>
 
       <View style={styles.container3}>

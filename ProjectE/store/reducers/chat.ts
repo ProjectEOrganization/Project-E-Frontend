@@ -1,5 +1,6 @@
 //@ts-nocheck
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { batch } from "react-redux";
 import { navigationRef } from "../../navigation";
 import { api } from "../../services/api";
 import { store } from "../store";
@@ -17,6 +18,7 @@ interface IUser {
     displayName: string;
     uid: string;
     isActive?: boolean;
+    secretDisplayName?: string;
     isFriends: boolean;
 }
 export interface IChat {
@@ -37,6 +39,10 @@ interface IQueue {
     user: IUser;
     messages: Array<IMessage>;
     chatId: string;
+    topic?: {
+        text: string;
+        colors: Array<string>
+    }
 }
 interface IState {
     chats: IChats;
@@ -52,7 +58,7 @@ export interface IisActiveEvent {
 
 export const fetchChats = createAsyncThunk(
     'chat/fetchChats',
-    async () => {
+    async (loading) => {
         const response = await api.get('/chats')
         return response.data
     }
@@ -77,11 +83,14 @@ export const fetchMessages = createAsyncThunk(
 export const joinQueue = createAsyncThunk(
     'chat/joinQueue',
     async (_, thunkAPI) => {
-        navigationRef.current?.navigate('RandomChat')
-        const response = await api.get('/join_queue')
+        navigationRef.current?.navigate('RandomChat');
+        const response = await api.get('/join_queue');
 
         if (response.data.status === 'found') {
-            thunkAPI.dispatch(initQueue(response.data.uid))
+            batch(() => {
+                thunkAPI.dispatch(addTopic(response.data.topic))
+                thunkAPI.dispatch(initQueue(response.data.uid))
+            })
         }
         return response.data;
     }
@@ -90,7 +99,14 @@ export const joinQueue = createAsyncThunk(
 export const loadChat = createAsyncThunk(
     'chat/loadChat',
     async (uid, thunkAPI) => {
-        const response = await api.get(`/chatSingle/${uid}`).catch((err) => alert(JSON.stringify(err)))
+        const response = await api.get(`/chatSingle/${uid}`)
+        return response.data
+    }
+)
+export const deleteChat = createAsyncThunk(
+    'chat/deleteChat',
+    async (chatId, thunkAPI) => {
+        const response = await api.get(`/delete_chat/${chatId}`)
         return response.data
     }
 )
@@ -106,7 +122,7 @@ export const skipQueue = createAsyncThunk(
 export const initQueue = createAsyncThunk(
     'chat/initQueue',
     async (uid: string) => {
-        const response = await api.get(`/chat/${uid}`);
+        const response = await api.get(`/chat/${uid}?isQueue=true`)
         navigationRef.current?.navigate('RandomChat')
         return response.data;
     }
@@ -189,11 +205,18 @@ const chatSlice = createSlice({
                 displayName: ''
             }
             state.queue.messages = []
+        },
+        addTopic(state, action) {
+            if (action.payload) {
+                state.queue.topic = action.payload
+            }
         }
     },
     extraReducers: {
-        [fetchChats.pending]: (state) => {
-            state.loadingChats = true;
+        [fetchChats.pending]: (state, action) => {
+            if (action.meta.arg?.loading !== false) {
+                state.loadingChats = true;
+            }
         },
         [fetchChats.fulfilled]: (state, action: { payload: Array<IChat> }) => {
             state.loadingChats = false;
@@ -240,6 +263,12 @@ const chatSlice = createSlice({
             state.queue.user = action.payload.user
             state.queue.chatId = action.payload.chatId
         },
+        [initQueue.pending]: (state) => {
+            state.queue.status = 'connecting'
+        },
+        [initQueue.rejected]: (state) => {
+            state.queue.status = 'error'
+        },
         [leaveQueue.fulfilled]: (state, action) => {
             state.queue.status = 'idle'
             state.queue.user = {
@@ -255,6 +284,9 @@ const chatSlice = createSlice({
                 ...action.payload,
                 messages: state.chats[action.payload.id]?.messages
             }
+        },
+        [deleteChat.fulfilled]: (state, action) => {
+            delete state.chats[action.payload.chatId];
         }
     }
 });
@@ -265,7 +297,8 @@ export const {
     setMessageDelivered,
     changeIsActive,
     addChat,
-    makeFriends
+    makeFriends,
+    addTopic
 } = chatSlice.actions;
 
 export default chatSlice.reducer;

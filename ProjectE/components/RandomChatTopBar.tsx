@@ -55,7 +55,7 @@ export default function RandomChatTopBar() {
       />
       <View style={styles.userNameText}>
         <Text style={styles.secondText}>You are chatting with</Text>
-        <Text numberOfLines={1} adjustsFontSizeToFit style={styles.firstText}>{user?.displayName}</Text>
+        <Text numberOfLines={1} adjustsFontSizeToFit style={styles.firstText}>{user?.isFriends ? user?.displayName : user?.secretDisplayName}</Text>
         <Text style={[{ color: user?.isActive == true ? 'green' : 'red' }]}>{user?.isActive == 1 ? 'Active' : 'Offline'}</Text>
       </View>
 

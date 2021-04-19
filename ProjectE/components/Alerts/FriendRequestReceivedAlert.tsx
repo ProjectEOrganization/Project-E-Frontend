@@ -23,7 +23,7 @@ export default function FriendRequestReceivedAlert({ friendId }) {
   async function acceptRequest() {
     navigationRef.current?.goBack()
     if (auth.user.isAnonymous) {
-      navigation.navigate('LoginModal', {
+      navigation.navigate('RegisterModal', {
         actionAfter: {
           name: 'accept_friends_request',
           data: {
