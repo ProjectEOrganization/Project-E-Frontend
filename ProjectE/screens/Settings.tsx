@@ -9,7 +9,7 @@ import { useFonts } from 'expo-font';
 import BackArrowSvgComponent from '../assets/backArrowSvgComponent.js';
 import Navigation from '../navigation';
 
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useNavigationState } from '@react-navigation/native';
 import TabOneScreen from './TabOneScreen';
 import SettingsPageSwitch from '../components/SettingsPageSwitch'
 import { useAuth } from '../services/auth';
@@ -28,6 +28,7 @@ import { store } from '../store';
 export default function Settings() {
 
   const navigation = useNavigation();
+  const state = useNavigationState(state => state.index);
 
   const auth = useAuth();
 

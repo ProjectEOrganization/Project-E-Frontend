@@ -16,7 +16,7 @@ import FriendsMessagesCard from '../components/Friends/FriendsMessagesCard';
 import IndividualFriendChat from '../components/Friends/IndividualFriendChat';
 import FriendsChatList from '../components/Friends/FriendsChatList';
 import navigationRef from '../navigation/index';
-import { Tooltip } from 'react-native-elements';
+import { Tooltip, SearchBar } from 'react-native-elements';
 import { useRef, useEffect } from 'react';
 import { store } from '../store';
 import { leaveQueue } from '../store/reducers/chat';
@@ -39,6 +39,8 @@ export default function FriendsScreen() {
   const auth = useAuth();
 
   const [route, setRoute] = React.useState<"messages" | "friends">("messages")
+
+  const [search, setSearch] = React.useState("");
 
   React.useEffect(() => {
     if (route === 'messages') scrollRef.current?.scrollTo({ x: 0, animated: true })
@@ -85,12 +87,15 @@ export default function FriendsScreen() {
             Hello {auth.user?.displayName || username}!
           </Text>
           <Text selectable>{auth.user?.uid}</Text>
-          <FriendsPageSwitch onChange={(route) => setRoute(route)} />
+          {/* <FriendsPageSwitch onChange={(route) => setRoute(route)} /> */}
+          <View style={{marginTop: 10}}>
+          <SearchBar placeholder="Filter Friends..." onChangeText={setSearch} value={search} lightTheme={true}/>
+          </View>
         </View>
 
         <ScrollView ref={scrollRef} scrollEnabled={false} horizontal pagingEnabled contentContainerStyle={{ flexDirection: 'row', width: width * 2, marginTop: 35, paddingBottom: 45 }}>
           <View style={{ backgroundColor: 'transparent', width, paddingLeft: (width * 0.15) / 2 }}>
-            <FriendsChatList />
+            <FriendsChatList search={search}/>
           </View>
           <View style={{ backgroundColor: 'transparent', width, paddingHorizontal: 35 }}>
             <FriendsChat />

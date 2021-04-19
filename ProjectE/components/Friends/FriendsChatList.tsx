@@ -14,7 +14,7 @@ const chatsSelector = createSelector(
     chats => Object.values(chats).sort((a, b) => b.sentAt - a.sentAt)
 )
 
-export default function FriendsChatList() {
+export default function FriendsChatList(props) {
     const loading = useSelector(state => state.chat.loadingChats);
     const chats = useSelector(chatsSelector);
     const auth = useAuth();
@@ -39,14 +39,20 @@ export default function FriendsChatList() {
         )
     }
 
+    chats.map((item, index) => {
+        console.log(item, "itemmmm", index);
+    });
+
     return (
         <View>
             {chats.map((item, index) => {
-                return (
-                    <View key={item.id?.toString()} style={{ paddingTop: index !== 0 ? 20 : 0 }}>
-                        <FriendsMessagesCard {...item} />
-                    </View>
-                )
+                if (item.user.displayName.includes(props.search)) {
+                    return (
+                        <View key={item.id?.toString()} style={{ paddingTop: index !== 0 ? 20 : 0 }}>
+                            <FriendsMessagesCard {...item} />
+                        </View>
+                    )
+                }
             })}
         </View>
     )

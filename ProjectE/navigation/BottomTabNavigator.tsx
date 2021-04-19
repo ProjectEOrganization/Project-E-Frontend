@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useAuth } from '../services/auth';
-import { useNavigation, useNavigationState } from '@react-navigation/native';
+import { useNavigation, useNavigationState, useRoute } from '@react-navigation/native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -36,8 +36,9 @@ const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 function BottomTabNavigator() {
   const navigation = useNavigation();
+  const route = useRoute();
+  const state = useNavigationState(state => state.index);
   const auth = useAuth();
-
   const skipRef = useRef(null);
 
   useEffect(() => {
@@ -76,16 +77,17 @@ function BottomTabNavigator() {
   function checkAuth() {
     if (!auth.user || auth.user.isAnonymous) {
       navigation.navigate('RegisterModal');
-      console.log('not logged in')
+      console.log('not logged in');
     } else {
-      navigationRef.current?.navigate('Friends')
-      console.log('logged in')
+      navigationRef.current?.navigate('Friends');
+      console.log('logged in');
     }
+    console.log(state, "Friends");
   }
 
   function Icon() {
     const queue = useSelector(state => state.chat.queue);
-    const state = useNavigationState(state => state.index)
+    const state = useNavigationState(state => state.index);
     const onPress = () => {
       if (state !== 1 && queue.status === 'idle') {
         store.dispatch(joinQueue())
@@ -99,11 +101,12 @@ function BottomTabNavigator() {
       else {
         store.dispatch(joinQueue())
       }
+      console.log(state, "RandomChat");
     }
 
     return (
       <>
-        <TouchableOpacity onPress={onPress} style={{ marginBottom: -20, backgroundColor: 'transparent' }}>
+        <TouchableOpacity onPress={onPress} style={{ marginBottom: -75, backgroundColor: 'transparent' }}>
           {/* <Tooltip ref={skipRef} onPress={onPress} popover={<Text>Skip this person</Text>}> */}
           <SvgComponentNav />
           {/* </Tooltip> */}
@@ -112,12 +115,25 @@ function BottomTabNavigator() {
     );
   }
 
+  function TabBarIcon(props: {
+    name: React.ComponentProps<typeof Ionicons>['name'];
+    color: string;
+  }) {
+    const logState = () => console.log(state, "settings");
+    return (
+        <>
+          <Ionicons size={25} style={{ marginTop: 25 }} {...props} />
+          <Text style={{ marginTop: 5, color: props.color, fontSize: 10 }}>Settings</Text>
+        </>
+    );
+  }
+
   return (
     <BottomTab.Navigator
       initialRouteName={auth.loggedIn ? "Friends" : "RandomChat"}
       tabBarOptions={{
         activeTintColor: '#00DBD0',
-        style: { height: 90 },
+        style: { height: 100 },
         inactiveTintColor: '#5C626E',
         showLabel: false
       }}
@@ -179,17 +195,7 @@ function Icon() {
   );
 }
 
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof Ionicons>['name'];
-  color: string;
-}) {
-  return (
-    <>
-      <Ionicons size={25} style={{ marginTop: 25 }} {...props} />
-      <Text style={{ marginTop: 5, color: props.color, fontSize: 10 }}>Settings</Text>
-    </>
-  );
-}
+
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
