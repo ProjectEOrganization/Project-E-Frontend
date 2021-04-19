@@ -32,6 +32,8 @@ import { navigationRef } from '.';
 import { useEffect, useRef } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import LottieView from 'lottie-react-native';
+
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 function BottomTabNavigator() {
@@ -83,7 +85,7 @@ function BottomTabNavigator() {
     }
   }
 
-  function Icon() {
+  const Icon = () => {
     const queue = useSelector(state => state.chat.queue);
     const state = useNavigationState(state => state.index)
 
@@ -103,11 +105,30 @@ function BottomTabNavigator() {
       }
     }
 
+    const animation = useRef<LottieView | null>();
+
+    useEffect(() => {
+      if (queue.status === 'searching') {
+        animation.current?.play()
+      }
+      else animation.current?.reset()
+    }, [queue?.status])
+
     return (
       <>
-        <TouchableOpacity onPress={onPress} style={{ marginBottom: -20, backgroundColor: 'transparent' }}>
+        <TouchableOpacity onPress={onPress} style={{ marginBottom: -20, backgroundColor: 'transparent', }}>
           {/* <Tooltip ref={skipRef} onPress={onPress} popover={<Text>Skip this person</Text>}> */}
-          <SvgComponentNav />
+          {/* <SvgComponentNav /> */}
+
+          <LottieView
+            ref={animation}
+            style={{
+              width: 100,
+              height: 100,
+              marginBottom: 30
+            }}
+            source={require('../assets/animations/button.json')}
+          />
           {/* </Tooltip> */}
         </TouchableOpacity>
       </>
@@ -243,3 +264,4 @@ export default function FriendsStackScreen() {
     </FriendsStack.Navigator>
   );
 }
+

@@ -41,6 +41,7 @@ interface IQueue {
     chatId: string;
     topic?: {
         text: string;
+        colors: Array<string>
     }
 }
 interface IState {
