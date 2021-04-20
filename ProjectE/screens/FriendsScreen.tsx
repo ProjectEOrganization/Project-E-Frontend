@@ -88,8 +88,10 @@ export default function FriendsScreen() {
           </Text>
           <Text selectable>{auth.user?.uid}</Text>
           {/* <FriendsPageSwitch onChange={(route) => setRoute(route)} /> */}
-          <View style={{marginTop: 10}}>
-            <SearchBar placeholder="Filter Friends..." onChangeText={setSearch} value={search} lightTheme={true}/>
+          <View style={{marginTop: 10,backgroundColor: 'transparent',marginLeft: -10}}>
+            <SearchBar  placeholder="Search Friends..." onChangeText={setSearch} value={search} lightTheme={true} containerStyle={{shadowOffset: { width: 0, height: 6 },
+    shadowColor: 'black', //black, aad1f0, borderTopWidth: 0.5, borderBottomWidth: 0.5, borderLeftWidth: 0.5, borderRightWidth: 0.5
+    shadowOpacity: 0.2,backgroundColor:'transparent', borderTopWidth:0, borderBottomWidth:0}} inputContainerStyle={{backgroundColor: 'white', borderRadius: 10, borderColor: '#aad1f0'}}/>
           </View>
         </View>
 
