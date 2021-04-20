@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, ActivityIndicator } from 'react-native'
+import { View, Text, ActivityIndicator, FlatList } from 'react-native'
 import { createSelector } from 'reselect'
 import { useSelector } from '../../hooks'
 import { api } from '../../services/api'
@@ -9,12 +9,13 @@ import { fetchChats } from '../../store/reducers/chat'
 import { fetchFriends } from '../../store/reducers/friends'
 import FriendsMessagesCard from './FriendsMessagesCard'
 
-const chatsSelector = createSelector(
-    (state: RootState) => state.chat.chats,
-    chats => Object.values(chats).sort((a, b) => b.sentAt - a.sentAt)
-)
+export default function FriendsChatList({ search }: { search: string }) {
 
-export default function FriendsChatList(props) {
+    const chatsSelector = createSelector(
+        (state: RootState) => state.chat.chats,
+        chats => Object.values(chats).filter(item => item.user.displayName.toLowerCase().match(search.toLowerCase())).sort((a, b) => b.sentAt - a.sentAt)
+    )
+
     const loading = useSelector(state => state.chat.loadingChats);
     const chats = useSelector(chatsSelector);
     const auth = useAuth();
@@ -39,21 +40,17 @@ export default function FriendsChatList(props) {
         )
     }
 
-    chats.map((item, index) => {
-        console.log(item, "itemmmm", index);
-    });
-
     return (
-        <View>
-            {chats.map((item, index) => {
-                if (item.user.displayName.includes(props.search)) {
-                    return (
-                        <View key={item.id?.toString()} style={{ paddingTop: index !== 0 ? 20 : 0 }}>
-                            <FriendsMessagesCard {...item} />
-                        </View>
-                    )
-                }
-            })}
-        </View>
+        <FlatList
+            data={chats}
+            contentContainerStyle={{ paddingTop: 35, paddingBottom: 45, alignItems: 'center' }}
+            renderItem={({ item, index }) => (
+                <View key={item.id?.toString()} style={{ paddingTop: index !== 0 ? 20 : 0 }}>
+                    <FriendsMessagesCard {...item} />
+                </View>
+            )}
+            extraData={[]}
+            keyExtractor={item => item.id.toString()}
+        />
     )
 }

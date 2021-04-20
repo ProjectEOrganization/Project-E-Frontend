@@ -11,7 +11,10 @@ import { useAuth } from '../../services/auth';
 import { api } from '../../services/api';
 import { useSocket } from '../../services/socket';
 import { useNavigation } from '@react-navigation/core';
-export default function Login({ path }: { path?: string }) {
+import { store } from '../../store/store';
+import { addChat, makeFriends } from '../../store/reducers/chat';
+import { addFriend } from '../../store/reducers/friends';
+export default function Login({ path, actionAfter }: { path?: string, actionAfter?: any }) {
   const auth = useAuth();
 
   const [email, setEmail] = useState('');
@@ -20,6 +23,16 @@ export default function Login({ path }: { path?: string }) {
   const onLogin = () => {
     auth
       .signin(email, password)
+      .then(() => {
+        if (actionAfter?.name === 'accept_friends_request') {
+          const friendId = actionAfter.data?.uid;
+          api.post('/friends/accept/' + friendId).then((res) => {
+            store.dispatch(addChat(res.data.chat))
+            store.dispatch(makeFriends())
+            store.dispatch(addFriend(friendId))
+          });
+        }
+      })
       .then(() => {
         navigation.goBack()
         navigation.navigate('Root', {
@@ -118,26 +131,26 @@ export default function Login({ path }: { path?: string }) {
         <TouchableOpacity onPress={onLogin} style={styles.loginButton}>
           <Text style={styles.loginText}>Login</Text>
         </TouchableOpacity>
-        <View style={{paddingBottom: 20, paddingTop: 20}}>
-        <Text
-          onPress={() => {
-            navigation.goBack();
-            setTimeout(() => {
-              navigation.navigate('RegisterModal')
-            }, 300)
-          }}
-          style={{
-            fontSize: 15,
-            color: '#A9ACB0',
-            marginLeft: 10,
-            fontFamily: 'Inter-Medium',
-          }}
-        >
-          Don't have an account?{' '}
-          <Text style={{ color: '#4B00FF', fontFamily: 'Inter-SemiBold' }}>
-            Register
+        <View style={{ paddingBottom: 20, paddingTop: 20 }}>
+          <Text
+            onPress={() => {
+              navigation.goBack();
+              setTimeout(() => {
+                navigation.navigate('RegisterModal')
+              }, 300)
+            }}
+            style={{
+              fontSize: 15,
+              color: '#A9ACB0',
+              marginLeft: 10,
+              fontFamily: 'Inter-Medium',
+            }}
+          >
+            Don't have an account?{' '}
+            <Text style={{ color: '#4B00FF', fontFamily: 'Inter-SemiBold' }}>
+              Register
             </Text>
-        </Text>
+          </Text>
         </View>
       </View>
 

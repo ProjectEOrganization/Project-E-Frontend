@@ -47,62 +47,54 @@ export default function FriendsScreen() {
     else if (route === 'friends') scrollRef.current?.scrollTo({ x: width, animated: true })
   }, [route])
 
-
-
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <View
+        style={{
+          marginTop: 80,
+          backgroundColor: 'transparent',
+          flexDirection: 'row',
+          marginLeft: 30
 
-        <View
+        }}
+      >
+        <ThreeDotsSvg />
+        <TouchableOpacity onPress={() => navigation.navigate('SendFriendRequestModal')} >
+          <Text style={{
+            marginLeft: 220, fontFamily: 'Inter-SemiBold', color: '#21293A'
+          }}>Add Friend +</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View
+        style={{
+          marginTop: 60,
+          backgroundColor: 'transparent',
+          paddingHorizontal: 35,
+        }}
+      >
+        <Text
           style={{
-            marginTop: 80,
-            backgroundColor: 'transparent',
-            flexDirection: 'row',
-            marginLeft: 30
-
+            fontFamily: 'Inter-SemiBold',
+            fontSize: 25,
+            color: '#21293A',
           }}
         >
-          <ThreeDotsSvg />
-          <TouchableOpacity onPress={() => navigation.navigate('SendFriendRequestModal')} >
-            <Text style={{
-              marginLeft: 220, fontFamily: 'Inter-SemiBold', color: '#21293A'
-            }}>Add Friend +</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View
-          style={{
-            marginTop: 60,
-            backgroundColor: 'transparent',
-            paddingHorizontal: 35,
-          }}
-        >
-          <Text
-            style={{
-              fontFamily: 'Inter-SemiBold',
-              fontSize: 25,
-              color: '#21293A',
-            }}
-          >
-            Hello {auth.user?.displayName || username}!
+          Hello {auth.user?.displayName || username}!
           </Text>
-          <Text selectable>{auth.user?.uid}</Text>
-          {/* <FriendsPageSwitch onChange={(route) => setRoute(route)} /> */}
-          <View style={{marginTop: 10}}>
-            <SearchBar placeholder="Filter Friends..." onChangeText={setSearch} value={search} lightTheme={true}/>
-          </View>
+        <Text selectable>{auth.user?.uid}</Text>
+        {/* <FriendsPageSwitch onChange={(route) => setRoute(route)} /> */}
+        <View style={{ marginTop: 10, backgroundColor: 'transparent', marginLeft: -10 }}>
+          <SearchBar placeholder="Search Friends..." onChangeText={setSearch} value={search} lightTheme={true} containerStyle={{
+            shadowOffset: { width: 0, height: 6 },
+            shadowColor: 'black', //black, aad1f0, borderTopWidth: 0.5, borderBottomWidth: 0.5, borderLeftWidth: 0.5, borderRightWidth: 0.5
+            shadowOpacity: 0.2, backgroundColor: 'transparent', borderTopWidth: 0, borderBottomWidth: 0
+          }} inputContainerStyle={{ backgroundColor: 'white', borderRadius: 10, borderColor: '#aad1f0' }} />
         </View>
+      </View>
 
-        <ScrollView ref={scrollRef} scrollEnabled={false} horizontal pagingEnabled contentContainerStyle={{ flexDirection: 'row', width: width * 2, marginTop: 35, paddingBottom: 45 }}>
-          <View style={{ backgroundColor: 'transparent', width, paddingLeft: (width * 0.15) / 2 }}>
-            <FriendsChatList search={search}/>
-          </View>
-          <View style={{ backgroundColor: 'transparent', width, paddingHorizontal: 35 }}>
-            <FriendsChat />
-          </View>
-        </ScrollView>
+      <FriendsChatList search={search} />
 
-      </ScrollView>
     </View>
   );
 }

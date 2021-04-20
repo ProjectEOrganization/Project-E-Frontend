@@ -18,6 +18,7 @@ import { useSelector } from '../hooks';
 import { createSelector } from 'reselect';
 import { fetchFriends } from '../store/reducers/friends';
 import { batch } from 'react-redux';
+import { backend } from '../services/backend'
 
 const { width, height } = Dimensions.get('screen')
 
@@ -53,6 +54,15 @@ export default function FriendsChatScreen() {
   useEffect(() => {
     store.dispatch(fetchMessages({ chatId: route.params.id, userId: route.params.user.uid }))
   }, [])
+
+  useEffect(() => {
+    if (chatMessages.length > 0) {
+      backend.chat.setAsRead({
+        chatId: route.params.id,
+        lastMessageId: chatMessages[0]?.id
+      });
+    }
+  }, [chatMessages, route.params.id])
 
 
   const Header = () => (

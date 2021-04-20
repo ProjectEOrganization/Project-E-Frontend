@@ -21,7 +21,7 @@ export default function SendFriendRequestAlertId() {
     await api.post('/friends/add/' + friendId);
   }
 
-  const [email, setEmail] = useState("martynas.alekna10@gmail.com")
+  const [email, setEmail] = useState("")
 
   return (
     <View style={styles.overallContainer}>

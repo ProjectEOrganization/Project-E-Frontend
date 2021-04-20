@@ -9,8 +9,12 @@ import { MonoText } from '../StyledText';
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
+import { api } from '../../services/api';
+import { store } from '../../store/store';
+import { addChat, makeFriends } from '../../store/reducers/chat';
+import { addFriend } from '../../store/reducers/friends';
 
-export default function Register({ path }: { path: string }) {
+export default function Register({ path, actionAfter }: { path: string, actionAfter?: any }) {
   const navigation = useNavigation();
   const auth = useAuth();
 
@@ -20,11 +24,23 @@ export default function Register({ path }: { path: string }) {
 
   const onRegister = async () => {
     if (email !== '' && password !== '' && displayName !== '') {
-      await auth.signup(email, password, displayName);
-      navigation.goBack();
-      console.log(
-        `${email}: ${password} has signed up. You can now login and authenticate with this user.`
-      );
+      auth.signup(email, password, displayName)
+        .then(() => {
+          if (actionAfter?.name === 'accept_friends_request') {
+            const friendId = actionAfter.data?.uid;
+            api.post('/friends/accept/' + friendId).then((res) => {
+              store.dispatch(addChat(res.data.chat))
+              store.dispatch(makeFriends())
+              store.dispatch(addFriend(friendId))
+            });
+          }
+        })
+        .then(() => {
+          navigation.goBack();
+          console.log(
+            `${email}: ${password} has signed up. You can now login and authenticate with this user.`
+          );
+        })
     } else {
       console.log('rip');
     }
@@ -163,7 +179,7 @@ export default function Register({ path }: { path: string }) {
           onPress={() => {
             navigation.goBack();
             setTimeout(() => {
-              navigation.navigate('LoginModal')
+              navigation.navigate('LoginModal', { actionAfter })
             }, 300)
           }}
           style={{

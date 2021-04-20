@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { batch } from "react-redux";
 import { navigationRef } from "../../navigation";
 import { api } from "../../services/api";
+import { backend } from "../../services/backend";
 import { store } from "../store";
 export interface IMessage {
     id?: string;
@@ -84,7 +85,7 @@ export const joinQueue = createAsyncThunk(
     'chat/joinQueue',
     async (_, thunkAPI) => {
         navigationRef.current?.navigate('RandomChat');
-        const response = await api.get('/join_queue');
+        const response = await backend.chat.joinQueue();
 
         if (response.data.status === 'found') {
             batch(() => {
