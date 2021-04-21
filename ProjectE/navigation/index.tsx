@@ -1,7 +1,7 @@
 import { NavigationContainer, DefaultTheme, DarkTheme, NavigationContainerRef } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import { ColorSchemeName } from 'react-native';
+import { ActivityIndicator, ColorSchemeName, View } from 'react-native';
 import FriendRequestReceivedModal from '../components/Modals/FriendRequestReceivedModal';
 import LoginModal from '../components/Modals/LoginModal';
 import RegisterModal from '../components/Modals/RegisterModal';
@@ -73,15 +73,12 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
 
   const fetchToken = async () => {
     const token = await AsyncStorage.getItem('token')
-
     if (!token) {
       navigationRef.current?.navigate('Onboarding');
     }
   }
 
   React.useEffect(() => {
-    if (ready === false) return
-
     fetchToken()
 
     const subscription = Notifications.addNotificationReceivedListener(notification => {
@@ -111,11 +108,18 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
     }
   }, [auth, ready])
 
+
+  if (auth.loading) return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} >
+      <ActivityIndicator size="small" color="black" />
+    </View>
+  )
+
   return (
     <NavigationContainer
       ref={navigationRef}
       linking={LinkingConfiguration}
-      // onReady={() => setReady(true)}
+      onReady={() => setReady(true)}
       theme={props.colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack.Navigator initialRouteName="Root" screenOptions={{ headerShown: false, cardOverlayEnabled: true }}>
         <Stack.Screen
@@ -173,7 +177,7 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
           component={SendFriendRequestModal}
           options={{ ...popupEffect }}
         />
-        <Stack.Screen name="Onboarding" component={Onboarding1} />
+        <Stack.Screen name="Onboarding" component={Onboarding1} options={{ gestureEnabled: false }} />
         <Stack.Screen name="Root" component={BottomTabNavigator} />
         <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       </Stack.Navigator>

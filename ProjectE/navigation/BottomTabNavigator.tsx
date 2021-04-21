@@ -117,6 +117,8 @@ function BottomTabNavigator() {
       else animation.current?.reset()
     }, [queue?.status])
 
+
+
     return (
       <>
         <TouchableOpacity onPress={onPress} style={{ marginBottom: -20, backgroundColor: 'transparent', }}>
@@ -142,12 +144,12 @@ function BottomTabNavigator() {
     name: React.ComponentProps<typeof Ionicons>['name'];
     color: string;
   }) {
-    const logState = () => console.log(state, "settings");
+
     return (
-        <>
-          <Ionicons size={25} style={{ marginTop: 25 }} {...props} />
-          <Text style={{ marginTop: 5, color: props.color, fontSize: 10 }}>Settings</Text>
-        </>
+      <>
+        <Ionicons size={25} style={{ marginTop: 25 }} {...props} />
+        <Text style={{ marginTop: 5, color: props.color, fontSize: 10 }}>Settings</Text>
+      </>
     );
   }
 
@@ -196,32 +198,6 @@ function BottomTabNavigator() {
     </BottomTab.Navigator>
   );
 }
-
-// You can explore the built-in icon families and icons on the web at:
-// https://icons.expo.fyi/
-function Icon() {
-  const queue = useSelector(state => state.chat.queue);
-  const auth = useAuth();
-
-  const onPress = async () => {
-    if (!auth.user) await auth.signInAnonymously();
-    if (queue.status === 'found') navigationRef.current?.navigate('SkipConfirmationModal')
-    else {
-      store.dispatch(joinQueue())
-    }
-  }
-
-  return (
-    <TouchableOpacity onPress={onPress} style={{ marginBottom: -20, backgroundColor: 'transparent' }}>
-      <SvgComponentNav />
-    </TouchableOpacity>
-  );
-}
-
-
-
-// Each tab has its own navigation stack, you can read more about this pattern here:
-// https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 
 const SettingsStack = createStackNavigator();
 

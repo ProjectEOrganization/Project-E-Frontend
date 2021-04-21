@@ -20,6 +20,8 @@ export default function Login({ path, actionAfter }: { path?: string, actionAfte
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [success, setSuccess] = useState(true);
+
   const onLogin = () => {
     auth
       .signin(email, password)
@@ -35,9 +37,14 @@ export default function Login({ path, actionAfter }: { path?: string, actionAfte
       })
       .then(() => {
         navigation.goBack()
-        navigation.navigate('Root', {
-          screen: 'Friends'
-        })
+        setTimeout(() => {
+          navigation.navigate('Root', {
+            screen: 'Friends', params: {
+              screen: 'RandomChat'
+            }
+          })
+        }, 400)
+        setSuccess(true);
         console.log(
           email,
           password,
@@ -45,6 +52,7 @@ export default function Login({ path, actionAfter }: { path?: string, actionAfte
         );
       })
       .catch(() => {
+        setSuccess(false)
         console.log(email, password, 'Account is not found. NOT authenticated');
       });
   };
@@ -64,9 +72,9 @@ export default function Login({ path, actionAfter }: { path?: string, actionAfte
         <Text style={styles.secondText}>
           Login to continue chatting with your friends
         </Text>
-        
 
-      
+
+
         <TextInput
           // onBlur={() => setFocused({ email: false, password: false })}
           // onFocus={() => setFocused({ email: false, password: true })}
@@ -129,19 +137,22 @@ export default function Login({ path, actionAfter }: { path?: string, actionAfte
             textAlign: 'left',
             marginTop: 25,
             marginBottom: 20
-            
-            
+
+
           }}
         />
 
-<Text style={{
-          fontSize: 14,
-    fontFamily: 'Inter-Medium',
-    color: 'red',
-    textAlign: 'center',
-    lineHeight: 23,}}>
-          Sorry, the email or password you entered was incorrect.
-        </Text>
+        {!success && (
+          <Text style={{
+            fontSize: 14,
+            fontFamily: 'Inter-Medium',
+            color: 'red',
+            textAlign: 'center',
+            lineHeight: 23,
+          }}>
+            Sorry, the email or password you entered was incorrect.
+          </Text>
+        )}
 
         <TouchableOpacity onPress={onLogin} style={styles.loginButton}>
           <Text style={styles.loginText}>Login</Text>
@@ -201,7 +212,7 @@ function handleHelpPress() {
 const styles = StyleSheet.create({
   overallContainer: {
     //overall container
-    height: 430,
+    minHeight: 430,
     width: 330,
     backgroundColor: '#fff',
     borderRadius: 40,

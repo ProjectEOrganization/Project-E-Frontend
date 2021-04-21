@@ -25,18 +25,13 @@ const { width } = Dimensions.get('screen');
 
 export default function FriendsScreen() {
   let username = 'Anonymous';
+  const auth = useAuth();
 
   const tooltipRef = useRef(null);
-
-  useEffect(() => {
-    tooltipRef.current?.toggleTooltip();
-  });
 
   const navigation = useNavigation();
 
   const scrollRef = React.useRef<ScrollView | null>(null);
-
-  const auth = useAuth();
 
   const [route, setRoute] = React.useState<"messages" | "friends">("messages")
 
@@ -46,6 +41,10 @@ export default function FriendsScreen() {
     if (route === 'messages') scrollRef.current?.scrollTo({ x: 0, animated: true })
     else if (route === 'friends') scrollRef.current?.scrollTo({ x: width, animated: true })
   }, [route])
+
+  useEffect(() => {
+    tooltipRef.current?.toggleTooltip();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -60,7 +59,7 @@ export default function FriendsScreen() {
       >
 
         <TouchableOpacity>
-        <ThreeDotsSvg />
+          <ThreeDotsSvg />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => navigation.navigate('SendFriendRequestModal')} >

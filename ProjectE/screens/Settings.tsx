@@ -57,7 +57,7 @@ export default function Settings() {
       {/* </View> */}
 
       <Text style={styles.title1}>Settings</Text>
-      
+
 
 
       {/* <Register /> */}
@@ -89,7 +89,7 @@ export default function Settings() {
           <Text style={styles.settingsText} >Referrals</Text>
         </TouchableOpacity>
 
-        
+
 
         {/* <Text style={styles.settingsText}>Customization</Text>
           <SettingsPageSwitch /> */}

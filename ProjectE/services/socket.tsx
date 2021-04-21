@@ -89,6 +89,10 @@ function useProvideSocket() {
                 navigationRef.current?.navigate('YouAreNowFriendsModal', { uid })
             })
 
+            socket.on('update_queue', (data) => {
+                alert(JSON.stringify(data))
+            })
+
             socket.on('friend_request_declined', (friendId) => {
                 navigationRef.current?.navigate('RejectedModal', { uid: friendId.uid })
             })

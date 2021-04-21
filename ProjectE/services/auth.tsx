@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext, createContext, useMemo } from "
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { api } from "./api";
 import { firebase } from "./firebase";
+import { navigationRef } from "../navigation";
 
 const AuthContext = createContext<ReturnType<typeof useProvideAuth>>();
 
@@ -24,6 +25,7 @@ export const useAuth = () => {
 // Provider hook that creates auth object and handles state
 function useProvideAuth() {
     const [user, setUser] = useState<firebase.User>(null);
+    const [loading, setLoading] = useState(true);
 
     const signin = (email, password) => {
         return firebase
@@ -62,11 +64,7 @@ function useProvideAuth() {
             .auth()
             .signOut()
             .then(async () => {
-                try {
-                    await AsyncStorage.removeItem('token');
-                } catch (error) {
-                    console.log(error);
-                }
+                await AsyncStorage.removeItem('token');
                 setUser();
             });
     };
@@ -97,15 +95,15 @@ function useProvideAuth() {
     }, [user])
 
     const init = async (user: firebase.User) => {
-        const token = await user.getIdToken();
+        const token = await firebase.auth().currentUser.getIdToken();
         await AsyncStorage.setItem('token', token)
         const res = await api.post('/auth', user);
-        const newUser: firebase.User = {
-            ...user,
-            ...res.data.user,
-            getIdToken: user.getIdToken,
-        }
-        setUser(newUser);
+        const newUser = firebase.auth().currentUser;
+        await newUser?.updateProfile({
+            displayName: res.data.user.displayName
+        })
+        setUser(Object.create(newUser));
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -113,8 +111,8 @@ function useProvideAuth() {
             if (user) {
                 init(user)
             } else {
-                const user = await signInAnonymously();
-                init(user)
+                setLoading(false);
+                setUser();
             }
         });
 
@@ -128,6 +126,7 @@ function useProvideAuth() {
     return {
         user,
         loggedIn,
+        loading,
         signin,
         signInAnonymously,
         signup,
