@@ -115,7 +115,7 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
     <NavigationContainer
       ref={navigationRef}
       linking={LinkingConfiguration}
-      onReady={() => setReady(true)}
+      // onReady={() => setReady(true)}
       theme={props.colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack.Navigator initialRouteName="Root" screenOptions={{ headerShown: false, cardOverlayEnabled: true }}>
         <Stack.Screen

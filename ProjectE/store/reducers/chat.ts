@@ -157,8 +157,7 @@ const chatSlice = createSlice({
                     state.chats[action.payload.chatId].sentAt = action.payload.sentAt;
                 }
             }
-            else {
-                if (!(action.payload.chatId in state.chats)) return
+            else if (action.payload.chatId in state.chats) {
                 const routeName = navigationRef.current?.getCurrentRoute()?.name;
                 if (routeName !== 'FriendsChatScreen') {
                     state.chats[action.payload.chatId].missed += 1;
@@ -260,7 +259,7 @@ const chatSlice = createSlice({
         },
         [initQueue.fulfilled]: (state, action) => {
             state.queue.status = 'found'
-            state.queue.messages = action.payload.messages || []
+            state.queue.messages = action.payload?.messages || []
             state.queue.user = action.payload.user
             state.queue.chatId = action.payload.chatId
         },
