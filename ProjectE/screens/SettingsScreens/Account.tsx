@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, TextInput } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, StyleSheet, TextInput } from 'react-native';
 
 import { Text, View } from '../../components/Themed';
 import { Image, TouchableOpacity } from 'react-native';
@@ -12,21 +12,35 @@ import { ScrollView } from 'react-native';
 import { useAuth } from '../../services/auth';
 
 export default function Account() {
+  const auth = useAuth();
+
   const [username, setName] = useState("")
   const [password, setPassword] = useState("")
 
-  const auth = useAuth();
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+
 
   const navigation = useNavigation();
 
   const change = async () => {
     if (!!username) {
+      setLoading(true)
       await auth.user.updateProfile({
         displayName: username
       })
+      await auth.init(auth.user);
       setName("")
+      setSuccess(true)
+      setLoading(false)
     }
   }
+
+  useEffect(() => {
+    return () => {
+      setSuccess(false)
+    }
+  }, [])
 
   return (
     <ScrollView style={styles.container}>
@@ -54,7 +68,7 @@ export default function Account() {
       <View style={{ width: '90%', height: '70%', marginTop: 80, backgroundColor: 'transparent' }}>
 
         <Text style={styles.settingsText}>Change Display Name</Text>
-        <Text style={{ fontFamily: 'Inter-SemiBold', color: '#4B00FF', paddingBottom: 10 }}>Enter Password</Text>
+        {/* <Text style={{ fontFamily: 'Inter-SemiBold', color: '#4B00FF', paddingBottom: 10 }}>Enter Password</Text>
         <TextInput
           // onBlur={() => setFocused({ email: false, password: false })}
           // onFocus={() => setFocused({ email: false, password: true })}
@@ -85,7 +99,7 @@ export default function Account() {
             paddingHorizontal: 20,
             textAlign: 'left',
             marginTop: 0
-          }} />
+          }} /> */}
 
         <Text style={{ fontFamily: 'Inter-SemiBold', color: '#4B00FF', marginTop: 25 }}>New Display Name</Text>
 
@@ -120,23 +134,30 @@ export default function Account() {
             marginTop: 10
           }} />
 
-<Text style={{
-          fontSize: 14,
-    fontFamily: 'Inter-SemiBold',
-    color: 'green',
-    paddingTop: 5,
-    lineHeight: 23,}}>
-          Display name change successful!
-        </Text>
+        {success && (
+          <Text style={{
+            fontSize: 14,
+            fontFamily: 'Inter-SemiBold',
+            color: 'green',
+            paddingTop: 5,
+            lineHeight: 23,
+          }}>
+            Display name change successful!
+          </Text>
+        )}
 
         <TouchableOpacity style={styles.loginButton} onPress={change}>
-          <Text style={styles.loginText} >
-            Change
-          </Text>
+          {!loading
+            ? (
+              <Text style={[styles.loginText]} >
+                Change
+              </Text>
+            )
+            : <ActivityIndicator color="white" size='small' />}
         </TouchableOpacity>
 
       </View>
-      
+
       {/* Login Component  */}
       {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
       {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
@@ -206,7 +227,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontFamily: 'Inter-Bold',
     color: '#59606E',
-    paddingBottom: 30,
+    // paddingBottom: 30,
   },
 
   text1: {
