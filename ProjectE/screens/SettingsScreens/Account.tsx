@@ -18,7 +18,10 @@ export default function Account() {
   const [password, setPassword] = useState("")
 
   const [success, setSuccess] = useState(false);
+  const [passwordSuccess, setPasswordSuccess] = useState(false);
+
   const [loading, setLoading] = useState(false);
+  const [passwordLoading, setPasswordLoading] = useState(false);
 
 
   const navigation = useNavigation();
@@ -35,10 +38,21 @@ export default function Account() {
       setLoading(false)
     }
   }
+  const changePassword = async () => {
+    if (!!password) {
+      setPasswordLoading(true)
+      await auth.user.updatePassword(password);
+      await auth.init(auth.user);
+      setPassword("");
+      setPasswordSuccess(true);
+      setPasswordLoading(false);
+    }
+  }
 
   useEffect(() => {
     return () => {
-      setSuccess(false)
+      setSuccess(false);
+      setPasswordSuccess(false);
     }
   }, [])
 
@@ -65,41 +79,42 @@ export default function Account() {
         <Register /> */}
 
       {/* Settings text */}
-      <View style={{ width: '90%', height: '70%', marginTop: 80, backgroundColor: 'transparent' }}>
+      <View style={{ width: '90%', height: '70%', marginTop: 20, backgroundColor: 'transparent' }}>
 
-        <Text style={styles.settingsText}>Change Display Name</Text>
         {/* <Text style={{ fontFamily: 'Inter-SemiBold', color: '#4B00FF', paddingBottom: 10 }}>Enter Password</Text>
         <TextInput
-          // onBlur={() => setFocused({ email: false, password: false })}
-          // onFocus={() => setFocused({ email: false, password: true })}
-          // onChangeText={text => setPassword(text)}
-          autoCapitalize={"none"}
-          autoCorrect={false}
-          secureTextEntry={true}
-          accessibilityElementsHidden={true}
-          contextMenuHidden={true}
-          placeholder="Password"
-          value={password}
-          placeholderTextColor="#85ACD6"
-          onChangeText={password => setPassword(password)}
-          style={{
-            // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
-            // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
-            backgroundColor: '#FFFFFF',
-            height: 48,
-            // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
-            borderWidth: 0,
-            shadowOffset: { width: 0, height: 2 },
-            shadowColor: 'black',
-            shadowOpacity: 0.16,
-            // height: 44,
-            width: '70%',
-            borderRadius: 6,
-            fontSize: 13,
-            paddingHorizontal: 20,
-            textAlign: 'left',
-            marginTop: 0
-          }} /> */}
+        // onBlur={() => setFocused({ email: false, password: false })}
+        // onFocus={() => setFocused({ email: false, password: true })}
+        // onChangeText={text => setPassword(text)}
+        autoCapitalize={"none"}
+        autoCorrect={false}
+        secureTextEntry={true}
+        accessibilityElementsHidden={true}
+        contextMenuHidden={true}
+        placeholder="Password"
+        value={password}
+        placeholderTextColor="#85ACD6"
+        onChangeText={password => setPassword(password)}
+        style={{
+          // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
+          // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
+          backgroundColor: '#FFFFFF',
+          height: 48,
+          // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
+          borderWidth: 0,
+          shadowOffset: { width: 0, height: 2 },
+          shadowColor: 'black',
+          shadowOpacity: 0.16,
+          // height: 44,
+          width: '70%',
+          borderRadius: 6,
+          fontSize: 13,
+          paddingHorizontal: 20,
+          textAlign: 'left',
+          marginTop: 0
+        }} /> */}
+
+        <Text style={styles.settingsText}>Change Display Name</Text>
 
         <Text style={{ fontFamily: 'Inter-SemiBold', color: '#4B00FF', marginTop: 25 }}>New Display Name</Text>
 
@@ -148,6 +163,63 @@ export default function Account() {
 
         <TouchableOpacity style={styles.loginButton} onPress={change}>
           {!loading
+            ? (
+              <Text style={[styles.loginText]} >
+                Change
+              </Text>
+            )
+            : <ActivityIndicator color="white" size='small' />}
+        </TouchableOpacity>
+
+        <Text style={styles.settingsText}>Change Password</Text>
+        
+        <Text style={{ fontFamily: 'Inter-SemiBold', color: '#4B00FF', marginTop: 25 }}>New Password</Text>
+
+        <TextInput
+          // onBlur={() => setFocused({ email: false, password: false })}
+          // onFocus={() => setFocused({ email: false, password: true })}
+          // onChangeText={text => setPassword(text)}
+          autoCapitalize={"none"}
+          autoCorrect={false}
+          accessibilityElementsHidden={true}
+          contextMenuHidden={true}
+          placeholder="Password"
+          value={password}
+          onChangeText={password => setPassword(password)}
+          placeholderTextColor="#85ACD6"
+          style={{
+            // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
+            // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
+            backgroundColor: '#FFFFFF',
+            height: 48,
+            // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
+            borderWidth: 0,
+            shadowOffset: { width: 0, height: 2 },
+            shadowColor: 'black',
+            shadowOpacity: 0.16,
+            // height: 44,
+            width: '70%',
+            borderRadius: 6,
+            fontSize: 13,
+            paddingHorizontal: 20,
+            textAlign: 'left',
+            marginTop: 10
+          }} />
+
+        {passwordSuccess && (
+          <Text style={{
+            fontSize: 14,
+            fontFamily: 'Inter-SemiBold',
+            color: 'green',
+            paddingTop: 5,
+            lineHeight: 23,
+          }}>
+            Password change successful!
+          </Text>
+        )}
+
+        <TouchableOpacity style={styles.loginButton} onPress={changePassword}>
+          {!passwordLoading
             ? (
               <Text style={[styles.loginText]} >
                 Change
@@ -224,6 +296,7 @@ const styles = StyleSheet.create({
   },
   settingsText: {
     //Rapid
+    marginTop: 30,
     fontSize: 17,
     fontFamily: 'Inter-Bold',
     color: '#59606E',
