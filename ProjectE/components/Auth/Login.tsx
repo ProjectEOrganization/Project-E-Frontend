@@ -64,6 +64,9 @@ export default function Login({ path, actionAfter }: { path?: string, actionAfte
         <Text style={styles.secondText}>
           Login to continue chatting with your friends
         </Text>
+        
+
+      
         <TextInput
           // onBlur={() => setFocused({ email: false, password: false })}
           // onFocus={() => setFocused({ email: false, password: true })}
@@ -92,7 +95,7 @@ export default function Login({ path, actionAfter }: { path?: string, actionAfte
             fontSize: 15,
             paddingHorizontal: 20,
             textAlign: 'left',
-            marginTop: 35,
+            marginTop: 20,
           }}
         />
 
@@ -125,8 +128,20 @@ export default function Login({ path, actionAfter }: { path?: string, actionAfte
             paddingHorizontal: 20,
             textAlign: 'left',
             marginTop: 25,
+            marginBottom: 20
+            
+            
           }}
         />
+
+<Text style={{
+          fontSize: 14,
+    fontFamily: 'Inter-Medium',
+    color: 'red',
+    textAlign: 'center',
+    lineHeight: 23,}}>
+          Sorry, the email or password you entered was incorrect.
+        </Text>
 
         <TouchableOpacity onPress={onLogin} style={styles.loginButton}>
           <Text style={styles.loginText}>Login</Text>
@@ -206,12 +221,13 @@ const styles = StyleSheet.create({
     color: '#A9ACB0',
     paddingTop: 15,
     lineHeight: 23,
+    paddingBottom: 15
   },
   loginButton: {
     backgroundColor: '#4B00FF',
     borderRadius: 6,
     height: 50,
-    marginTop: 40,
+    marginTop: 20,
     shadowOffset: { width: 0, height: 2 },
     shadowColor: '#4B00FF',
     shadowOpacity: 0.27,

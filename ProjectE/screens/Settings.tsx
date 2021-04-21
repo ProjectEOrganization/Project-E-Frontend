@@ -57,6 +57,7 @@ export default function Settings() {
       {/* </View> */}
 
       <Text style={styles.title1}>Settings</Text>
+      
 
 
       {/* <Register /> */}
@@ -87,6 +88,8 @@ export default function Settings() {
         <TouchableOpacity onPress={() => navigation.navigate('ReferralModal')}>
           <Text style={styles.settingsText} >Referrals</Text>
         </TouchableOpacity>
+
+        
 
         {/* <Text style={styles.settingsText}>Customization</Text>
           <SettingsPageSwitch /> */}

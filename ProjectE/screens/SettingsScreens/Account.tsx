@@ -119,6 +119,16 @@ export default function Account() {
             textAlign: 'left',
             marginTop: 10
           }} />
+
+<Text style={{
+          fontSize: 14,
+    fontFamily: 'Inter-SemiBold',
+    color: 'green',
+    paddingTop: 5,
+    lineHeight: 23,}}>
+          Display name change successful!
+        </Text>
+
         <TouchableOpacity style={styles.loginButton} onPress={change}>
           <Text style={styles.loginText} >
             Change
@@ -126,7 +136,7 @@ export default function Account() {
         </TouchableOpacity>
 
       </View>
-
+      
       {/* Login Component  */}
       {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
       {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}

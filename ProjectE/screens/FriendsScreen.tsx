@@ -58,7 +58,11 @@ export default function FriendsScreen() {
 
         }}
       >
+
+        <TouchableOpacity>
         <ThreeDotsSvg />
+        </TouchableOpacity>
+
         <TouchableOpacity onPress={() => navigation.navigate('SendFriendRequestModal')} >
           <Text style={{
             marginLeft: 220, fontFamily: 'Inter-SemiBold', color: '#21293A'
@@ -87,8 +91,8 @@ export default function FriendsScreen() {
         <View style={{ marginTop: 10, backgroundColor: 'transparent', marginLeft: -10 }}>
           <SearchBar placeholder="Search Friends..." onChangeText={setSearch} value={search} lightTheme={true} containerStyle={{
             shadowOffset: { width: 0, height: 6 },
-            shadowColor: 'black', //black, aad1f0, borderTopWidth: 0.5, borderBottomWidth: 0.5, borderLeftWidth: 0.5, borderRightWidth: 0.5
-            shadowOpacity: 0.2, backgroundColor: 'transparent', borderTopWidth: 0, borderBottomWidth: 0
+            shadowColor: '#aad1f0', //black, aad1f0, borderTopWidth: 0.5, borderBottomWidth: 0.5, borderLeftWidth: 0.5, borderRightWidth: 0.5
+            shadowOpacity: 0.5, backgroundColor: 'transparent', borderTopWidth: 0, borderBottomWidth: 0
           }} inputContainerStyle={{ backgroundColor: 'white', borderRadius: 10, borderColor: '#aad1f0' }} />
         </View>
       </View>

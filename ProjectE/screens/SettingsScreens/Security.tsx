@@ -113,6 +113,16 @@ export default function Security() {
               textAlign: 'left',
               marginTop: 10
             }} />
+
+<Text style={{
+          fontSize: 14,
+    fontFamily: 'Inter-SemiBold',
+    color: 'green',
+    paddingTop: 5,
+    lineHeight: 23,}}>
+          Password change successful!
+        </Text>
+
           <TouchableOpacity style={styles.loginButton}>
             <Text style={styles.loginText} >
               Change
