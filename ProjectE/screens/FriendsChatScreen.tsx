@@ -105,7 +105,11 @@ export default function FriendsChatScreen() {
           backgroundColor: 'transparent',
         }}
       >
+
+        <TouchableOpacity onPress={() => navigation.navigate('RemoveFriendModal')}>
         <ThreeDotsSvg />
+        </TouchableOpacity>
+
       </View>
     </View>
   )

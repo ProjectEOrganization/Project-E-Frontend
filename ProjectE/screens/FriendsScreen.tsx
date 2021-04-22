@@ -58,7 +58,7 @@ export default function FriendsScreen() {
         }}
       >
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('LogoutModal')}>
           <ThreeDotsSvg />
         </TouchableOpacity>
 
