@@ -103,16 +103,16 @@ function useProvideAuth() {
             displayName: res.data.user.displayName
         })
         setUser(Object.create(newUser));
-        setLoading(false)
     }
 
     useEffect(() => {
         const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
             if (user) {
-                init(user)
+                await init(user).catch(err => setLoading(false))
+                setLoading(false)
             } else {
+                alert('false')
                 setLoading(false);
-                setUser();
             }
         });
 
