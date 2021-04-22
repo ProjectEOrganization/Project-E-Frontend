@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, TextInput } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, StyleSheet, TextInput } from 'react-native';
 
 import { Text, View } from '../../components/Themed';
 import { Image, TouchableOpacity } from 'react-native';
@@ -9,6 +9,7 @@ import Register from '../../components/Auth/Register';
 import { useNavigation } from '@react-navigation/native';
 import BackArrowSvgComponent from '../../assets/backArrowSvgComponent.js';
 import { ScrollView } from 'react-native';
+import { useAuth } from '../../services/auth';
 
 // import * as yourModuleName from 'module-name';
 
@@ -19,8 +20,38 @@ export default function Security() {
     'Inter-Regular': require('../../assets/fonts/Inter/Inter-Regular.ttf'),
     'Inter-SemiBold': require('../../assets/fonts/Inter/Inter-SemiBold.ttf'),
   });
+  
+  const [currentPassword, setCurrentPassword] = useState("")
+
+  const [newPassword, setNewPassword] = useState("")
+
+  const [passwordSuccess, setPasswordSuccess] = useState(false);
+
+  const [passwordLoading, setPasswordLoading] = useState(false);
 
   const navigation = useNavigation();
+  const auth = useAuth();
+
+  const changePassword = async () => {
+    auth.signin(auth.user.email, currentPassword).then(async function() {
+      if (!!newPassword) {
+        setPasswordLoading(true);
+        await auth.user.updatePassword(newPassword);
+        // await auth.init(auth.user);
+        setNewPassword("");
+        setPasswordSuccess(true);
+        setPasswordLoading(false);
+    }
+    }).catch(function(error) {
+      console.log(error);
+    });
+  }
+
+  useEffect(() => {
+    return () => {
+      setPasswordSuccess(false);
+    }
+  }, [])
 
   if (!fontsLoaded) {
     return <View />;
@@ -58,42 +89,11 @@ export default function Security() {
             // onChangeText={text => setPassword(text)}
             autoCapitalize={"none"}
             autoCorrect={false}
-            secureTextEntry={true}
             accessibilityElementsHidden={true}
             contextMenuHidden={true}
-            placeholder="Current Password"
-            placeholderTextColor="#85ACD6"
-            style={{
-              // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
-              // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
-              backgroundColor: '#FFFFFF',
-              height: 48,
-              // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
-              borderWidth: 0,
-              shadowOffset: { width: 0, height: 2 },
-              shadowColor: 'black',
-              shadowOpacity: 0.16,
-              // height: 44,
-              width: '70%',
-              borderRadius: 6,
-              fontSize: 13,
-              paddingHorizontal: 20,
-              textAlign: 'left',
-              marginTop: 0
-            }} />
-
-          <Text style={{ fontFamily: 'Inter-SemiBold', color: '#4B00FF', marginTop: 25 }}>New Password</Text>
-
-          <TextInput
-            // onBlur={() => setFocused({ email: false, password: false })}
-            // onFocus={() => setFocused({ email: false, password: true })}
-            // onChangeText={text => setPassword(text)}
-            autoCapitalize={"none"}
-            autoCorrect={false}
-            secureTextEntry={true}
-            accessibilityElementsHidden={true}
-            contextMenuHidden={true}
-            placeholder="New Password"
+            placeholder="Password"
+            value={currentPassword}
+            onChangeText={password => setCurrentPassword(password)}
             placeholderTextColor="#85ACD6"
             style={{
               // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
@@ -112,47 +112,66 @@ export default function Security() {
               paddingHorizontal: 20,
               textAlign: 'left',
               marginTop: 10
-            }} />
+              }} 
+            />
 
-<Text style={{
-          fontSize: 14,
-    fontFamily: 'Inter-SemiBold',
-    color: 'green',
-    paddingTop: 5,
-    lineHeight: 23,}}>
-          Password change successful!
-        </Text>
+          <Text style={{ fontFamily: 'Inter-SemiBold', color: '#4B00FF', marginTop: 25 }}>New Password</Text>
 
-          <TouchableOpacity style={styles.loginButton}>
-            <Text style={styles.loginText} >
-              Change
+          <TextInput
+            // onBlur={() => setFocused({ email: false, password: false })}
+            // onFocus={() => setFocused({ email: false, password: true })}
+            // onChangeText={text => setPassword(text)}
+            autoCapitalize={"none"}
+            autoCorrect={false}
+            accessibilityElementsHidden={true}
+            contextMenuHidden={true}
+            placeholder="Password"
+            value={newPassword}
+            onChangeText={password => setNewPassword(password)}
+            placeholderTextColor="#85ACD6"
+            style={{
+              // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
+              // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
+              backgroundColor: '#FFFFFF',
+              height: 48,
+              // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
+              borderWidth: 0,
+              shadowOffset: { width: 0, height: 2 },
+              shadowColor: 'black',
+              shadowOpacity: 0.16,
+              // height: 44,
+              width: '70%',
+              borderRadius: 6,
+              fontSize: 13,
+              paddingHorizontal: 20,
+              textAlign: 'left',
+              marginTop: 10
+              }} 
+            />
+
+        {passwordSuccess && (
+          <Text style={{
+            fontSize: 14,
+            fontFamily: 'Inter-SemiBold',
+            color: 'green',
+            paddingTop: 5,
+            lineHeight: 23,
+          }}>
+            Password change successful!
           </Text>
-          </TouchableOpacity>
+        )}
+
+        <TouchableOpacity style={styles.loginButton} onPress={changePassword}>
+          {!passwordLoading
+            ? (
+              <Text style={[styles.loginText]} >
+                Change
+              </Text>
+            )
+            : <ActivityIndicator color="white" size='small' />}
+        </TouchableOpacity>
 
         </View>
-
-        {/* Login Component  */}
-        {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
-        {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
-        {/* <View style={styles.container2}>
-      <Text style={styles.title3}>
-        Chat with random people and create 
-        everlasting friendships, 
-        <Text style={{fontWeight: 'bold'}}> click below </Text>
-       
-        </Text >  
-      </View> */}
-
-        {/* <SvgComponent1 /> */}
-
-        {/* <Image style={{marginTop: 40 ,height: 138, width: 138, transform: [{ rotate: '25deg'}]}} source={require('../assets/images/peace-sign-emoji-by-google.png')}/> */}
-        {/* <View style={styles.container3}>
-      <Text style={styles.title4}>
-        Already have an account?
-        <Text onPress={() => navigation.navigate(TabOneScreen)} style={{fontFamily: 'Inter-SemiBold', color: '#4B00FF'}}> Log in </Text>
-       
-        </Text >  
-      </View> */}
       </ScrollView>
     );
   }

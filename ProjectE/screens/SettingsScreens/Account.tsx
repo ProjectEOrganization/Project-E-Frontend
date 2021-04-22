@@ -171,7 +171,7 @@ export default function Account() {
             : <ActivityIndicator color="white" size='small' />}
         </TouchableOpacity>
 
-        <Text style={styles.settingsText}>Change Password</Text>
+        {/* <Text style={styles.settingsText}>Change Password</Text>
         
         <Text style={{ fontFamily: 'Inter-SemiBold', color: '#4B00FF', marginTop: 25 }}>New Password</Text>
 
@@ -226,7 +226,7 @@ export default function Account() {
               </Text>
             )
             : <ActivityIndicator color="white" size='small' />}
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
       </View>
 
