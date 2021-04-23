@@ -106,7 +106,8 @@ export default function FriendsChatScreen() {
         }}
       >
 
-        <TouchableOpacity onPress={() => navigation.navigate('RemoveFriendModal')}>
+        <TouchableOpacity onPress={() => navigation.navigate('RemoveFriendModal', {chatId: route.params.id, friendId: route.params.user.uid})}>
+          
         <ThreeDotsSvg />
         </TouchableOpacity>
 

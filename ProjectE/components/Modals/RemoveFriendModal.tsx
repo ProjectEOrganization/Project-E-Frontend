@@ -1,14 +1,28 @@
-import { useNavigation } from '@react-navigation/core'
+import { useNavigation, useRoute } from '@react-navigation/core'
 import React from 'react'
 import { Dimensions, View, Text, TouchableOpacity } from 'react-native'
 import { StyleSheet } from 'react-native';
 import LoginSvgComponent from '../../assets/loginSvgComponent.js';
-
-import Chillzone from '../Auth/Chillzone'
+import { api } from '../../services/api';
+import Chillzone from '../Auth/Chillzone';
+import { store } from '../../store/store';
+import { deleteChat } from '../../store/reducers/chat';
 const { width, height } = Dimensions.get('screen');
 
 export default function RemoveFriendModal() {
     const navigation = useNavigation();
+    const { params } = useRoute();
+
+    const removeFriend = () => {
+      api.post('/friends/remove/' + params.friendId).then((res) => {
+        console.log(params.friendId);
+        console.log(res.data);
+        navigation.goBack();
+        navigation.navigate('Friends');
+        store.dispatch(deleteChat(params.chatId))
+      })
+      .catch(error => console.log(error));
+    }
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -23,7 +37,7 @@ export default function RemoveFriendModal() {
         </Text>
        
 
-        <TouchableOpacity  style={styles.loginButton}>
+        <TouchableOpacity onPress={removeFriend} style={styles.loginButton}>
           <Text style={styles.loginText}>Remove Friend</Text>
         </TouchableOpacity>
       </View>

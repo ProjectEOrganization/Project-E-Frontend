@@ -33,10 +33,10 @@ export default function Settings() {
   const auth = useAuth();
 
   const logout = async () => {
-    await store.dispatch(leaveQueue())
+    await store.dispatch(leaveQueue());
     setTimeout(() => {
       auth.signout()
-    }, 500)
+    }, 500);
   }
 
   return (
