@@ -97,10 +97,11 @@ function useProvideAuth() {
     const init = async (user: firebase.User) => {
         const token = await firebase.auth().currentUser.getIdToken();
         await AsyncStorage.setItem('token', token)
-        const res = await api.post('/auth', user);
+        const res = await api.post('/auth', user)
         const newUser = firebase.auth().currentUser;
         await newUser?.updateProfile({
-            displayName: res.data.user.displayName
+            displayName: res.data.user.displayName,
+            photoURL: res.data.user.photoURL,
         })
         setUser(Object.create(newUser));
     }
