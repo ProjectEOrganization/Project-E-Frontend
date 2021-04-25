@@ -22,7 +22,7 @@ export default function FriendsChatBox({ messages }: { messages: Array<IMessage>
   if (messages?.length === 0) {
     return (
       <View style={{ flexGrow: 1, backgroundColor: 'transparent', alignItems: 'center', justifyContent: 'center' }}>
-        <Text>no messages</Text>
+        <Text style={{fontFamily: "Inter-SemiBold"}}>Say something...</Text>
       </View>
     )
   }

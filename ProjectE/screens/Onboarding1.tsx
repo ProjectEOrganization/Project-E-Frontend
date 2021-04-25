@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   },
   title3: { //chat with random people
     fontSize: 17,
-    fontFamily: 'Inter-Regular',
+    fontFamily: 'Inter-SemiBold',
     color: '#636E7E',
     lineHeight: 24
 
