@@ -3,13 +3,24 @@ import React from 'react'
 import { Dimensions, View, Text, TouchableOpacity } from 'react-native'
 import { StyleSheet } from 'react-native';
 import LoginSvgComponent from '../../assets/loginSvgComponent.js';
+import { useAuth } from '../../services/auth';
+import { leaveQueue } from '../../store/reducers/chat';
+import { store } from '../../store';
 
 import Chillzone from '../Auth/Chillzone'
 const { width, height } = Dimensions.get('screen');
 
 export default function LogoutModal() {
     const navigation = useNavigation();
+    const auth = useAuth();
 
+      const logout = async () => {
+        await store.dispatch(leaveQueue());
+        setTimeout(() => {
+          auth.signout()
+        }, 500);
+      }
+  
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ zIndex: 999 }}>
@@ -23,7 +34,7 @@ export default function LogoutModal() {
         </Text>
        
 
-        <TouchableOpacity  style={styles.loginButton}>
+        <TouchableOpacity onPress={logout} style={styles.loginButton}>
           <Text style={styles.loginText}>Logout</Text>
         </TouchableOpacity>
       </View>
