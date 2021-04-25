@@ -63,15 +63,16 @@ export default function Settings() {
       {/* <Register /> */}
       {/* Settings text */}
       <View style={{ width: '90%', height: '70%', marginTop: 80, backgroundColor: 'transparent' }}>
-        <TouchableOpacity onPress={() => navigation.navigate('Account')}>
-          <Text style={[styles.settingsText]}>Account</Text>
-        </TouchableOpacity>
-
-
-        <TouchableOpacity onPress={() => navigation.navigate('Security')}>
-          <Text style={[styles.settingsText]}>Security</Text>
-        </TouchableOpacity>
-
+        {(auth.user &&!auth.user.isAnonymous) &&
+          <TouchableOpacity onPress={() => navigation.navigate('Account')}>
+            <Text style={[styles.settingsText]}>Account</Text>
+          </TouchableOpacity>
+        }
+        {(auth.user &&!auth.user.isAnonymous) &&
+          <TouchableOpacity onPress={() => navigation.navigate('Security')}>
+            <Text style={[styles.settingsText]}>Security</Text>
+          </TouchableOpacity>
+        }
         {/* <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
             <Text style={styles.settingsText}>Notifications</Text>
           </TouchableOpacity> */}
@@ -103,7 +104,7 @@ export default function Settings() {
 
 
         <TouchableOpacity>
-          {auth.user?.uid && <Text onPress={logout} style={[styles.settingsText, styles.text2]}>Log Out</Text>}
+          {(auth.user &&!auth.user.isAnonymous) && <Text onPress={logout} style={[styles.settingsText, styles.text2]}>Log Out</Text>}
         </TouchableOpacity>
 
       </View>
