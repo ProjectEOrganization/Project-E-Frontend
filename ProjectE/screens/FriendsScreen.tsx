@@ -83,7 +83,7 @@ export default function FriendsScreen() {
             color: '#21293A',
           }}
         >
-          Hello {auth.user?.photoURL || username}!
+          Hello {auth.user?.displayName || username}!
           </Text>
         <Text selectable>{auth.user?.uid}</Text>
         {/* <FriendsPageSwitch onChange={(route) => setRoute(route)} /> */}
