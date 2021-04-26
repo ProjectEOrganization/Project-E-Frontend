@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: 'Inter-SemiBold',
     color: '#FFFFFF',
+    textAlign: 'center'
   },
   secondText: {
     fontSize: 14,
