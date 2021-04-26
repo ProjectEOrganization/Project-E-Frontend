@@ -50,8 +50,9 @@ export default function RandomChatTopBar() {
   return (
     <View style={[styles.topBar, { paddingTop: top + 10 }]}>
       <Image
-        style={{ height: 60, width: 60 }}
-        source={require('../assets/images/Profile-Male-PNG.png')}
+        style={[{ width: user.photoURL ? 40 : 60, height: user.photoURL ? 40 : 60 }]}
+        source={user.photoURL ? { uri: user.photoURL } : require('../assets/images/Profile-Male-PNG.png')}
+        resizeMode="contain"
       />
       <View style={styles.userNameText}>
         <Text style={styles.secondText}>You are chatting with</Text>

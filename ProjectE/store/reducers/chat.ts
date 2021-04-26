@@ -21,6 +21,7 @@ interface IUser {
     isActive?: boolean;
     secretDisplayName?: string;
     isFriends: boolean;
+    photoURL: string;
 }
 export interface IChat {
     content: string;

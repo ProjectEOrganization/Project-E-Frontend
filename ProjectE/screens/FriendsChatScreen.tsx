@@ -84,8 +84,9 @@ export default function FriendsChatScreen() {
 
       <View style={{ flexGrow: 1, flexDirection: 'row', alignItems: 'center', backgroundColor: 'transparent', }}>
         <Image
-          style={{ height: 50, width: 50 }}
-          source={require('../assets/images/Profile-Male-PNG.png')}
+          style={[{ width: chat.user.photoURL ? 40 : 65, height: chat.user.photoURL ? 40 : 65 }]}
+          source={chat.user.photoURL ? { uri: chat.user.photoURL } : require('../assets/images/Profile-Male-PNG.png')}
+          resizeMode="contain"
         />
         <Text
           style={{
@@ -106,9 +107,9 @@ export default function FriendsChatScreen() {
         }}
       >
 
-        <TouchableOpacity onPress={() => navigation.navigate('RemoveFriendModal', {chatId: route.params.id, friendId: route.params.user.uid})}>
-          
-        <ThreeDotsSvg />
+        <TouchableOpacity onPress={() => navigation.navigate('RemoveFriendModal', { chatId: route.params.id, friendId: route.params.user.uid })}>
+
+          <ThreeDotsSvg />
         </TouchableOpacity>
 
       </View>

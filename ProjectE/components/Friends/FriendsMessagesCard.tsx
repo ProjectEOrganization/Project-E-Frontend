@@ -28,8 +28,9 @@ export default function FriendsMessagesCard(props: IChat) {
     >
       <View style={styles.topBar}>
         <Image
-          style={styles.profileImage}
-          source={require('../../assets/images/Profile-Male-PNG.png')}
+          style={[styles.profileImage, { width: props.user.photoURL ? 45 : 65 }]}
+          source={props.user.photoURL ? { uri: props.user.photoURL } : require('../../assets/images/Profile-Male-PNG.png')}
+          resizeMode="contain"
         />
 
         <View style={[styles.profile, { flex: 1 }]}>
