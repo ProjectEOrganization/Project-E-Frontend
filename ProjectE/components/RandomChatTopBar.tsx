@@ -20,7 +20,7 @@ import { useSelector } from '../hooks/useSelector';
 
 export default function RandomChatTopBar() {
   const { top } = useSafeAreaInsets();
-
+  const auth = useAuth();
   const user = useSelector(state => state.chat.queue.user);
 
   const navigation = useNavigation();
@@ -28,8 +28,14 @@ export default function RandomChatTopBar() {
   const friendRef = useRef(null);
 
   const sendFriendRequest = () => {
-    api.post(`/friends/add/${user?.uid}`)
+    if (!user.isAnonymous && auth.user?.uid) {
+      api.post(`/friends/add/${user?.uid}`)
       .then(() => navigation.navigate('FriendRequestSentModal'))
+    } else if (user.isAnonymous && auth.user?.uid) {
+      navigation.navigate('TheyNoAccountModal');
+    } else {
+      navigation.navigate('RegisterModal');
+    }
   }
 
   useEffect(() => {
@@ -50,9 +56,8 @@ export default function RandomChatTopBar() {
   return (
     <View style={[styles.topBar, { paddingTop: top + 10 }]}>
       <Image
-        style={[{ width: user.photoURL ? 40 : 60, height: user.photoURL ? 40 : 60 }]}
-        source={user.photoURL ? { uri: user.photoURL } : require('../assets/images/Profile-Male-PNG.png')}
-        resizeMode="contain"
+        style={{ height: 60, width: 60 }}
+        source={require('../assets/images/Profile-Male-PNG.png')}
       />
       <View style={styles.userNameText}>
         <Text style={styles.secondText}>You are chatting with</Text>

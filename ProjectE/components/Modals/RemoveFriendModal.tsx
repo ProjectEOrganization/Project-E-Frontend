@@ -9,6 +9,7 @@ import { store } from '../../store/store';
 import { deleteChat } from '../../store/reducers/chat';
 const { width, height } = Dimensions.get('screen');
 
+
 export default function RemoveFriendModal() {
     const navigation = useNavigation();
     const { params } = useRoute();
