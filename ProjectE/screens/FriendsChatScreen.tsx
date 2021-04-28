@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, Image, ActivityIndicator, KeyboardAvoidingView, Dimensions } from 'react-native';
+import { StyleSheet, TouchableOpacity, Image, ActivityIndicator, KeyboardAvoidingView, Dimensions, Platform } from 'react-native';
 import { Text, View } from '../components/Themed';
 import BackArrowSvgComponent from '../assets/backArrowSvgComponent.js';
 import { useFonts } from 'expo-font';
@@ -119,7 +119,7 @@ export default function FriendsChatScreen() {
   const { top } = useSafeAreaInsets()
   if (!chat) return null
   return (
-    <KeyboardAvoidingView behavior="padding" style={[styles.container, { flex: 1, width: '100%', paddingTop: top, paddingBottom: 20 }]}>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding" : null} style={[styles.container, { flex: 1, width: '100%', paddingTop: top }]}>
       <Header />
       {loading ? <LoadingScreen /> : <FriendsChatBox messages={chatMessages} />}
       <FriendsChatScreenBottomBar chatId={chat?.id} recipientId={chat.user?.uid} />

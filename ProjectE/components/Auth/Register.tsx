@@ -191,7 +191,7 @@ export default function Register({ path, actionAfter }: { path: string, actionAf
           }}
         >
           Already have an account?{' '}
-          <Text style={{ color: '#4B00FF', fontFamily: 'Inter-SemiBold' }}>
+          <Text numberOfLines={1} adjustsFontSizeToFit style={{ color: '#4B00FF', fontFamily: 'Inter-SemiBold' }}>
             Log in
             </Text>
         </Text>
@@ -229,7 +229,7 @@ function handleHelpPress() {
 const styles = StyleSheet.create({
   overallContainer: {
     //overall container
-    height: 600,
+    minHeight: 600,
     width: 330,
     backgroundColor: '#fff',
     borderRadius: 40,

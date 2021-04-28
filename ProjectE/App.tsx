@@ -22,16 +22,16 @@ export default function App() {
     return null;
   } else {
     return (
-      <Provider store={store}>
-        <ProvideAuth>
-          <ProvideSocket>
-            <SafeAreaProvider>
+      <SafeAreaProvider>
+        <Provider store={store}>
+          <ProvideAuth>
+            <ProvideSocket>
               <Navigation colorScheme={colorScheme} />
               <StatusBar barStyle="dark-content" />
-            </SafeAreaProvider>
-          </ProvideSocket>
-        </ProvideAuth>
-      </Provider>
+            </ProvideSocket>
+          </ProvideAuth>
+        </Provider>
+      </SafeAreaProvider>
     );
   }
 }

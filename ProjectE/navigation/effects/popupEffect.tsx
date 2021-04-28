@@ -14,7 +14,7 @@ const Backdrop = ({ style }: ViewProps) => {
 export const popupEffect: StackNavigationOptions = {
     transparentCard: true,
     headerShown: false,
-    gestureEnabled: false,
+    gestureEnabled: true,
     cardOverlay: Backdrop,
     // gestureDirection: 'vertical',
     // gestureResponseDistance: { vertical: height },

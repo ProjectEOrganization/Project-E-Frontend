@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ActivityIndicator, Button, KeyboardAvoidingView, StyleSheet } from 'react-native';
+import { ActivityIndicator, Button, KeyboardAvoidingView, Platform, StyleSheet } from 'react-native';
 import { Text, View } from '../components/Themed';
 import RandomChatTopBar from '../components/RandomChatTopBar';
 import { useNavigation, useNavigationState } from '@react-navigation/native';
@@ -58,7 +58,7 @@ export default function RandomChatScreen() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#F1F6FC' }}>
         <View style={{
-          width: '100%', backgroundColor: random1, height: 190, shadowOffset: { width: 0, height: 2 },
+          width: '100%', backgroundColor: random1, minHeight: 190, shadowOffset: { width: 0, height: 2 },
           shadowColor: random1,
           shadowOpacity: 1, alignItems: 'center'
         }}>
@@ -89,14 +89,16 @@ export default function RandomChatScreen() {
   }
 
   return (
-    <KeyboardAvoidingView behavior="padding" style={styles.container}>
-      <RandomChatTopBar user={queue.user} />
-      {queue.topic && (
-        <View style={{ position: 'relative', backgroundColor: 'transparent', top: 20, zIndex: 999 }}>
-          <TopicStarter topic={queue.topic} colors={queue.topic.colors} />
-        </View>
-      )}
-      <FriendsChatBox messages={queueMessages} />
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding" : null} style={styles.container}>
+      <View style={{ flexGrow: 1, backgroundColor: 'transparentπ' }}>
+        <RandomChatTopBar user={queue.user} />
+        {queue.topic && (
+          <View style={{ position: 'relative', backgroundColor: 'transparent', top: 20, zIndex: 999 }}>
+            <TopicStarter topic={queue.topic} colors={queue.topic.colors} />
+          </View>
+        )}
+        <FriendsChatBox messages={queueMessages} />
+      </View>
       <FriendsChatScreenBottomBar chatId={queue?.chatId} recipientId={queue.user?.uid} isQueue={true} />
     </KeyboardAvoidingView>
   );
