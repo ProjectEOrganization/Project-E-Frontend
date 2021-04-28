@@ -15,6 +15,7 @@ import ReferralModal from '../components/Modals/ReferralModal'
 import ChillzoneModal from '../components/Modals/ChillzoneModal'
 import LogoutModal from '../components/Modals/LogoutModal'
 import RemoveFriendModal from '../components/Modals/RemoveFriendModal'
+import TheyNoAccountModal from '../components/Modals/TheyNoAccountModal'
 import Onboarding1 from '../screens/Onboarding1'
 
 import NotFoundScreen from '../screens/NotFoundScreen';
@@ -142,6 +143,11 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
         <Stack.Screen
           name='RemoveFriendModal'
           component={RemoveFriendModal}
+          options={{ ...popupEffect }}
+        />
+        <Stack.Screen
+          name='TheyNoAccountModal'
+          component={TheyNoAccountModal}
           options={{ ...popupEffect }}
         />
         <Stack.Screen
