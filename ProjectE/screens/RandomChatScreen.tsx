@@ -90,15 +90,13 @@ export default function RandomChatScreen() {
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding" : null} style={styles.container}>
-      <View style={{ flexGrow: 1, backgroundColor: 'transparentπ' }}>
-        <RandomChatTopBar user={queue.user} />
-        {queue.topic && (
-          <View style={{ position: 'relative', backgroundColor: 'transparent', top: 20, zIndex: 999 }}>
-            <TopicStarter topic={queue.topic} colors={queue.topic.colors} />
-          </View>
-        )}
-        <FriendsChatBox messages={queueMessages} />
-      </View>
+      <RandomChatTopBar user={queue.user} />
+      {queue.topic && (
+        <View style={{ position: 'relative', backgroundColor: 'transparent', top: 20, zIndex: 999 }}>
+          <TopicStarter topic={queue.topic} colors={queue.topic.colors} />
+        </View>
+      )}
+      <FriendsChatBox messages={queueMessages} />
       <FriendsChatScreenBottomBar chatId={queue?.chatId} recipientId={queue.user?.uid} isQueue={true} />
     </KeyboardAvoidingView>
   );
