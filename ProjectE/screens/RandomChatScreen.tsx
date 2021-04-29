@@ -63,14 +63,13 @@ export default function RandomChatScreen() {
           shadowOpacity: 1, alignItems: 'center'
         }}>
 
-          <Text style={{ fontFamily: 'Inter-Bold', fontSize: 20, marginTop: 25, color: 'white', marginBottom: -10 }}>{queue.status == "searching" ? "Finding Someone Awesome" : queue.status}</Text>
+          <Text style={{ fontFamily: 'Inter-Bold', fontSize: 20, marginTop: 25, color: 'white', marginBottom: -10 }}>{queue.status == "searching" ? "Finding Someone Awesome" : queue.status === 'joining' ? 'Joining' : queue.status === 'idle' ? 'Not in Queue' : queue.status}</Text>
           {queue.status !== 'idle' && (
             <AnimatedEllipsis style={{ fontSize: 40, color: 'white' }} />
           )}
 
           <Text style={{ fontFamily: 'Inter-Bold', fontSize: 13, marginTop: 25, color: 'white' }}>In the meantime, say Hello to Wocto</Text>
           <Text style={{ fontSize: 35, marginTop: 10 }}>🐙</Text>
-
         </View>
 
         {queue.status === 'searching' && (
