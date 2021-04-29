@@ -112,7 +112,6 @@ function useProvideAuth() {
                 await init(user).catch(err => setLoading(false))
                 setLoading(false)
             } else {
-                alert('Successfully Logged Out')
                 setLoading(false);
             }
         });
