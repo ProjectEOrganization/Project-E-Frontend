@@ -18,6 +18,7 @@ import RemoveFriendModal from '../components/Modals/RemoveFriendModal'
 import TheyNoAccountModal from '../components/Modals/TheyNoAccountModal'
 import Onboarding1 from '../screens/Onboarding1'
 import Onboarding2 from '../screens/Onboarding2'
+import ChooseProfileModal from '../components/Modals/ChooseProfileModal';
 
 
 import NotFoundScreen from '../screens/NotFoundScreen';
@@ -34,6 +35,7 @@ import { api } from '../services/api';
 import { setNotificationHandler } from 'expo-notifications';
 import { store } from '../store';
 import { loadChat } from '../store/reducers/chat';
+
 
 export const navigationRef = React.createRef<NavigationContainerRef>();
 
@@ -160,6 +162,11 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
         <Stack.Screen
           name='RegisterModal'
           component={RegisterModal}
+          options={{ ...popupEffect }}
+        />
+        <Stack.Screen
+          name='ChooseProfileModal'
+          component={ChooseProfileModal}
           options={{ ...popupEffect }}
         />
         <Stack.Screen

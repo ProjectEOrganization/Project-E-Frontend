@@ -68,25 +68,7 @@ export default function SkipConfirmationAlert({ path }: { path: string }) {
       <Text onPress={leaveQueueAction} style={{ fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 140, fontSize: 16 }}> Leave Queue </Text>
 
 
-      {/* <View
-          style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
-          >
-          <MonoText>{path}</MonoText>
-        </View> */}
-
-      {/* <Text
-          style={styles.getStartedText}
-          >
-          Change any of the text, save the file, and your app will automatically update.
-        </Text>
-      </View>
-
-      <View style={styles.helpContainer}>
-        <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-          <Text style={styles.helpLinkText} >
-            Tap here if your app doesn't automatically update after making changes
-          </Text>
-        </TouchableOpacity> */}
+     
 
     </View>
   );
