@@ -17,6 +17,8 @@ import LogoutModal from '../components/Modals/LogoutModal'
 import RemoveFriendModal from '../components/Modals/RemoveFriendModal'
 import TheyNoAccountModal from '../components/Modals/TheyNoAccountModal'
 import Onboarding1 from '../screens/Onboarding1'
+import Onboarding2 from '../screens/Onboarding2'
+
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
@@ -197,6 +199,7 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
         />
         <Stack.Screen name="Onboarding" component={Onboarding1} options={{ gestureEnabled: false }} />
         <Stack.Screen name="Root" component={BottomTabNavigator} />
+        <Stack.Screen name="Onboarding2" component={Onboarding2} />
         <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       </Stack.Navigator>
     </NavigationContainer>

@@ -6,7 +6,7 @@ import { Text, View } from '../components/Themed';
 import { useFonts } from 'expo-font';
 import SvgComponent from '../assets/svgComponent.js';
 import SvgComponent1 from '../assets/svgComponent1.js';
-import OnBoardingSvgComponent from '../assets/onBoardingSvgComponent.js';
+import OnBoardingSvgComponent2 from '../assets/onBoardingSvgComponent2.js';
 import Navigation from '../navigation';
 
 import { useNavigation } from '@react-navigation/native';
@@ -17,7 +17,7 @@ import { useAuth } from '../services/auth';
 
 
 
-export default function TabTwoScreen() {
+export default function TabThreeScreen() {
   const auth = useAuth();
 
   async function anonymousSignin() {
@@ -32,12 +32,18 @@ export default function TabTwoScreen() {
       
       {/* <Text style={styles.title2}>Rapid</Text> */}
       {/* <SvgComponent /> */}
-      <OnBoardingSvgComponent />
-      <Text style={styles.title1}>WELCOME {"\n"}TO RAPID</Text>
+
+      <OnBoardingSvgComponent2 />
+      {/* <Text style={styles.title1}>ONBOARDING 2 {"\n"}TO RAPID</Text> */}
+
       {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
       {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
+
+
+      <Text style={styles.title1}>CHOOSE</Text>
+      <Text style={styles.title2}>YOU</Text>
       
-      <TouchableOpacity style={styles.yesButton} onPress={() => navigation.navigate('Onboarding2')}>
+      <TouchableOpacity style={styles.yesButton} onPress={() => navigation.navigate('LoginModal')}>
             <Text style={styles.loginText}>
               Let's Go!
           </Text>
@@ -76,40 +82,32 @@ const styles = StyleSheet.create({
   container: { // overall container
     flex: 1,
     alignItems: 'center',
-    marginTop:-140,
-    marginLeft: -69,
+    marginTop:-850,
+    paddingLeft: 580,
     backgroundColor: '#FFFFFF'
   },
-  container2: { //text part
-    flex: 1,
-    width: 300,
-
-    justifyContent: 'center',
-    paddingTop: '13%',
-
-    backgroundColor: '#F5F7F9',
-    flexDirection: 'row'
-  },
-  container3: { //bottom login text part
-    flex: 1,
-    width: 300,
-
-    justifyContent: 'center',
-
-
-    backgroundColor: '#F5F7F9',
-    flexDirection: 'row'
-  },
+  
   title1: { //Welcome to
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: 'bold',
-    textAlign: 'center',
+    textAlign: 'right',
     fontFamily: 'Inter-ExtraBold',
-    color: '#FFFFFF',
+    color: '#4957FF',
     letterSpacing: 1,
     position: 'absolute',
-    top: 420, 
-    left: 173
+    top: 1100, 
+    left: 20
+  },
+  title2: { //Welcome to
+    fontSize: 28,
+    fontWeight: 'bold',
+    textAlign: 'right',
+    fontFamily: 'Inter-ExtraBold',
+    color: '#4957FF',
+    letterSpacing: 1,
+    position: 'absolute',
+    top: 1140, 
+    left: 110
   },
   yesButton: {
     backgroundColor: '#50E3C2',
