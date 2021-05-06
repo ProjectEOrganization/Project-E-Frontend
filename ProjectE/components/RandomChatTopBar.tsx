@@ -6,6 +6,7 @@ import RandomChatTopBarSvgComponent from '../assets/randomChatTopBarSvgComponent
 const { width, height } = Dimensions.get('screen')
 import Colors from '../../constants/Colors';
 import { MonoText } from '../StyledText';
+import ThreeDotsSvg from '../assets/threeDotsSvg.js'
 // import { Text, View } from './Themed';
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput, Image } from 'react-native';
@@ -71,12 +72,16 @@ export default function RandomChatTopBar() {
             <TouchableOpacity onPress={sendFriendRequest} style={styles.loginButton}>
               {/* <Tooltip ref={friendRef} popover={<Text>Send friend request</Text>}> */}
               <RandomChatTopBarSvgComponent />
-              <Text style={styles.loginText}>Let's be Friends</Text>
+              <Text style={styles.loginText}>Let's be {"\n"}Friends</Text>
               {/* </Tooltip> */}
             </TouchableOpacity>
+
           </>
         )}
       </View>
+          <TouchableOpacity onPress={() => navigation.navigate('ReportBlockModal')} style={{transform: [{ rotate: '90deg' }], marginLeft: -10, marginRight: -10}}>
+      <ThreeDotsSvg />
+      </TouchableOpacity>
 
     </View >
   );
@@ -115,7 +120,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#4B00FF',
     marginTop: 10,
     borderRadius: 30,
-    paddingHorizontal: 10,
+    paddingHorizontal: 0,
     paddingVertical: 10,
     shadowOffset: { width: 0, height: 2 },
     shadowColor: '#4B00FF',
@@ -123,7 +128,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    marginRight: -10,
+    marginRight: 20
+    
+    
   },
   loginText: {
     color: 'white',

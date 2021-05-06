@@ -75,12 +75,16 @@ export default function RandomChatScreen() {
         {queue.status === 'searching' && (
           <TouchableOpacity onPress={leaveQueueAction}>
             <Text style={{ fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 30, fontSize: 16 }}> Leave Queue </Text>
+           
           </TouchableOpacity>
+          
         )}
+         <RandomChatTopBar user={queue.user} />
         {queue.status === 'idle' && (
           <TouchableOpacity onPress={() => store.dispatch(joinQueue())}>
             <Text style={{ fontFamily: 'Inter-SemiBold', color: 'red', marginTop: 30, fontSize: 16 }}>Join Queue</Text>
           </TouchableOpacity>
+
         )
         }
       </View >
