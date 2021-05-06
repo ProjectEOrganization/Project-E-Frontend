@@ -10,39 +10,44 @@ import { useNavigation } from '@react-navigation/core'
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput } from 'react-native'
 import { navigationRef } from '../../navigation/index';
+import { api } from '../../services/api';
 
-export default function ReportBlockAlert({ path }: { path: string }) {
+export default function ReportBlockAlert({ uid }: { uid: string }) {
   const navigation = useNavigation();
+
+  function block() {
+    api.post('/block/' + uid)
+      .then(data => console.log(data))
+      .catch(error => console.log(error));
+    console.log("hi");
+  }
+
   return (
-  <View style={styles.overallContainer}>
-<LoginSvgComponent />
-<View style={{ width: 260, paddingTop: 30, alignItems: 'center' }}>
-<Text style={styles.firstText}>
-Report or Block
-</Text>
+    <View style={styles.overallContainer}>
+      <LoginSvgComponent />
+      <View style={{ width: 260, paddingTop: 30, alignItems: 'center' }}>
+        <Text style={styles.firstText}>
+        Report or Block
+        </Text>
 
-{/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
-<Text style={styles.secondText}>
-This person is offensive, choose to report or block this user.
-</Text>
+      {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
+        <Text style={styles.secondText}>
+          This person is offensive, choose to report or block this user.
+        </Text>
+        <TouchableOpacity onPress={() => navigation.navigate('ReportDetailModal')} style={styles.loginButton}>
+          <Text style={styles.loginText} >
+            Report
+          </Text>
+        </TouchableOpacity>
 
-
-<TouchableOpacity onPress={() => navigation.navigate('ReportDetailModal')} style={styles.loginButton}>
-<Text style={styles.loginText} >
-Report
-</Text>
-</TouchableOpacity>
-
-<TouchableOpacity  style={styles.loginButton1}>
-<Text style={styles.loginText} >
-Block
-</Text>
-</TouchableOpacity>
-
-</View>
-</View>
-
-);
+        <TouchableOpacity onPress={block} style={styles.loginButton1}>
+          <Text style={styles.loginText} >
+            Block
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

@@ -1,15 +1,25 @@
 import { useNavigation } from '@react-navigation/core'
-import React from 'react'
+import React, {useState} from 'react'
 import { Dimensions, View } from 'react-native'
 import { Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
 import LoginSvgComponent from '../../assets/loginSvgComponent.js';
 import { navigationRef } from '../../navigation';
-import YouAreNowFriendsAlert from '../Alerts/YouAreNowFriendsAlert'
+import YouAreNowFriendsAlert from '../Alerts/YouAreNowFriendsAlert';
+import { api } from '../../services/api';
+
 const { width, height } = Dimensions.get('screen');
 
 
-export default function ReportDetailModal() {
-    const navigation = useNavigation();
+export default function ReportDetailModal({ uid }: {uid: string}) {
+  const navigation = useNavigation();
+
+  const [reason, setReason] = useState("");
+  
+  function report() {
+    api.post('/report/' + uid, { reason: reason })
+      .then(() => navigationRef.current?.goBack());
+    console.log("report test")
+  }
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -29,7 +39,8 @@ export default function ReportDetailModal() {
         <TextInput
           // onBlur={() => setFocused({ email: false, password: false })}
           // onFocus={() => setFocused({ email: false, password: true })}
-        //   onChangeText={(text) => setEmail(text)}
+          onChangeText={(text) => setReason(text)}
+          value={reason}
           autoCapitalize={'none'}
           autoCorrect={true}
           multiline={true}
@@ -60,7 +71,7 @@ export default function ReportDetailModal() {
         />
 
         
-        <TouchableOpacity onPress={() => navigationRef.current?.goBack()} style={styles.loginButton1}>
+        <TouchableOpacity onPress={() => report()} style={styles.loginButton1}>
           <Text style={styles.loginText} >
             Submit Report
           </Text>
