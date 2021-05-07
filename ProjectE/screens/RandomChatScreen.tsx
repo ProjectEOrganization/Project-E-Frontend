@@ -33,6 +33,7 @@ const queueMessagesSelector = createSelector(
 export default function RandomChatScreen() {
   const auth = useAuth();
   const queue = useSelector(state => state.chat.queue);
+  const navigation = useNavigation();
 
   const queueMessages = useSelector(queueMessagesSelector)
 
@@ -91,7 +92,14 @@ export default function RandomChatScreen() {
           </TouchableOpacity>
 
         )
+        
         }
+       
+          <TouchableOpacity onPress={() => navigation.navigate('YouAreNowChattingModal')}>
+            <Text style={{ fontFamily: 'Inter-SemiBold', color: 'white', marginTop: 30, fontSize: 20 }}>Open YouAreNowChattingModal</Text>
+          </TouchableOpacity>
+
+
       </View >
     )
   }

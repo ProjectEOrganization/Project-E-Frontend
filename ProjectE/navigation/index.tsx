@@ -21,6 +21,7 @@ import Onboarding2 from '../screens/Onboarding2'
 import ChooseProfileModal from '../components/Modals/ChooseProfileModal';
 import ReportBlockModal from '../components/Modals/ReportBlockModal'
 import ReportDetailModal from '../components/Modals/ReportDetailModal'
+import YouAreNowChattingModal from '../components/Modals/YouAreNowChattingModal'
 
 
 import NotFoundScreen from '../screens/NotFoundScreen';
@@ -179,6 +180,11 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
         <Stack.Screen
           name='ReportDetailModal'
           component={ReportDetailModal}
+          options={{ ...popupEffect }}
+        />
+        <Stack.Screen
+          name='YouAreNowChattingModal'
+          component={YouAreNowChattingModal}
           options={{ ...popupEffect }}
         />
         <Stack.Screen
