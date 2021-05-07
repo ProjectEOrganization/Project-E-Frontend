@@ -16,6 +16,7 @@ import { api } from '../services/api';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { createSelector } from 'reselect';
 import TopicStarter from '../components/TopicStarter';
+import QueueSvgComponent from '../assets/queueSvgComponent.js';
 
 LogBox.ignoreLogs(['Animated: `useNativeDriver`']);
 
@@ -46,9 +47,10 @@ export default function RandomChatScreen() {
   }
 
   const colors = [
-    '#2D7CDB',
-    '#BA2DDB',
-    '#2DDBC0'
+    '#F09CA5',
+    '#F09CE7',
+    '#2DDBC0',
+    '#F0C39C'
   ];
 
   const random = Math.floor(Math.random() * colors.length);
@@ -57,6 +59,9 @@ export default function RandomChatScreen() {
   if (queue.status !== 'found') {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#F1F6FC' }}>
+          <View style={{position: 'absolute', top: -600, backgroundColor: 'transparent'}}>
+        <QueueSvgComponent />
+        </View>
         <View style={{
           width: '100%', backgroundColor: random1, minHeight: 190, shadowOffset: { width: 0, height: 2 },
           shadowColor: random1,
@@ -74,15 +79,15 @@ export default function RandomChatScreen() {
 
         {queue.status === 'searching' && (
           <TouchableOpacity onPress={leaveQueueAction}>
-            <Text style={{ fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 30, fontSize: 16 }}> Leave Queue </Text>
+            <Text style={{ fontFamily: 'Inter-SemiBold', color: 'white', marginTop: 30, fontSize: 16 }}> Leave Queue </Text>
            
           </TouchableOpacity>
           
         )}
-         <RandomChatTopBar user={queue.user} />
+       
         {queue.status === 'idle' && (
           <TouchableOpacity onPress={() => store.dispatch(joinQueue())}>
-            <Text style={{ fontFamily: 'Inter-SemiBold', color: 'red', marginTop: 30, fontSize: 16 }}>Join Queue</Text>
+            <Text style={{ fontFamily: 'Inter-SemiBold', color: 'white', marginTop: 30, fontSize: 16 }}>Join Queue</Text>
           </TouchableOpacity>
 
         )
