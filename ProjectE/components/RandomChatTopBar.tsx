@@ -59,7 +59,7 @@ export default function RandomChatTopBar(props: IChat) {
     <View style={[styles.topBar, { paddingTop: top + 10 }]}>
       <Image
         style={{ height: 60, width: 60 }}
-        source={props.user.photoURL ? { uri: props.user.photoURL } : require('../../assets/images/Profile-Male-PNG.png')}
+        source={props.user.photoURL ? { uri: props.user.photoURL } : require('../assets/images/Profile-Male-PNG.png')}
         resizeMode="contain"
       />
       <View style={styles.userNameText}>

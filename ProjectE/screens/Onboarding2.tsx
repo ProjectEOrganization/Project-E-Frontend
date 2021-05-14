@@ -9,6 +9,7 @@ import SvgComponent1 from '../assets/svgComponent1.js';
 import OnBoardingSvgComponent2 from '../assets/onBoardingSvgComponent2.js';
 import Navigation from '../navigation';
 
+import { api } from '../services/api';
 import { useNavigation } from '@react-navigation/native';
 import TabOneScreen from './FriendsScreen';
 import { useAuth } from '../services/auth';
@@ -25,7 +26,14 @@ export default function TabThreeScreen() {
     navigation.navigate('RandomChat');
   }
 
+  async function getRandomName() {
+    const randomName = await ( await api.get("/generate_display_name")).data
+    console.log(randomName)
+  }
+
   const navigation = useNavigation();
+
+  
 
   return (
     <View style={styles.container}>
@@ -75,7 +83,7 @@ export default function TabThreeScreen() {
           </Text>
           </View>
 
-          <TouchableOpacity style={styles.yesButton2} >
+          <TouchableOpacity style={styles.yesButton2} onPress={getRandomName} >
             <Text style={styles.loginText2}>
               Randomize
           </Text>
@@ -86,6 +94,7 @@ export default function TabThreeScreen() {
                 Ready!
           </Text>
           </TouchableOpacity>
+          
 
           <Text style={styles.title5}>
           By pressing on “Ready!”, you agree to our Terms of Service and {"\n"} acknowledge that you read our Privacy Policy
