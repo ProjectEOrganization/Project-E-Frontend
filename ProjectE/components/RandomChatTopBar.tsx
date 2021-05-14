@@ -18,8 +18,9 @@ import { Tooltip } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuth } from '../services/auth';
 import { useSelector } from '../hooks/useSelector';
+import { IChat } from '../store/reducers/chat';
 
-export default function RandomChatTopBar() {
+export default function RandomChatTopBar(props: IChat) {
   const { top } = useSafeAreaInsets();
   const auth = useAuth();
   const user = useSelector(state => state.chat.queue.user);
@@ -58,7 +59,8 @@ export default function RandomChatTopBar() {
     <View style={[styles.topBar, { paddingTop: top + 10 }]}>
       <Image
         style={{ height: 60, width: 60 }}
-        source={require('../assets/images/Profile-Male-PNG.png')}
+        source={props.user.photoURL ? { uri: props.user.photoURL } : require('../../assets/images/Profile-Male-PNG.png')}
+        resizeMode="contain"
       />
       <View style={styles.userNameText}>
         <Text style={styles.secondText}>You are chatting with</Text>
