@@ -27,13 +27,14 @@ export default function TabThreeScreen() {
   }
 
   async function getRandomName() {
-    const randomName = await ( await api.get("/generate_display_name")).data
-    console.log(randomName)
+    const newRandomName = await (await api.get("/generate_display_name")).data.name;
+    setRandomName(newRandomName);
+    console.log(newRandomName);
   }
 
   const navigation = useNavigation();
 
-  
+  const [randomName, setRandomName] = useState("Green Chinchilla");
 
   return (
     <View style={styles.container}>
@@ -79,7 +80,7 @@ export default function TabThreeScreen() {
           </Text>
 
           <Text style={styles.title4}>
-            Green Chinchilla
+            {randomName}
           </Text>
           </View>
 

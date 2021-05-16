@@ -37,8 +37,6 @@ export default function ReportDetailModal({ uid }: {uid: string}) {
         </Text>
 
         <TextInput
-          // onBlur={() => setFocused({ email: false, password: false })}
-          // onFocus={() => setFocused({ email: false, password: true })}
           onChangeText={(text) => setReason(text)}
           value={reason}
           autoCapitalize={'none'}
