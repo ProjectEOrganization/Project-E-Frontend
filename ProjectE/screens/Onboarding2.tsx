@@ -22,7 +22,11 @@ export default function TabThreeScreen() {
   const auth = useAuth();
 
   async function anonymousSignin() {
-    await auth.signInAnonymously()
+    await auth.signInAnonymously();
+    var user = auth.user;
+    await user.updateProfile({
+      displayName: randomName,
+    }).then(data => console.log(data));
     navigation.navigate('RandomChat');
   }
 
