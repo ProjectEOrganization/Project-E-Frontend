@@ -32,6 +32,8 @@ export default function TabThreeScreen() {
 
   async function getRandomName() {
     const newRandomName = await (await api.get("/generate_display_name")).data.name;
+    // const avatars = await (await api.get("avatars")).data.avatars;
+    // console.log("avatars: ", avatars);
     setRandomName(newRandomName);
     console.log(newRandomName);
   }
