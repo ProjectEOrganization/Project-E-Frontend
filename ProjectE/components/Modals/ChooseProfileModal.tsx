@@ -7,6 +7,7 @@ import { Text,  TextInput } from 'react-native'
 import Login from '../Auth/Login'
 import { api } from '../../services/api';
 import { useAuth } from '../../services/auth';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const { width, height } = Dimensions.get('screen');
 
@@ -66,10 +67,11 @@ export default function ChooseProfileModal() {
 
 
 <LoginSvgComponent />
-<View style={{ width: 260, paddingTop: 30, alignItems: 'center' }}>
+<View style={{ width: 260, paddingTop: 20, alignItems: 'center' }}>
   
 
-  <View style={{ flex: 1, flexDirection: "row", width: 300}}>
+  <View style={{ flex: 1, flexDirection: "row", width: 325, flexWrap: 'wrap', height: 80}}>
+  
     {avatars.map((value, index) => {
       console.log("value", value);
       return (
@@ -77,10 +79,12 @@ export default function ChooseProfileModal() {
         //   <Image style={{ width: 80, height: 80, marginHorizontal: 10 }} source={{ uri: value }} />
         // </TouchableOpacity>
         <TouchableOpacity onPress={changeProfilePic(value)}>
-          <Image style={{ width: 80, height: 80, marginHorizontal: 10 }} source={{ uri: value }} />
+        
+          <Image style={{ width: 60, height: 60, marginHorizontal: 10, marginVertical: 10 }} source={{ uri: value }} />
         </TouchableOpacity>
       );
     })}
+   
   </View>
 
 </View>
@@ -95,7 +99,7 @@ export default function ChooseProfileModal() {
 
 const styles = StyleSheet.create({
     overallContainer: { //overall container
-      height: 555,
+      height: 675,
       width: 350,
       backgroundColor: '#fff',
       borderRadius: 40,
