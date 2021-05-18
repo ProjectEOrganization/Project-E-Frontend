@@ -12,6 +12,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 const { width, height } = Dimensions.get('screen');
 
 export default function ChooseProfileModal() {
+  const { params } = useRoute();
   const navigation = useNavigation();
   const route = useRoute();
   const auth = useAuth();
@@ -75,11 +76,7 @@ export default function ChooseProfileModal() {
     {avatars.map((value, index) => {
       console.log("value", value);
       return (
-        // <TouchableOpacity>
-        //   <Image style={{ width: 80, height: 80, marginHorizontal: 10 }} source={{ uri: value }} />
-        // </TouchableOpacity>
-        <TouchableOpacity onPress={changeProfilePic(value)}>
-        
+        <TouchableOpacity onPress={() => params.changeProfilePicFunc(value)}>
           <Image style={{ width: 60, height: 60, marginHorizontal: 10, marginVertical: 10 }} source={{ uri: value }} />
         </TouchableOpacity>
       );

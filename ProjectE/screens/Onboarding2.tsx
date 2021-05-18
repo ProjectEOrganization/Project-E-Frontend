@@ -13,6 +13,7 @@ import { api } from '../services/api';
 import { useNavigation } from '@react-navigation/native';
 import TabOneScreen from './FriendsScreen';
 import { useAuth } from '../services/auth';
+import { createIconSetFromFontello } from '@expo/vector-icons';
 
 // import * as yourModuleName from 'module-name';
 
@@ -26,7 +27,10 @@ export default function TabThreeScreen() {
     var user = auth.user;
     await user.updateProfile({
       displayName: randomName,
-    }).then(data => console.log(data));
+      photoURL: photoURL
+    }).then(data => {
+      console.log(data);
+    });
     navigation.navigate('RandomChat');
   }
 
@@ -36,11 +40,13 @@ export default function TabThreeScreen() {
     // console.log("avatars: ", avatars);
     setRandomName(newRandomName);
     console.log(newRandomName);
+    console.log(photoURL);
   }
 
   const navigation = useNavigation();
 
   const [randomName, setRandomName] = useState("Green Chinchilla");
+  const [photoURL, setPhotoURL] = useState("https://rapid.nyc3.digitaloceanspaces.com/avatars/01-dog.png");
 
   return (
     <View style={styles.container}>
@@ -65,14 +71,14 @@ export default function TabThreeScreen() {
         left: 25,
         width: 90,
         height: 90}}
-        source={ require('../assets/images/Profile-Male-PNG.png')}
+        source={photoURL? { uri:  photoURL} : require('../assets/images/Profile-Male-PNG.png')}
         />
 
-        <TouchableOpacity style={styles.yesButton} onPress={() => navigation.navigate('ChooseProfileModal')}>
+        <TouchableOpacity style={styles.yesButton} onPress={() => navigation.navigate('ChooseProfileModal', {changeProfilePicFunc: setPhotoURL})}>
             <Text style={styles.loginText}>
               Change
-          </Text>
-          </TouchableOpacity>
+            </Text>
+        </TouchableOpacity>
 
         <View 
         style={{position: 'absolute',
