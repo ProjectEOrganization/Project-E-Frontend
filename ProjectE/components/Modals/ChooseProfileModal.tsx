@@ -8,6 +8,7 @@ import Login from '../Auth/Login'
 import { api } from '../../services/api';
 import { useAuth } from '../../services/auth';
 import { ScrollView } from 'react-native-gesture-handler';
+import { navigationRef } from '../../navigation/index';
 
 const { width, height } = Dimensions.get('screen');
 
@@ -52,6 +53,11 @@ export default function ChooseProfileModal() {
   function changeProfilePic(url) {
     auth.user.updateProfile({ photoURL: url });
   }
+
+  async function goBack(value) {
+    params.changeProfilePicFunc(value)
+    navigationRef.current?.goBack()
+  }
   // useEffect(() => {
   //   async function getAvatars() {
   //     avatars = await (await api.get("avatars")).data.avatars;
@@ -76,7 +82,7 @@ export default function ChooseProfileModal() {
     {avatars.map((value, index) => {
       console.log("value", value);
       return (
-        <TouchableOpacity onPress={() => params.changeProfilePicFunc(value)}>
+        <TouchableOpacity onPress={goBack}>
           <Image style={{ width: 60, height: 60, marginHorizontal: 10, marginVertical: 10 }} source={{ uri: value }} />
         </TouchableOpacity>
       );

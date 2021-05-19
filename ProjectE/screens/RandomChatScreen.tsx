@@ -105,6 +105,7 @@ export default function RandomChatScreen() {
   }
 
   return (
+    
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding" : null} style={styles.container}>
       <RandomChatTopBar user={queue.user} />
       {queue.topic && (
