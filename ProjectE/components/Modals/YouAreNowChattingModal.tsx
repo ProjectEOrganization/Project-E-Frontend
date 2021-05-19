@@ -12,7 +12,7 @@ export default function YouAreNowChattingModal() {
             <View style={{ zIndex: 999 }}>
                 <YouAreNowChattingAlert />
             </View>
-            <View onTouchStart={navigation.goBack} style={{ width, height, position: 'absolute' }} />
+            <View  style={{ width, height, position: 'absolute' }} />
         </View>
     )
 }

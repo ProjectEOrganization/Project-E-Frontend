@@ -5,6 +5,7 @@ import LoginSvgComponent from '../../assets/loginSvgComponent.js';
 
 import Colors from '../../constants/Colors';
 import { MonoText } from '../StyledText';
+import { useNavigation, useNavigationState } from '@react-navigation/native';
 // import { Text, View } from './Themed';
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput } from 'react-native'
@@ -12,6 +13,7 @@ import { navigationRef } from '../../navigation/index';
 import { joinQueue, leaveQueue, skip } from '../../store/reducers/chat';
 import { store } from '../../store/store';
 import { api } from '../../services/api';
+
 
 export default function YouAreNowChattingAlert({ path }: { path: string }) {
 //   const skipAction = () => {
@@ -32,6 +34,8 @@ export default function YouAreNowChattingAlert({ path }: { path: string }) {
     navigationRef.current?.navigate('RandomChat');
     store.dispatch(joinQueue())
   }
+
+  const navigation = useNavigation();
 
   
   <Text onPress={leaveQueueAction} style={{ fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 140, fontSize: 16 }}> Leave Queue </Text>
@@ -62,7 +66,7 @@ export default function YouAreNowChattingAlert({ path }: { path: string }) {
 
         <View style={{ flex: 1, flexDirection: 'row' }}>
 
-          <TouchableOpacity  style={styles.yesButton}>
+          <TouchableOpacity  style={styles.yesButton} onPress={navigation.goBack}>
             <Text style={styles.loginText} >
               Chat
           </Text>
