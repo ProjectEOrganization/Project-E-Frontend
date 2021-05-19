@@ -17,6 +17,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { createSelector } from 'reselect';
 import TopicStarter from '../components/TopicStarter';
 import QueueSvgComponent from '../assets/queueSvgComponent.js';
+import YouAreNowChattingModal from '../components/Modals/YouAreNowChattingModal';
+import { navigationRef } from '../navigation';
 
 LogBox.ignoreLogs(['Animated: `useNativeDriver`']);
 
@@ -104,6 +106,8 @@ export default function RandomChatScreen() {
     )
   }
 
+  if (queue.status === 'found') {
+    navigation.navigate('YouAreNowChattingModal')
   return (
     
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding" : null} style={styles.container}>
@@ -117,6 +121,7 @@ export default function RandomChatScreen() {
       <FriendsChatScreenBottomBar chatId={queue?.chatId} recipientId={queue.user?.uid} isQueue={true} />
     </KeyboardAvoidingView>
   );
+      }
 }
 
 const styles = StyleSheet.create({

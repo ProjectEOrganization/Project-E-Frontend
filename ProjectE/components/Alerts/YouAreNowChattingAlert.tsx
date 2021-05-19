@@ -27,6 +27,13 @@ export default function YouAreNowChattingAlert({ path }: { path: string }) {
     store.dispatch(leaveQueue())
     navigationRef.current?.goBack();
   }
+
+  const skipAction = () => {
+    navigationRef.current?.navigate('RandomChat');
+    store.dispatch(joinQueue())
+  }
+
+  
   <Text onPress={leaveQueueAction} style={{ fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 140, fontSize: 16 }}> Leave Queue </Text>
 
   return (
@@ -62,7 +69,7 @@ export default function YouAreNowChattingAlert({ path }: { path: string }) {
           </TouchableOpacity>
 
 
-          <TouchableOpacity  style={styles.noButton}>
+          <TouchableOpacity  style={styles.noButton} onPress={skipAction}>
             <Text style={styles.loginText} >
               Skip
           </Text>
