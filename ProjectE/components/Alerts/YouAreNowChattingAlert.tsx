@@ -10,12 +10,13 @@ import { useNavigation, useNavigationState } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput } from 'react-native'
 import { navigationRef } from '../../navigation/index';
-import { joinQueue, leaveQueue, skip } from '../../store/reducers/chat';
+import { joinQueue, leaveQueue, skip, initQueue, addTopic } from '../../store/reducers/chat';
 import { store } from '../../store/store';
 import { api } from '../../services/api';
+import { useEffect, useState } from 'react';
 
 
-export default function YouAreNowChattingAlert({ path }: { path: string }) {
+export default function YouAreNowChattingAlert({ msg }: { msg: any }) {
 //   const skipAction = () => {
 //     navigationRef.current?.navigate('RandomChat');
 //     store.dispatch(joinQueue())
@@ -24,7 +25,18 @@ export default function YouAreNowChattingAlert({ path }: { path: string }) {
 //   const dontSkip = () => {
 //     navigationRef.current?.navigate('RandomChat');
 //   }
-
+  
+  const [displayName, setDisplayName] = useState("");
+  const [photoURL, setPhotoURL] = useState("");
+  
+  useEffect(() => {
+    async function getUser() {
+      const response = await api.get(`/chat/${msg.uid}?isQueue=true`);
+      setDisplayName(response.user.displayName);
+      setPhotoURL(response.user.photoURL);
+    }
+  }, []);
+  
   async function leaveQueueAction() {
     store.dispatch(leaveQueue())
     navigationRef.current?.goBack();
@@ -33,6 +45,11 @@ export default function YouAreNowChattingAlert({ path }: { path: string }) {
   const skipAction = () => {
     navigationRef.current?.navigate('RandomChat');
     store.dispatch(joinQueue())
+  }
+
+  const joinChat = () => {
+    store.dispatch(initQueue(msg.uid));
+    store.dispatch(addTopic(msg.topic));
   }
 
   const navigation = useNavigation();
@@ -50,7 +67,7 @@ export default function YouAreNowChattingAlert({ path }: { path: string }) {
           You are now chatting with
         </Text>
         <Text style={styles.thirdText}>
-          Green Chinchilla
+        {displayName}
         </Text>
 
         {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
@@ -60,13 +77,12 @@ export default function YouAreNowChattingAlert({ path }: { path: string }) {
        marginHorizontal: 10,
        marginTop: 20
     }}
-      
-       source={ require('../../assets/images/Profile-Male-PNG.png')}
+       source={ {uri: photoURL}}
        />
 
         <View style={{ flex: 1, flexDirection: 'row' }}>
 
-          <TouchableOpacity  style={styles.yesButton} onPress={navigation.goBack}>
+          <TouchableOpacity  style={styles.yesButton} onPress={joinChat}>
             <Text style={styles.loginText} >
               Chat
           </Text>
