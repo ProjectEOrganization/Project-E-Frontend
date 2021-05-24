@@ -71,14 +71,15 @@ export default function YouAreNowChattingAlert({ msg }: { msg: any }) {
         </Text>
 
         {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
-        <Image  style={{
-       width: 80,
-       height: 80,
-       marginHorizontal: 10,
-       marginTop: 20
-    }}
-       source={ {uri: photoURL}}
-       />
+        <Image
+          style={{
+            width: 80,
+            height: 80,
+            marginHorizontal: 10,
+            marginTop: 20
+          }}
+          source={{uri: photoURL}}
+        />
 
         <View style={{ flex: 1, flexDirection: 'row' }}>
 

@@ -82,7 +82,7 @@ export default function ChooseProfileModal() {
     {avatars.map((value, index) => {
       console.log("value", value);
       return (
-        <TouchableOpacity onPress={goBack}>
+        <TouchableOpacity onPress={() => goBack(value)}>
           <Image style={{ width: 60, height: 60, marginHorizontal: 10, marginVertical: 10 }} source={{ uri: value }} />
         </TouchableOpacity>
       );
