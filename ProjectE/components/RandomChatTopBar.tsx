@@ -30,7 +30,7 @@ export default function RandomChatTopBar(props: IChat) {
   const friendRef = useRef(null);
 
   const sendFriendRequest = () => {
-    if (!user.isAnonymous && auth.user?.uid) {
+    if (!user.isAnonymous && auth.user?.uid && !auth.user.isAnonymous) {
       api.post(`/friends/add/${user?.uid}`)
       .then(() => navigation.navigate('FriendRequestSentModal'))
     } else if (user.isAnonymous && auth.user?.uid) {
