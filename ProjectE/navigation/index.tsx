@@ -17,6 +17,12 @@ import LogoutModal from '../components/Modals/LogoutModal'
 import RemoveFriendModal from '../components/Modals/RemoveFriendModal'
 import TheyNoAccountModal from '../components/Modals/TheyNoAccountModal'
 import Onboarding1 from '../screens/Onboarding1'
+import Onboarding2 from '../screens/Onboarding2'
+import ChooseProfileModal from '../components/Modals/ChooseProfileModal';
+import ReportBlockModal from '../components/Modals/ReportBlockModal'
+import ReportDetailModal from '../components/Modals/ReportDetailModal'
+import YouAreNowChattingModal from '../components/Modals/YouAreNowChattingModal'
+
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
@@ -32,6 +38,7 @@ import { api } from '../services/api';
 import { setNotificationHandler } from 'expo-notifications';
 import { store } from '../store';
 import { loadChat } from '../store/reducers/chat';
+
 
 export const navigationRef = React.createRef<NavigationContainerRef>();
 
@@ -161,6 +168,26 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
           options={{ ...popupEffect }}
         />
         <Stack.Screen
+          name='ChooseProfileModal'
+          component={ChooseProfileModal}
+          options={{ ...popupEffect }}
+        />
+        <Stack.Screen
+          name='ReportBlockModal'
+          component={ReportBlockModal}
+          options={{ ...popupEffect }}
+        />
+        <Stack.Screen
+          name='ReportDetailModal'
+          component={ReportDetailModal}
+          options={{ ...popupEffect }}
+        />
+        <Stack.Screen
+          name='YouAreNowChattingModal'
+          component={YouAreNowChattingModal}
+          options={{ ...popupEffect }}
+        />
+        <Stack.Screen
           name='FriendRequestReceivedModal'
           component={FriendRequestReceivedModal}
           options={{ ...popupEffect }}
@@ -197,6 +224,7 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
         />
         <Stack.Screen name="Onboarding" component={Onboarding1} options={{ gestureEnabled: false }} />
         <Stack.Screen name="Root" component={BottomTabNavigator} />
+        <Stack.Screen name="Onboarding2" component={Onboarding2} />
         <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       </Stack.Navigator>
     </NavigationContainer>

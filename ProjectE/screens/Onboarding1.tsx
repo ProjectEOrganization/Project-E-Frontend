@@ -6,6 +6,7 @@ import { Text, View } from '../components/Themed';
 import { useFonts } from 'expo-font';
 import SvgComponent from '../assets/svgComponent.js';
 import SvgComponent1 from '../assets/svgComponent1.js';
+import OnBoardingSvgComponent from '../assets/onBoardingSvgComponent.js';
 import Navigation from '../navigation';
 
 import { useNavigation } from '@react-navigation/native';
@@ -28,12 +29,21 @@ export default function TabTwoScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title1}>Welcome to</Text>
-      <Text style={styles.title2}>Rapid</Text>
-      <SvgComponent />
+      
+      {/* <Text style={styles.title2}>Rapid</Text> */}
+      {/* <SvgComponent /> */}
+      <OnBoardingSvgComponent />
+      <Text style={styles.title1}>WELCOME {"\n"}TO RAPID</Text>
       {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
       {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
-      <View style={styles.container2}>
+      
+      <TouchableOpacity style={styles.yesButton} onPress={() => navigation.navigate('Onboarding2')}>
+            <Text style={styles.loginText}>
+              Let's Go!
+          </Text>
+          </TouchableOpacity>
+
+      {/* <View style={styles.container2}>
         <Text style={styles.title3}>
           Chat with random people and create
           everlasting friendships,
@@ -44,15 +54,17 @@ export default function TabTwoScreen() {
 
       <TouchableOpacity onPress={anonymousSignin}>
         <SvgComponent1 />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
-      <View style={styles.container3}>
+
+
+      {/* <View style={styles.container3}>
         <Text style={styles.title4}>
           Already have an account?
-        <Text onPress={() => navigation.navigate('LoginModal')} style={{ fontFamily: 'Inter-SemiBold', color: '#4B00FF' }}> Log in </Text>
+        <Text onPress={() => navigation.navigate('LoginModal')} style={{ fontFamily: 'Inter-SemiBold', color: '#4B00FF' }}> Log in </Text> */}
           {/* <Text onPress={anonymousSignin} style={{fontFamily: 'Inter-SemiBold', color: '#4B00FF'}}> Log in as a guest</Text> */}
-        </Text >
-      </View>
+        {/* </Text >
+      </View> */}
 
 
 
@@ -64,9 +76,9 @@ const styles = StyleSheet.create({
   container: { // overall container
     flex: 1,
     alignItems: 'center',
-    paddingTop: '22%',
-
-    backgroundColor: '#F5F7F9'
+    marginTop:-140,
+    marginLeft: -69,
+    backgroundColor: '#FFFFFF'
   },
   container2: { //text part
     flex: 1,
@@ -89,42 +101,37 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   title1: { //Welcome to
-    fontSize: 20,
+    fontSize: 32,
     fontWeight: 'bold',
-    fontFamily: 'Inter-Medium',
-    color: '#414750',
-    letterSpacing: 1.5
+    textAlign: 'center',
+    fontFamily: 'Inter-ExtraBold',
+    color: '#FFFFFF',
+    letterSpacing: 1,
+    position: 'absolute',
+    top: 420, 
+    left: 173
   },
-  title2: { //Rapid
-    fontSize: 30,
-    fontWeight: 'bold',
-    fontFamily: 'Inter-Bold',
-    color: '#414750',
-    letterSpacing: 1.7,
-    shadowColor: '#4A2EFF',
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 6,
-    shadowOpacity: 1,
-    paddingTop: '2%'
-  },
-  title3: { //chat with random people
-    fontSize: 17,
-    fontFamily: 'Inter-SemiBold',
-    color: '#636E7E',
-    lineHeight: 24
+  yesButton: {
+    backgroundColor: '#50E3C2',
+    borderRadius: 15,
+    height: 75,
+    marginTop: 55,
+    marginLeft: 70,
+    shadowOffset: { width: 2, height: 6 },
+    shadowColor: '#50E3C2',
+    shadowOpacity: 0.27,
+    justifyContent: 'center',
+    width: 250,
+    
 
   },
-  title4: { //login text part
-    fontSize: 15,
-    fontFamily: 'Inter-Medium',
-    color: '#A9ACB0',
+  loginText: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 25,
+    fontFamily: 'Inter-ExtraBold',
 
+  }
 
-  },
-
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
+  
 });

@@ -77,8 +77,9 @@ function useProvideSocket() {
 
             socket.on('queue', (msg) => {
                 batch(() => {
-                    store.dispatch(initQueue(msg.uid))
-                    store.dispatch(addTopic(msg.topic))
+                    // store.dispatch(initQueue(msg.uid))
+                    // store.dispatch(addTopic(msg.topic))
+                    navigationRef.current.navigate('YouAreNowChattingModal', {msg: msg})
                 })
             })
 

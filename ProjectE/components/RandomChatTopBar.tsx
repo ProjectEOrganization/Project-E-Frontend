@@ -6,6 +6,7 @@ import RandomChatTopBarSvgComponent from '../assets/randomChatTopBarSvgComponent
 const { width, height } = Dimensions.get('screen')
 import Colors from '../../constants/Colors';
 import { MonoText } from '../StyledText';
+import ThreeDotsSvg from '../assets/threeDotsSvg.js'
 // import { Text, View } from './Themed';
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput, Image } from 'react-native';
@@ -17,8 +18,9 @@ import { Tooltip } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuth } from '../services/auth';
 import { useSelector } from '../hooks/useSelector';
+import { IChat } from '../store/reducers/chat';
 
-export default function RandomChatTopBar() {
+export default function RandomChatTopBar(props: IChat) {
   const { top } = useSafeAreaInsets();
   const auth = useAuth();
   const user = useSelector(state => state.chat.queue.user);
@@ -57,7 +59,8 @@ export default function RandomChatTopBar() {
     <View style={[styles.topBar, { paddingTop: top + 10 }]}>
       <Image
         style={{ height: 60, width: 60 }}
-        source={require('../assets/images/Profile-Male-PNG.png')}
+        source={props.user.photoURL ? { uri: props.user.photoURL } : require('../assets/images/Profile-Male-PNG.png')}
+        resizeMode="contain"
       />
       <View style={styles.userNameText}>
         <Text style={styles.secondText}>You are chatting with</Text>
@@ -71,12 +74,16 @@ export default function RandomChatTopBar() {
             <TouchableOpacity onPress={sendFriendRequest} style={styles.loginButton}>
               {/* <Tooltip ref={friendRef} popover={<Text>Send friend request</Text>}> */}
               <RandomChatTopBarSvgComponent />
-              <Text style={styles.loginText}>Let's be Friends</Text>
+              <Text style={styles.loginText}>Let's be {"\n"}Friends</Text>
               {/* </Tooltip> */}
             </TouchableOpacity>
+
           </>
         )}
       </View>
+          <TouchableOpacity onPress={() => navigation.navigate('ReportBlockModal')} style={{transform: [{ rotate: '90deg' }], marginLeft: -10, marginRight: -10}}>
+      <ThreeDotsSvg />
+      </TouchableOpacity>
 
     </View >
   );
@@ -115,7 +122,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#4B00FF',
     marginTop: 10,
     borderRadius: 30,
-    paddingHorizontal: 10,
+    paddingHorizontal: 0,
     paddingVertical: 10,
     shadowOffset: { width: 0, height: 2 },
     shadowColor: '#4B00FF',
@@ -123,7 +130,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    marginRight: -10,
+    marginRight: 20
+    
+    
   },
   loginText: {
     color: 'white',

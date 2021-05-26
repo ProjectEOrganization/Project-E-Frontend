@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
     shadowColor: '#000000',
     shadowOpacity: 0.05,
     marginBottom: 50
-
   },
 
   loginText: {

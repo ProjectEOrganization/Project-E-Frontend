@@ -197,25 +197,6 @@ export default function Register({ path, actionAfter }: { path: string, actionAf
         </Text>
       </View>
 
-      {/* <View
-          style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
-          >
-          <MonoText>{path}</MonoText>
-        </View> */}
-
-      {/* <Text
-          style={styles.getStartedText}
-          >
-          Change any of the text, save the file, and your app will automatically update.
-        </Text>
-      </View>
-
-      <View style={styles.helpContainer}>
-        <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-          <Text style={styles.helpLinkText} >
-            Tap here if your app doesn't automatically update after making changes
-          </Text>
-        </TouchableOpacity> */}
     </View>
   );
 }

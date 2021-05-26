@@ -1,32 +1,60 @@
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity, Image } from 'react-native';
 import LoginSvgComponent from '../../assets/loginSvgComponent.js';
 
 import Colors from '../../constants/Colors';
 import { MonoText } from '../StyledText';
+import { useNavigation, useNavigationState } from '@react-navigation/native';
 // import { Text, View } from './Themed';
 import { useFonts } from 'expo-font';
 import { Text, View, TextInput } from 'react-native'
 import { navigationRef } from '../../navigation/index';
-import { joinQueue, leaveQueue, skip } from '../../store/reducers/chat';
+import { joinQueue, leaveQueue, skip, initQueue, addTopic } from '../../store/reducers/chat';
 import { store } from '../../store/store';
 import { api } from '../../services/api';
+import { useEffect, useState } from 'react';
 
-export default function SkipConfirmationAlert({ path }: { path: string }) {
+
+export default function YouAreNowChattingAlert({ msg }: { msg: any }) {
+//   const skipAction = () => {
+//     navigationRef.current?.navigate('RandomChat');
+//     store.dispatch(joinQueue())
+//   }
+
+//   const dontSkip = () => {
+//     navigationRef.current?.navigate('RandomChat');
+//   }
+  
+  const [displayName, setDisplayName] = useState("");
+  const [photoURL, setPhotoURL] = useState("");
+  
+  useEffect(() => {
+    async function getUser() {
+      const response = await api.get(`/chat/${msg.uid}?isQueue=true`);
+      setDisplayName(response.user.displayName);
+      setPhotoURL(response.user.photoURL);
+    }
+  }, []);
+  
+  async function leaveQueueAction() {
+    store.dispatch(leaveQueue())
+    navigationRef.current?.goBack();
+  }
+
   const skipAction = () => {
     navigationRef.current?.navigate('RandomChat');
     store.dispatch(joinQueue())
   }
 
-  const dontSkip = () => {
-    navigationRef.current?.navigate('RandomChat');
+  const joinChat = () => {
+    store.dispatch(initQueue(msg.uid));
+    store.dispatch(addTopic(msg.topic));
   }
 
-  async function leaveQueueAction() {
-    store.dispatch(leaveQueue())
-    navigationRef.current?.goBack();
-  }
+  const navigation = useNavigation();
+
+  
   <Text onPress={leaveQueueAction} style={{ fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 140, fontSize: 16 }}> Leave Queue </Text>
 
   return (
@@ -36,26 +64,35 @@ export default function SkipConfirmationAlert({ path }: { path: string }) {
       <LoginSvgComponent />
       <View style={{ width: 260, paddingTop: 30, alignItems: 'center' }}>
         <Text style={styles.firstText}>
-          Are you sure you{"\n"}want to skip?
+          You are now chatting with
+        </Text>
+        <Text style={styles.thirdText}>
+        {displayName}
         </Text>
 
         {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
-        <Text style={styles.secondText}>
-          You will probably never talk to this person ever again.
-        </Text>
+        <Image
+          style={{
+            width: 80,
+            height: 80,
+            marginHorizontal: 10,
+            marginTop: 20
+          }}
+          source={{uri: photoURL}}
+        />
 
         <View style={{ flex: 1, flexDirection: 'row' }}>
 
-          <TouchableOpacity onPress={skipAction} style={styles.yesButton}>
+          <TouchableOpacity  style={styles.yesButton} onPress={joinChat}>
             <Text style={styles.loginText} >
-              Yup
+              Chat
           </Text>
           </TouchableOpacity>
 
 
-          <TouchableOpacity onPress={dontSkip} style={styles.noButton}>
+          <TouchableOpacity  style={styles.noButton} onPress={skipAction}>
             <Text style={styles.loginText} >
-              Nah
+              Skip
           </Text>
           </TouchableOpacity>
 
@@ -82,7 +119,7 @@ function handleHelpPress() {
 
 const styles = StyleSheet.create({
   overallContainer: { //overall container
-    height: 335,
+    height: 375,
     width: 330,
     backgroundColor: '#fff',
     borderRadius: 40,
@@ -92,9 +129,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
   },
   firstText: {
+    fontSize: 20,
+    fontFamily: 'Inter-SemiBold',
+    color: '#689CF6',
+    textAlign: 'center',
+    lineHeight: 30
+  },
+  thirdText: {
     fontSize: 22,
     fontFamily: 'Inter-ExtraBold',
-    color: '#4957FF',
+    color: '#493FFF',
     textAlign: 'center',
     lineHeight: 30
   },
