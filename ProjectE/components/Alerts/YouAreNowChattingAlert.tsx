@@ -17,7 +17,19 @@ import { useEffect, useState } from 'react';
 
 
 export default function YouAreNowChattingAlert(props) {
-
+  const [displayName, setDisplayName] = useState("");
+  const [photoURL, setPhotoURL] = useState("");
+  
+  useEffect(() => {
+    async function getUser() {
+      const response = await api.get(`/chat/${props.msg.uid}?isQueue=true`);
+      setDisplayName(response.data.user.displayName);
+      setPhotoURL(response.data.user.photoURL);
+      console.log("new resonse", response.data);
+    }
+    getUser();
+  });
+  
   async function leaveQueueAction() {
     store.dispatch(leaveQueue())
     navigationRef.current?.goBack();
@@ -45,7 +57,8 @@ export default function YouAreNowChattingAlert(props) {
           You are now chatting with
         </Text>
         <Text style={styles.thirdText}>
-          {props.msg.user.displayName}
+          {/* {props.msg.user.displayName} */}
+          {displayName}
         </Text>
 
         {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
@@ -56,7 +69,7 @@ export default function YouAreNowChattingAlert(props) {
             marginHorizontal: 10,
             marginTop: 20
           }}
-          source={{ uri: props.msg.user.photoURL }}
+          source={{ uri: photoURL }}
         />
 
         <View style={{ flex: 1, flexDirection: 'row' }}>
