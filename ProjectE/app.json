@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "ProjectE",
+    "name": "Rapid",
     "slug": "ProjectE",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -20,12 +20,13 @@
     ],
     "ios": {
       "bundleIdentifier": "com.rapid.rapidapp",
-      "buildNumber": "2"
+      "buildNumber": "3"
     },
     "android": {
+      "package": "com.rapid.rapidapp",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./assets/images/icon.png",
+        "backgroundColor": "#262626"
       },
       "softwareKeyboardLayoutMode": "resize"
     },
