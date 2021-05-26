@@ -15,7 +15,6 @@ const { width, height } = Dimensions.get('screen');
 export default function ChooseProfileModal() {
   const { params } = useRoute();
   const navigation = useNavigation();
-  const route = useRoute();
   const auth = useAuth();
 
   var avatars = [

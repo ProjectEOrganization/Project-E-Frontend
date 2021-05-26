@@ -16,16 +16,8 @@ import { api } from '../../services/api';
 import { useEffect, useState } from 'react';
 
 
-export default function YouAreNowChattingAlert({ msg }: { msg: any }) {
-//   const skipAction = () => {
-//     navigationRef.current?.navigate('RandomChat');
-//     store.dispatch(joinQueue())
-//   }
+export default function YouAreNowChattingAlert(props) {
 
-//   const dontSkip = () => {
-//     navigationRef.current?.navigate('RandomChat');
-//   }
-  
   const [displayName, setDisplayName] = useState("");
   const [photoURL, setPhotoURL] = useState("");
   
@@ -34,7 +26,9 @@ export default function YouAreNowChattingAlert({ msg }: { msg: any }) {
       const response = await api.get(`/chat/${msg.uid}?isQueue=true`);
       setDisplayName(response.user.displayName);
       setPhotoURL(response.user.photoURL);
+      console.log("msg", props.msg);
     }
+    getUser();
   }, []);
   
   async function leaveQueueAction() {
@@ -48,8 +42,8 @@ export default function YouAreNowChattingAlert({ msg }: { msg: any }) {
   }
 
   const joinChat = () => {
-    store.dispatch(initQueue(msg.uid));
-    store.dispatch(addTopic(msg.topic));
+    store.dispatch(initQueue(props.msg.uid));
+    store.dispatch(addTopic(props.msg.topic));
   }
 
   const navigation = useNavigation();

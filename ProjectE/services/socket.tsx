@@ -76,11 +76,13 @@ function useProvideSocket() {
             })
 
             socket.on('queue', (msg) => {
-                batch(() => {
-                    // store.dispatch(initQueue(msg.uid))
-                    // store.dispatch(addTopic(msg.topic))
-                    navigationRef.current.navigate('YouAreNowChattingModal', {msg: msg})
-                })
+                // batch(() => {
+                //     store.dispatch(initQueue(msg.uid))
+                //     store.dispatch(addTopic(msg.topic))
+                // })
+                console.log("message", msg)
+                navigationRef.current?.navigate('YouAreNowChattingModal', {msg: msg})
+
             })
 
             socket.on('friend_request_accepted', ({ uid, chat }: { uid: string, chat: IChat }) => {
