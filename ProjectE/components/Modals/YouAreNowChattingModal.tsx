@@ -7,7 +7,7 @@ const { width, height } = Dimensions.get('screen');
 export default function YouAreNowChattingModal() {
     const navigation = useNavigation();
     const route = useRoute();
-    console.log(route);
+    console.log(route.params);
     // if (route.params.msg!=undefined) {
     //     console.log("paramsss", params.msg);
     //     var message = params.msg;
@@ -15,9 +15,9 @@ export default function YouAreNowChattingModal() {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{ zIndex: 999 }}>
-                <YouAreNowChattingAlert msg={route.params.message}/>
+                <YouAreNowChattingAlert msg={route.params?.msg} />
             </View>
-            <View  style={{ width, height, position: 'absolute' }} />
+            <View style={{ width, height, position: 'absolute' }} />
         </View>
     )
 }

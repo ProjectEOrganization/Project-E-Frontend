@@ -89,10 +89,11 @@ export const joinQueue = createAsyncThunk(
         const response = await backend.chat.joinQueue();
 
         if (response.data.status === 'found') {
-            batch(() => {
-                thunkAPI.dispatch(addTopic(response.data.topic))
-                thunkAPI.dispatch(initQueue(response.data.uid))
-            })
+            navigationRef.current?.navigate('YouAreNowChattingModal', { msg: response.data })
+            // batch(() => {
+            //     thunkAPI.dispatch(addTopic(response.data.topic))
+            //     thunkAPI.dispatch(initQueue(response.data.uid))
+            // })
         }
         return response.data;
     }

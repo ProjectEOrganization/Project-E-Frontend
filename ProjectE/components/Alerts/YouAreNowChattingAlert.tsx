@@ -18,19 +18,6 @@ import { useEffect, useState } from 'react';
 
 export default function YouAreNowChattingAlert(props) {
 
-  const [displayName, setDisplayName] = useState("");
-  const [photoURL, setPhotoURL] = useState("");
-  
-  useEffect(() => {
-    async function getUser() {
-      const response = await api.get(`/chat/${msg.uid}?isQueue=true`);
-      setDisplayName(response.user.displayName);
-      setPhotoURL(response.user.photoURL);
-      console.log("msg", props.msg);
-    }
-    getUser();
-  }, []);
-  
   async function leaveQueueAction() {
     store.dispatch(leaveQueue())
     navigationRef.current?.goBack();
@@ -46,9 +33,6 @@ export default function YouAreNowChattingAlert(props) {
     store.dispatch(addTopic(props.msg.topic));
   }
 
-  const navigation = useNavigation();
-
-  
   <Text onPress={leaveQueueAction} style={{ fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 140, fontSize: 16 }}> Leave Queue </Text>
 
   return (
@@ -61,7 +45,7 @@ export default function YouAreNowChattingAlert(props) {
           You are now chatting with
         </Text>
         <Text style={styles.thirdText}>
-        {displayName}
+          {props.msg.user.displayName}
         </Text>
 
         {/* PROBABLY NEED AN IF STATEMENT (like if on certain page, display different text below) */}
@@ -72,19 +56,19 @@ export default function YouAreNowChattingAlert(props) {
             marginHorizontal: 10,
             marginTop: 20
           }}
-          source={{uri: photoURL}}
+          source={{ uri: props.msg.user.photoURL }}
         />
 
         <View style={{ flex: 1, flexDirection: 'row' }}>
 
-          <TouchableOpacity  style={styles.yesButton} onPress={joinChat}>
+          <TouchableOpacity style={styles.yesButton} onPress={joinChat}>
             <Text style={styles.loginText} >
               Chat
           </Text>
           </TouchableOpacity>
 
 
-          <TouchableOpacity  style={styles.noButton} onPress={skipAction}>
+          <TouchableOpacity style={styles.noButton} onPress={skipAction}>
             <Text style={styles.loginText} >
               Skip
           </Text>
@@ -99,7 +83,7 @@ export default function YouAreNowChattingAlert(props) {
       <Text onPress={leaveQueueAction} style={{ fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 140, fontSize: 16 }}> Leave Queue </Text>
 
 
-     
+
 
     </View>
   );

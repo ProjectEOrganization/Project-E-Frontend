@@ -17,7 +17,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { createSelector } from 'reselect';
 import TopicStarter from '../components/TopicStarter';
 import QueueSvgComponent from '../assets/queueSvgComponent.js';
-import YouAreNowChattingModal from '../components/Modals/YouAreNowChattingModal';
 import { navigationRef } from '../navigation';
 
 LogBox.ignoreLogs(['Animated: `useNativeDriver`']);
@@ -62,8 +61,8 @@ export default function RandomChatScreen() {
   if (queue.status !== 'found') {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#F1F6FC' }}>
-          <View style={{position: 'absolute', top: -600, backgroundColor: 'transparent'}}>
-        <QueueSvgComponent />
+        <View style={{ position: 'absolute', top: -600, backgroundColor: 'transparent' }}>
+          <QueueSvgComponent />
         </View>
         <View style={{
           width: '100%', backgroundColor: random1, minHeight: 190, shadowOffset: { width: 0, height: 2 },
@@ -83,23 +82,23 @@ export default function RandomChatScreen() {
         {queue.status === 'searching' && (
           <TouchableOpacity onPress={leaveQueueAction}>
             <Text style={{ fontFamily: 'Inter-SemiBold', color: 'white', marginTop: 30, fontSize: 16 }}> Leave Queue </Text>
-           
+
           </TouchableOpacity>
-          
+
         )}
-       
+
         {queue.status === 'idle' && (
           <TouchableOpacity onPress={() => store.dispatch(joinQueue())}>
             <Text style={{ fontFamily: 'Inter-SemiBold', color: 'white', marginTop: 30, fontSize: 16 }}>Join Queue</Text>
           </TouchableOpacity>
 
         )
-        
+
         }
-       
-          <TouchableOpacity onPress={() => navigation.navigate('YouAreNowChattingModal')}>
-            <Text style={{ fontFamily: 'Inter-SemiBold', color: 'white', marginTop: 30, fontSize: 20 }}>Open YouAreNowChattingModal</Text>
-          </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => navigation.navigate('YouAreNowChattingModal')}>
+          <Text style={{ fontFamily: 'Inter-SemiBold', color: 'white', marginTop: 30, fontSize: 20 }}>Open YouAreNowChattingModal</Text>
+        </TouchableOpacity>
 
 
       </View >
@@ -107,21 +106,19 @@ export default function RandomChatScreen() {
   }
 
   if (queue.status === 'found') {
-    navigation.navigate('YouAreNowChattingModal')
-  return (
-    
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding" : null} style={styles.container}>
-      <RandomChatTopBar user={queue.user} />
-      {queue.topic && (
-        <View style={{ position: 'relative', backgroundColor: 'transparent', top: 20, zIndex: 999 }}>
-          <TopicStarter topic={queue.topic} colors={queue.topic.colors} />
-        </View>
-      )}
-      <FriendsChatBox messages={queueMessages} />
-      <FriendsChatScreenBottomBar chatId={queue?.chatId} recipientId={queue.user?.uid} isQueue={true} />
-    </KeyboardAvoidingView>
-  );
-      }
+    return (
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? "padding" : null} style={styles.container}>
+        <RandomChatTopBar user={queue.user} />
+        {queue.topic && (
+          <View style={{ position: 'relative', backgroundColor: 'transparent', top: 20, zIndex: 999 }}>
+            <TopicStarter topic={queue.topic} colors={queue.topic.colors} />
+          </View>
+        )}
+        <FriendsChatBox messages={queueMessages} />
+        <FriendsChatScreenBottomBar chatId={queue?.chatId} recipientId={queue.user?.uid} isQueue={true} />
+      </KeyboardAvoidingView>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

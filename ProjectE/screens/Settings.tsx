@@ -65,12 +65,12 @@ export default function Settings() {
 
 
       {/* </View> */}
-      <View style={{position:"absolute", marginTop: -330, left: -90, backgroundColor: '#F9FBFB'}}>
+      <View style={{ position: "absolute", marginTop: -330, left: -90, backgroundColor: '#F9FBFB' }}>
         <SettingsSvgComponent />
-        </View>
+      </View>
 
       <Text style={styles.title1}>Settings</Text>
-      
+
 
 
 
@@ -79,96 +79,96 @@ export default function Settings() {
       <View style={{ width: '90%', height: '70%', marginTop: 80, backgroundColor: 'transparent' }}>
 
 
-      {(auth.user && !auth.user.isAnonymous) && 
-        <View style={{height: '25%', borderRadius: 20}}>
-        <TouchableOpacity onPress={() => navigation.navigate('Account')}>
-          <View style={{flexDirection: 'row', alignItems: 'center', paddingVertical: 20,borderRadius: 10}}>
-            <SettingsIcon1 />
-        {(auth.user && !auth.user.isAnonymous) &&
-            <Text style={[styles.settingsText]}>Account</Text>
-        }
-           <SettingsIcon0 />
+        {(auth.user && !auth.user?.isAnonymous) &&
+          <View style={{ height: '25%', borderRadius: 20 }}>
+            <TouchableOpacity onPress={() => navigation.navigate('Account')}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20, borderRadius: 10 }}>
+                <SettingsIcon1 />
+                {(auth.user && !auth.user?.isAnonymous) &&
+                  <Text style={[styles.settingsText]}>Account</Text>
+                }
+                <SettingsIcon0 />
 
+              </View>
+            </TouchableOpacity>
+
+
+
+
+            <View style={styles.separator} lightColor="#6F8BA4" opacity={0.14} />
+            <TouchableOpacity onPress={() => navigation.navigate('Security')}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20, borderRadius: 10 }}>
+                <SettingsIcon2 />
+                {(auth.user && !auth.user?.isAnonymous) &&
+
+                  <Text style={[styles.settingsText]}>Security</Text>
+
+                }
+                <SettingsIcon0 />
+              </View>
+            </TouchableOpacity>
           </View>
-          </TouchableOpacity>
-        
-
-
-
-          <View style={styles.separator} lightColor="#6F8BA4" opacity={0.14} />
-          <TouchableOpacity onPress={() => navigation.navigate('Security')}>
-          <View style={{flexDirection: 'row', alignItems: 'center', paddingVertical: 20,borderRadius: 10}}>
-          <SettingsIcon2 />
-        {(auth.user && !auth.user.isAnonymous) &&
-         
-            <Text style={[styles.settingsText]}>Security</Text>
-            
         }
-          <SettingsIcon0 />
-        </View>
-        </TouchableOpacity>
-        </View>
-}
 
         {/* <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
             <Text style={styles.settingsText}>Notifications</Text>
           </TouchableOpacity> */}
-         <View style={{height: '40%', borderRadius: 20, marginTop: 40}}>
-        <TouchableOpacity>
-        <View style={{flexDirection: 'row', alignItems: 'center', paddingVertical: 20,borderRadius: 10}}>
-        <SettingsIcon3 />
-          <Text style={styles.settingsText} onPress={() => Linking.openURL('http://rapidapp.live/support')}>Support</Text>
-          
-          </View>
-        </TouchableOpacity>
+        <View style={{ height: '40%', borderRadius: 20, marginTop: 40 }}>
+          <TouchableOpacity>
+            <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20, borderRadius: 10 }}>
+              <SettingsIcon3 />
+              <Text style={styles.settingsText} onPress={() => Linking.openURL('http://rapidapp.live/support')}>Support</Text>
 
-        <View style={styles.separator} lightColor="#6F8BA4" opacity={0.14} />
+            </View>
+          </TouchableOpacity>
 
-
-        <TouchableOpacity>
-        <View style={{flexDirection: 'row', alignItems: 'center', paddingVertical: 20,borderRadius: 10}}>
-        <SettingsIcon4 />
-          <Text style={styles.settingsText} onPress={() => Linking.openURL('http://rapidapp.live/terms')} >Terms and Policy</Text>
-          <SettingsIcon0 />
-       </View>
-        </TouchableOpacity>
-
-        <View style={styles.separator} lightColor="#6F8BA4" opacity={0.14} />
+          <View style={styles.separator} lightColor="#6F8BA4" opacity={0.14} />
 
 
+          <TouchableOpacity>
+            <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20, borderRadius: 10 }}>
+              <SettingsIcon4 />
+              <Text style={styles.settingsText} onPress={() => Linking.openURL('http://rapidapp.live/terms')} >Terms and Policy</Text>
+              <SettingsIcon0 />
+            </View>
+          </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate('ReferralModal')}>
-        <View style={{flexDirection: 'row', alignItems: 'center', paddingVertical: 20,borderRadius: 10}}>
-        <SettingsIcon5 />
-          <Text style={styles.settingsText} >Referrals</Text>
-          <SettingsIcon0 />
-          </View>
-        </TouchableOpacity>
-      
+          <View style={styles.separator} lightColor="#6F8BA4" opacity={0.14} />
+
+
+
+          <TouchableOpacity onPress={() => navigation.navigate('ReferralModal')}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20, borderRadius: 10 }}>
+              <SettingsIcon5 />
+              <Text style={styles.settingsText} >Referrals</Text>
+              <SettingsIcon0 />
+            </View>
+          </TouchableOpacity>
+
         </View>
 
-          {(auth.user && !auth.user.isAnonymous) && 
-        <View style={{height: '13%', borderRadius: 20, marginTop: 40}}>
-        <TouchableOpacity>
-        <View style={{flexDirection: 'row', alignItems: 'center', paddingVertical: 20,borderRadius: 10}}>
-        <SettingsIcon6 />
-          {(auth.user && !auth.user.isAnonymous) && <Text onPress={logout} style={[styles.settingsText, styles.text2]}>Log Out</Text>}
+        {(auth.user && !auth.user?.isAnonymous) &&
+          <View style={{ height: '13%', borderRadius: 20, marginTop: 40 }}>
+            <TouchableOpacity>
+              <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20, borderRadius: 10 }}>
+                <SettingsIcon6 />
+                {(auth.user && !auth.user?.isAnonymous) && <Text onPress={logout} style={[styles.settingsText, styles.text2]}>Log Out</Text>}
+              </View>
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
-      </View>
-          }
+        }
 
 
-        {(auth.user.isAnonymous) && 
-        <View style={{height: '13%', borderRadius: 20, marginTop: 40}}>
-        <TouchableOpacity onPress={() => navigation.navigate('RegisterModal')}>
-        <View style={{flexDirection: 'row', alignItems: 'center', paddingVertical: 20,borderRadius: 10}}>
-        <SettingsIcon7 />
-         <Text  style={[styles.settingsText, styles.text2]}>Create Account</Text>
+        {(auth.user?.isAnonymous) &&
+          <View style={{ height: '13%', borderRadius: 20, marginTop: 40 }}>
+            <TouchableOpacity onPress={() => navigation.navigate('RegisterModal')}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20, borderRadius: 10 }}>
+                <SettingsIcon7 />
+                <Text style={[styles.settingsText, styles.text2]}>Create Account</Text>
+              </View>
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
-      </View>
-          }
+        }
 
 
 
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     paddingTop: '22%',
-    
+
     backgroundColor: '#F9FBFB'
   },
   container2: { //text part

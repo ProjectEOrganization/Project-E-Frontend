@@ -81,7 +81,7 @@ function useProvideSocket() {
                 //     store.dispatch(addTopic(msg.topic))
                 // })
                 console.log("message", msg)
-                navigationRef.current?.navigate('YouAreNowChattingModal', {msg: msg})
+                navigationRef.current?.navigate('YouAreNowChattingModal', { msg: msg })
 
             })
 
