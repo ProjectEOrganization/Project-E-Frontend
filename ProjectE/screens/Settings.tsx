@@ -23,6 +23,7 @@ import SettingsIcon4 from '../assets/icons/settingsIcon4.js'
 import SettingsIcon5 from '../assets/icons/settingsIcon5.js'
 import SettingsIcon6 from '../assets/icons/settingsIcon6.js'
 import SettingsIcon7 from '../assets/icons/settingsIcon7.js'
+import SettingsIcon8 from '../assets/icons/settingsIcon8.js'
 
 
 
@@ -80,7 +81,9 @@ export default function Settings() {
 
 
         {(auth.user && !auth.user?.isAnonymous) &&
-          <View style={{ height: '25%', borderRadius: 20 }}>
+          <View style={{ height: '50%', borderRadius: 20, shadowOffset: { width: 0, height: 3 },
+          shadowColor: '#000000',
+          shadowOpacity: 0.16, }}>
             <TouchableOpacity onPress={() => navigation.navigate('Account')}>
               <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20, borderRadius: 10 }}>
                 <SettingsIcon1 />
@@ -107,13 +110,36 @@ export default function Settings() {
                 <SettingsIcon0 />
               </View>
             </TouchableOpacity>
+
+            
+            <View style={styles.separator} lightColor="#6F8BA4" opacity={0.14} />
+            <TouchableOpacity onPress={() => navigation.navigate('RapidID')}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20, borderRadius: 10, height: 100, backgroundColor: 'white',  }}>
+                <SettingsIcon8 />
+                
+                  <View style={{flexDirection: 'column'}}>
+                  <Text style={[styles.settingsText]}>RapidID</Text>
+                  <Text style={{fontSize: 16,
+                  fontFamily: 'Inter-Medium',
+                   color: '#B0B0B0',
+                     paddingRight: 110}}>steve-1513</Text>
+                  </View>
+                <SettingsIcon0 />
+                
+              </View>
+              
+            </TouchableOpacity>
+
+            
           </View>
         }
 
         {/* <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
             <Text style={styles.settingsText}>Notifications</Text>
           </TouchableOpacity> */}
-        <View style={{ height: '40%', borderRadius: 20, marginTop: 40 }}>
+        <View style={{ height: '43%', borderRadius: 20, marginTop: 30,  shadowOffset: { width: 0, height: 3 },
+          shadowColor: '#000000',
+          shadowOpacity: 0.16 }}>
           <TouchableOpacity>
             <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20, borderRadius: 10 }}>
               <SettingsIcon3 />
@@ -148,11 +174,11 @@ export default function Settings() {
         </View>
 
         {(auth.user && !auth.user?.isAnonymous) &&
-          <View style={{ height: '13%', borderRadius: 20, marginTop: 40 }}>
-            <TouchableOpacity>
-              <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20, borderRadius: 10 }}>
-                <SettingsIcon6 />
-                {(auth.user && !auth.user?.isAnonymous) && <Text onPress={logout} style={[styles.settingsText, styles.text2]}>Log Out</Text>}
+          <View style={{ height: '13%', borderRadius: 40, marginTop: 40, backgroundColor: '#F1435B' }}>
+            <TouchableOpacity >
+              <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20, borderRadius: 80, backgroundColor: '#F1435B', justifyContent: 'center'}}>
+                {/* <SettingsIcon6 /> */}
+                {(auth.user && !auth.user?.isAnonymous) && <Text onPress={logout} style={[ styles.text2]}>Log Out</Text>}
               </View>
             </TouchableOpacity>
           </View>
@@ -212,7 +238,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: '22%',
 
-    backgroundColor: '#F9FBFB'
+    backgroundColor: '#FAFCFF'
   },
   container2: { //text part
     flex: 1,
@@ -255,9 +281,10 @@ const styles = StyleSheet.create({
     paddingTop: 20
   },
   text2: {
-    color: '#04A242',
-    fontFamily: 'Inter-SemiBold'
-
+    fontSize: 18,
+    color: 'white',
+    fontFamily: 'Inter-SemiBold',
+    height: '100%'
   },
   separator: {
     marginVertical: 0,
