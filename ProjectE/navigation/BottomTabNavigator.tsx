@@ -13,6 +13,7 @@ import RandomChatScreen from '../screens/RandomChatScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
 import SvgComponentNav from '../assets/svgComponentNav.js';
 import HomeButtonTipSvg from '../assets/HomeButtonTipSvg.js'
+import NavbarRCHAT from '../assets/navbarRCHAT.svg'
 import { View } from '../components/Themed';
 import NextPart from '../screens/NextPart';
 import Settings from '../screens/Settings';
@@ -26,7 +27,7 @@ import onBoarding1 from '../screens/Onboarding1';
 import { store } from '../store';
 import { fetchChats, joinQueue } from '../store/reducers/chat';
 import { useSelector } from '../hooks';
-import { Pressable, Text, TouchableOpacity } from 'react-native';
+import { Pressable, Text, TouchableOpacity, Image } from 'react-native';
 import { Tooltip } from 'react-native-elements';
 import { navigationRef } from '.';
 import { useEffect, useRef } from 'react';
@@ -70,8 +71,8 @@ function BottomTabNavigator() {
   }) {
     return (
       <TouchableOpacity onPress={checkAuth}>
-        <FontAwesome5 size={25} style={{ marginTop: 25 }} {...props} />
-        <Text style={{ marginTop: 5, color: props.color, fontSize: 10 }}>Friends</Text>
+        <FontAwesome5 size={25} style={{ marginTop: 25, marginLeft: 5 }} {...props} />
+        <Text style={{ marginTop: 5, color: props.color, fontSize: 12, fontFamily: 'Inter-SemiBold' }}>Friends</Text>
       </TouchableOpacity>
     );
   }
@@ -87,7 +88,10 @@ function BottomTabNavigator() {
     console.log(state, "Friends");
   }
 
-  const Icon = () => {
+  const Icon = (props: {
+    name: React.ComponentProps<typeof Ionicons>['name'];
+    color: string;
+  }) => {
     const queue = useSelector(state => state.chat.queue);
     const state = useNavigationState(state => state.index)
 
@@ -120,23 +124,32 @@ function BottomTabNavigator() {
 
 
     return (
-      <>
-        <TouchableOpacity onPress={onPress} style={{ marginBottom: -20, backgroundColor: 'transparent', }}>
-          {/* <Tooltip ref={skipRef} onPress={onPress} popover={<Text>Skip this person</Text>}> */}
-          {/* <SvgComponentNav /> */}
 
-          <LottieView
-            ref={animation}
-            style={{
-              width: 100,
-              height: 100,
-              marginBottom: 30
-            }}
-            source={require('../assets/animations/button.json')}
-          />
-          {/* </Tooltip> */}
-        </TouchableOpacity>
+      <>
+       
+        <Image source={require("../assets/dog2.png")} 
+       style={{height: 28, width: 28, tintColor: props.color, marginTop: 24 }} />
+        <Text style={{ marginTop: 5, color: props.color, fontSize: 12, fontFamily: 'Inter-SemiBold' }}>rChat</Text>
       </>
+      // <>
+      //   <TouchableOpacity onPress={onPress} style={{ marginBottom: -20, backgroundColor: 'transparent', }}>
+      //     {/* <Tooltip ref={skipRef} onPress={onPress} popover={<Text>Skip this person</Text>}> */}
+      //     {/* <SvgComponentNav /> */}
+
+      //     <LottieView
+      //       ref={animation}
+      //       style={{
+      //         width: 100,
+      //         height: 100,
+      //         marginBottom: 30
+      //       }}
+      //       source={require('../assets/animations/button.json')}
+      //     />
+      //     {/* </Tooltip> */}
+      //   </TouchableOpacity>
+      // </>
+
+
     );
   }
 
@@ -148,7 +161,7 @@ function BottomTabNavigator() {
     return (
       <>
         <Ionicons size={25} style={{ marginTop: 25 }} {...props} />
-        <Text style={{ marginTop: 5, color: props.color, fontSize: 10 }}>Settings</Text>
+        <Text style={{ marginTop: 5, color: props.color, fontSize: 12, fontFamily: 'Inter-SemiBold' }}>Settings</Text>
       </>
     );
   }
@@ -157,9 +170,9 @@ function BottomTabNavigator() {
     <BottomTab.Navigator
       initialRouteName={auth.loggedIn ? "Friends" : "RandomChat"}
       tabBarOptions={{
-        activeTintColor: '#00DBD0',
-        style: { height: 100 },
-        inactiveTintColor: '#5C626E',
+        activeTintColor: '#4B6EF6',
+        style: { height: 90, borderColor: 'transparent', borderTopLeftRadius: 30, borderTopRightRadius: 30, shadowOffset: { width: 0, height: 1}, shadowColor: '#000000', shadowOpacity: 0.3},
+        inactiveTintColor: '#92A0BC',
         showLabel: false
       }}
     >
