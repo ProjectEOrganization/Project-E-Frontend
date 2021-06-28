@@ -77,7 +77,7 @@ export default function Settings() {
 
       {/* <Register /> */}
       {/* Settings text */}
-      <View style={{ width: '90%', height: '70%', marginTop: 80, backgroundColor: 'transparent' }}>
+      <View style={{ width: '90%', height: '63%', marginTop: 80, backgroundColor: 'transparent' }}>
 
 
         {(auth.user && !auth.user?.isAnonymous) &&
@@ -114,7 +114,7 @@ export default function Settings() {
             
             <View style={styles.separator} lightColor="#6F8BA4" opacity={0.14} />
             <TouchableOpacity onPress={() => navigation.navigate('RapidID')}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20, borderRadius: 10, height: 100, backgroundColor: 'white',  }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20, borderRadius: 10, height: 80, backgroundColor: 'white',  }}>
                 <SettingsIcon8 />
                 
                   <View style={{flexDirection: 'column'}}>
@@ -137,7 +137,7 @@ export default function Settings() {
         {/* <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
             <Text style={styles.settingsText}>Notifications</Text>
           </TouchableOpacity> */}
-        <View style={{ height: '43%', borderRadius: 20, marginTop: 30,  shadowOffset: { width: 0, height: 3 },
+        <View style={{ height: '44.5%', borderRadius: 20, marginTop: 30,  shadowOffset: { width: 0, height: 13 },
           shadowColor: '#000000',
           shadowOpacity: 0.16 }}>
           <TouchableOpacity>
@@ -183,7 +183,9 @@ export default function Settings() {
             </TouchableOpacity>
           </View>
         }
-
+        <View style={{alignItems: 'center', marginTop: 20, backgroundColor: 'transparent'}}>
+        <Text style={{fontFamily: 'Inter-SemiBold', fontSize: 12, color: '#6F8BA4'}}>v1.0.2 mb515235</Text>
+        </View>
 
         {(auth.user?.isAnonymous) &&
           <View style={{ height: '13%', borderRadius: 20, marginTop: 40 }}>
