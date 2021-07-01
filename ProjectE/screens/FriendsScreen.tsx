@@ -62,9 +62,15 @@ export default function FriendsScreen() {
           <ThreeDotsSvg />
         </TouchableOpacity>
 
+        <TouchableOpacity onPress={() => navigation.navigate('AcceptFriendRequestsModal')} >
+          <Text style={{
+            marginLeft: 120, fontFamily: 'Inter-SemiBold', color: '#21293A'
+          }}>Test</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity onPress={() => navigation.navigate('SendFriendRequestModal')} >
           <Text style={{
-            marginLeft: 220, fontFamily: 'Inter-SemiBold', color: '#21293A'
+            marginLeft: 80, fontFamily: 'Inter-SemiBold', color: '#21293A'
           }}>Add Friend +</Text>
         </TouchableOpacity>
       </View>

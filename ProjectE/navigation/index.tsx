@@ -22,6 +22,8 @@ import ChooseProfileModal from '../components/Modals/ChooseProfileModal';
 import ReportBlockModal from '../components/Modals/ReportBlockModal'
 import ReportDetailModal from '../components/Modals/ReportDetailModal'
 import YouAreNowChattingModal from '../components/Modals/YouAreNowChattingModal'
+import AcceptFriendRequestsModal from '../components/Modals/AcceptFriendRequestsModal'
+
 
 
 import NotFoundScreen from '../screens/NotFoundScreen';
@@ -205,6 +207,11 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
         <Stack.Screen
           name='FriendRequestSentModal'
           component={FriendRequestSentModal}
+          options={{ ...popupEffect }}
+        />
+        <Stack.Screen
+          name='AcceptFriendRequestsModal'
+          component={AcceptFriendRequestsModal}
           options={{ ...popupEffect }}
         />
         <Stack.Screen
