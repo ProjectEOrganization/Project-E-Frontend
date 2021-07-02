@@ -50,15 +50,16 @@ export default function FriendsMessagesCard(props: IChat) {
 
 const styles = StyleSheet.create({
   topBar: {
-    paddingVertical: 15,
+    paddingVertical: 13,
     backgroundColor: '#fff',
     borderRadius: 25,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    shadowOffset: { width: 0, height: 6 },
+    shadowOffset: { width: 0, height: 4 },
     shadowColor: '#000000',
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
     width: width * 0.85,
   },
   profile: {
