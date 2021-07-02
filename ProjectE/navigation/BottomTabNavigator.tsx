@@ -23,6 +23,7 @@ import Account from '../screens/SettingsScreens/Account';
 import Notifications from '../screens/SettingsScreens/Notifications';
 import Security from '../screens/SettingsScreens/Security'
 import FriendsChatScreen from '../screens/FriendsChatScreen';
+import FriendRequests from '../screens/FriendRequests';
 import onBoarding1 from '../screens/Onboarding1';
 import { store } from '../store';
 import { fetchChats, joinQueue } from '../store/reducers/chat';
@@ -254,6 +255,11 @@ export default function FriendsStackScreen() {
       <FriendsStack.Screen
         name='FriendsChatScreen'
         component={FriendsChatScreen}
+        options={{ headerShown: false }}
+      />
+      <FriendsStack.Screen
+        name='FriendRequests'
+        component={FriendRequests}
         options={{ headerShown: false }}
       />
     </FriendsStack.Navigator>

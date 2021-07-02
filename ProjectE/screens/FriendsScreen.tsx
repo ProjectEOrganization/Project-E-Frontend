@@ -69,7 +69,7 @@ export default function FriendsScreen() {
         {/* <ThreeDotsSvg /> */}
 
         <TouchableOpacity
-          onPress={() => navigation.navigate("AcceptFriendRequestsModal")}
+          onPress={() => navigation.navigate("FriendRequests")}
           style={{
             backgroundColor: '#FAFCFF',
             width: 40,
