@@ -29,13 +29,13 @@ export default function FriendRequests() {
 
   return (
     <View style={styles.overallContainer}>
-      <View style={{ width: 50, backgroundColor: 'transparent', alignSelf: 'left', marginLeft: 30}}>
+      <View style={{ width: 50, backgroundColor: 'transparent', alignSelf: 'left', marginLeft: 30, marginTop: 20 }}>
         <TouchableOpacity onPress={() => navigationRef.current?.goBack()}>
           <BackArrowSvgComponent />
         </TouchableOpacity>
       </View>
 
-      <View style={{ width: 260, paddingTop: 30, alignItems: 'center' }}>
+      <View style={{ width: 260, paddingTop: 10, alignItems: 'center' }}>
         <Text style={styles.firstText}>
           Friend Requests
         </Text>
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   firstText: {
     fontSize: 22,
     fontFamily: 'Inter-ExtraBold',
-    color: '#4957FF',
+    color: '#4B6EF6',
     textAlign: 'center',
     lineHeight: 30
   },
