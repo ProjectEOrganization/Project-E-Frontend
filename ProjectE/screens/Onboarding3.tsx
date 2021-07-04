@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
+import { StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
@@ -22,32 +22,32 @@ import { createIconSetFromFontello } from '@expo/vector-icons';
 export default function TabThreeScreen() {
   const auth = useAuth();
 
-  // async function anonymousSignin() {
-  //   await auth.signInAnonymously();
-  //   var user = auth.user;
-  //   await user.updateProfile({
-  //     displayName: randomName,
-  //     photoURL: photoURL
-  //   }).then(data => {
-  //     console.log(data);
-  //   });
-  //   navigation.navigate('RandomChat');
-  // }
+  async function anonymousSignin() {
+    await auth.signInAnonymously();
+    var user = auth.user;
+    await user.updateProfile({
+      displayName: randomName,
+      photoURL: photoURL
+    }).then(data => {
+      console.log(data);
+    });
+    navigation.navigate('RandomChat');
+  }
 
-  // async function getRandomName() {
-  //   const newRandomName = await (await api.get("/generate_display_name")).data.name;
-  //   // const avatars = await (await api.get("avatars")).data.avatars;
-  //   // console.log("avatars: ", avatars);
-  //   setRandomName(newRandomName);
-  //   console.log(newRandomName);
-  //   console.log(photoURL);
-  // }
+  async function getRandomName() {
+    const newRandomName = await (await api.get("/generate_display_name")).data.name;
+    // const avatars = await (await api.get("avatars")).data.avatars;
+    // console.log("avatars: ", avatars);
+    setRandomName(newRandomName);
+    console.log(newRandomName);
+    console.log(photoURL);
+  }
 
   const navigation = useNavigation();
 
-  // const [randomName, setRandomName] = useState("Green Chinchilla");
-  // const [photoURL, setPhotoURL] = useState("https://rapid.nyc3.digitaloceanspaces.com/avatars/01-dog.png");
-  const [text, onChangeText] = React.useState("Testing");
+  const [randomName, setRandomName] = useState("Green Chinchilla");
+  const [photoURL, setPhotoURL] = useState("https://rapid.nyc3.digitaloceanspaces.com/avatars/01-dog.png");
+
   return (
     <View style={styles.container}>
       
@@ -61,18 +61,24 @@ export default function TabThreeScreen() {
       {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
 
 
-      <Text style={styles.title1}>Create</Text>
-      <Text style={styles.title2}>Your Account</Text>
+      <Text style={styles.title1}>CHOOSE</Text>
+      <Text style={styles.title2}>YOU</Text>
       
-     
-      <Text style={styles.title6}>Phone Number</Text>
+        <Image 
+        style={{
+        position: 'absolute',
+        top: 1260, 
+        left: 25,
+        width: 90,
+        height: 90}}
+        source={photoURL? { uri:  photoURL} : require('../assets/images/Profile-Male-PNG.png')}
+        />
 
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeText}
-        value={text}
-      />
-        
+        <TouchableOpacity style={styles.yesButton} onPress={() => navigation.navigate('ChooseProfileModal', {changeProfilePicFunc: setPhotoURL})}>
+            <Text style={styles.loginText}>
+              Change
+            </Text>
+        </TouchableOpacity>
 
         <View 
         style={{position: 'absolute',
@@ -86,14 +92,17 @@ export default function TabThreeScreen() {
           </Text>
 
           <Text style={styles.title4}>
-            {/* {randomName} */}
-            Test
+            {randomName}
           </Text>
           </View>
 
-         
+          <TouchableOpacity style={styles.yesButton2} onPress={getRandomName} >
+            <Text style={styles.loginText2}>
+              Randomize
+          </Text>
+          </TouchableOpacity>
 
-          <TouchableOpacity style={styles.yesButton3} onPress={() => navigation.navigate('Onboarding3')} >
+          <TouchableOpacity style={styles.yesButton3} onPress={anonymousSignin} >
             <Text style={styles.loginText3}>
                 Ready!
           </Text>
@@ -138,8 +147,8 @@ const styles = StyleSheet.create({
   container: { // overall container
     flex: 1,
     alignItems: 'center',
-    marginTop:-870,
-    paddingLeft: 620,
+    marginTop:-850,
+    paddingLeft: 580,
     backgroundColor: '#FFFFFF'
   },
   
@@ -148,10 +157,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'right',
     fontFamily: 'Inter-ExtraBold',
-    color: '#4B6EF6',
+    color: '#4957FF',
     letterSpacing: 1,
     position: 'absolute',
-    top: 1080, 
+    top: 1100, 
     left: 20
   },
   title2: { //Welcome to
@@ -159,11 +168,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'right',
     fontFamily: 'Inter-ExtraBold',
-    color: '#4B6EF6',
+    color: '#4957FF',
     letterSpacing: 1,
     position: 'absolute',
-    top: 1120, 
-    left: 20
+    top: 1140, 
+    left: 110
   },
   title3: { //Welcome to
     fontSize: 22,
@@ -185,17 +194,6 @@ const styles = StyleSheet.create({
     // position: 'absolute',
     // top: 1420, 
     // left: 0
-  },
-  title6: { //Welcome to
-    fontSize: 23,
-    textAlign: 'center',
-    fontFamily: 'Inter-SemiBold',
-    color: '#6E6E6E',
-    letterSpacing: 0,
-    marginTop: 10,
-    position: 'absolute',
-    top: 1200,
-    left: 20
   },
   yesButton: {
     backgroundColor: '#4957FF',
@@ -270,17 +268,6 @@ const styles = StyleSheet.create({
     top: 1640, 
     left: 45
   },
-  input: {
-    height: 40,
-    margin: 12,
-    width: 280,
-    borderWidth: 1,
-    position: 'absolute',
-    top: 1240,
-    left: 20,
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 0,
-  },
+
   
 });
