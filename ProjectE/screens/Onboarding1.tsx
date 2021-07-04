@@ -8,6 +8,7 @@ import SvgComponent from '../assets/svgComponent.js';
 import SvgComponent1 from '../assets/svgComponent1.js';
 import OnBoardingSvgComponent from '../assets/onBoardingSvgComponent.js';
 import Navigation from '../navigation';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { useNavigation } from '@react-navigation/native';
 import TabOneScreen from './FriendsScreen';
@@ -37,12 +38,37 @@ export default function TabTwoScreen() {
       {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
       {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
       
-      <TouchableOpacity style={styles.yesButton} onPress={() => navigation.navigate('Onboarding2')}>
+      
+      <TouchableOpacity  onPress={() => navigation.navigate('Onboarding2')}>
+      <LinearGradient
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 0 }}
+      colors={['#B3ECAE', '#00DBD0']}
+      style={styles.yesButton}
+    >
             <Text style={styles.loginText}>
               Let's Go!
           </Text>
+          </LinearGradient>
           </TouchableOpacity>
 
+          <Text style={{marginLeft: 70, marginTop: 40}}>
+          <Text style={[styles.termsText, {marginTop: 40}]}>
+          By logging in or signing up, you agree to our {''}
+          </Text>
+          <Text style={[styles.termsText, {color: '#A6CCF9', fontFamily: 'Inter-ExtraBold'} ]}>
+          Terms of Use
+          </Text>
+          </Text>
+
+          <Text style={{marginLeft: 70, marginTop: 5}}>
+          <Text style={[styles.termsText, {marginTop: 5}]}>
+          and have read and understood our {''}
+          </Text>
+          <Text style={[styles.termsText, {color: '#A6CCF9', fontFamily: 'Inter-ExtraBold'} ]}>
+          Privacy Policy
+          </Text>
+          </Text>
       {/* <View style={styles.container2}>
         <Text style={styles.title3}>
           Chat with random people and create
@@ -78,7 +104,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop:-140,
     marginLeft: -69,
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#395EEE'
   },
   container2: { //text part
     flex: 1,
@@ -113,23 +139,33 @@ const styles = StyleSheet.create({
   },
   yesButton: {
     backgroundColor: '#50E3C2',
-    borderRadius: 15,
+    borderRadius: 25,
     height: 75,
-    marginTop: 55,
+    marginTop: -10,
     marginLeft: 70,
     shadowOffset: { width: 2, height: 6 },
     shadowColor: '#50E3C2',
     shadowOpacity: 0.27,
     justifyContent: 'center',
-    width: 250,
+    width: 280,
     
 
   },
   loginText: {
-    color: 'white',
+    color: '#15154E',
     textAlign: 'center',
     fontSize: 25,
     fontFamily: 'Inter-ExtraBold',
+
+  },
+  termsText: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 12,
+    fontFamily: 'Inter-SemiBold',
+    marginLeft: 70,
+    
+   
 
   }
 
