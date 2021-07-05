@@ -8,6 +8,7 @@ import SvgComponent from '../assets/svgComponent.js';
 import SvgComponent1 from '../assets/svgComponent1.js';
 import OnBoardingSvgComponent2 from '../assets/onBoardingSvgComponent2.js';
 import Navigation from '../navigation';
+ import { LinearGradient } from 'expo-linear-gradient';
 
 import { api } from '../services/api';
 import { useNavigation } from '@react-navigation/native';
@@ -47,7 +48,7 @@ export default function TabThreeScreen() {
 
   // const [randomName, setRandomName] = useState("Green Chinchilla");
   // const [photoURL, setPhotoURL] = useState("https://rapid.nyc3.digitaloceanspaces.com/avatars/01-dog.png");
-  const [text, onChangeText] = React.useState("Testing");
+  const [text, onChangeText] = React.useState("");
   return (
     <View style={styles.container}>
       
@@ -69,8 +70,10 @@ export default function TabThreeScreen() {
 
       <TextInput
         style={styles.input}
+        keyboardType='numeric'
         onChangeText={onChangeText}
         value={text}
+        autoFocus
       />
         
 
@@ -81,28 +84,26 @@ export default function TabThreeScreen() {
        
         width: 400}}>
 
-          <Text style={styles.title3}>
-            We'll call you
-          </Text>
-
-          <Text style={styles.title4}>
-            {/* {randomName} */}
-            Test
-          </Text>
+         
           </View>
 
          
-
-          <TouchableOpacity style={styles.yesButton3} onPress={() => navigation.navigate('Onboarding3')} >
+          <LinearGradient
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 0 }}
+      colors={['#B3ECAE', '#00DBD0']}
+      style={styles.yesButton3}
+    >
+          <TouchableOpacity  onPress={() => navigation.navigate('Onboarding2')}>
+      
             <Text style={styles.loginText3}>
-                Ready!
+              Let's Go!
           </Text>
-          </TouchableOpacity>
           
+          </TouchableOpacity>
+          </LinearGradient>
 
-          <Text style={styles.title5}>
-          By pressing on “Ready!”, you agree to our Terms of Service and {"\n"} acknowledge that you read our Privacy Policy
-          </Text>
+          
 
 
       {/* <View style={styles.container2}>
@@ -241,23 +242,25 @@ const styles = StyleSheet.create({
 
   yesButton3: {
     backgroundColor: '#50E3C2',
-    borderRadius: 18,
+    borderRadius: 25,
     height: 70,
     shadowOffset: { width: 2, height: 6 },
     shadowColor: '#50E3C2',
     shadowOpacity: 0.27,
     justifyContent: 'center',
-    width: 220,
+    width: 280,
     position: 'absolute',
-    top: 1565, 
-    left: 90
+    top: 1335, 
+    left: 50
 
   },
   loginText3: {
-    color: 'white',
+   
     textAlign: 'center',
     fontSize: 25,
     fontFamily: 'Inter-ExtraBold',
+    color: 'white',
+    
   },
   title5: { 
     fontSize: 10,
@@ -273,14 +276,17 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     margin: 12,
-    width: 280,
-    borderWidth: 1,
+    width: 320,
+    borderWidth: 2,
+    borderBottomColor: '#4B6EF6',
     position: 'absolute',
     top: 1240,
-    left: 20,
+    left: 10,
     borderTopWidth: 0,
     borderLeftWidth: 0,
     borderRightWidth: 0,
+    fontSize: 26,
+    fontFamily: 'Inter-SemiBold'
   },
   
 });
