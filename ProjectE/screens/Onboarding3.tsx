@@ -6,8 +6,9 @@ import { Text, View } from '../components/Themed';
 import { useFonts } from 'expo-font';
 import SvgComponent from '../assets/svgComponent.js';
 import SvgComponent1 from '../assets/svgComponent1.js';
-import OnBoardingSvgComponent2 from '../assets/onBoardingSvgComponent2.js';
+import OnBoardingSvgComponent3 from '../assets/onBoardingSvgComponent3.js';
 import Navigation from '../navigation';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { api } from '../services/api';
 import { useNavigation } from '@react-navigation/native';
@@ -54,7 +55,7 @@ export default function TabThreeScreen() {
       {/* <Text style={styles.title2}>Rapid</Text> */}
       {/* <SvgComponent /> */}
 
-      <OnBoardingSvgComponent2 />
+      <OnBoardingSvgComponent3 />
       {/* <Text style={styles.title1}>ONBOARDING 2 {"\n"}TO RAPID</Text> */}
 
       {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
@@ -64,8 +65,8 @@ export default function TabThreeScreen() {
       <Text style={styles.title}>Choose your Profile Pic</Text>      
       <View style={{
           position: 'absolute',
-          top: 1220, 
-          left: 130,
+          top: 1260, 
+          left: 120,
           borderRadius: 100,
           borderWidth: 5,
           borderColor: '#4B6EF6',}}>
@@ -110,11 +111,20 @@ export default function TabThreeScreen() {
           </Text>
           </TouchableOpacity> */}
 
-          <TouchableOpacity style={styles.yesButton3} onPress={anonymousSignin} >
+<LinearGradient
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 0 }}
+      colors={['#B3ECAE', '#00DBD0']}
+      style={styles.yesButton3}
+    >
+          <TouchableOpacity  onPress={() => navigation.navigate('Onboarding3')}>
+      
             <Text style={styles.loginText3}>
-                Ready!
+              Let's Go!
           </Text>
+          
           </TouchableOpacity>
+          </LinearGradient>
           
 
           <Text style={styles.title5}>
@@ -155,20 +165,21 @@ const styles = StyleSheet.create({
   container: { // overall container
     flex: 1,
     alignItems: 'center',
-    marginTop:-850,
-    paddingLeft: 580,
+    marginTop:-950,
+    paddingLeft: 80,
     backgroundColor: '#FFFFFF'
   },
   title: {
     position: 'absolute',
-    top: 1140, 
+    top: 1180, 
     left: 40,
     alignSelf: 'center',
-    fontSize: 28,
+    fontSize: 25,
     fontWeight: 'bold',
     fontFamily: 'Inter-ExtraBold',
     color: '#4957FF',
     letterSpacing: 1,
+    
   },
   title1: { //Welcome to
     fontSize: 28,
@@ -223,7 +234,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 190,
     position: 'absolute',
-    top: 1400, 
+    top: 1450, 
     left: 115
   },
 
@@ -257,7 +268,7 @@ const styles = StyleSheet.create({
 
   yesButton3: {
     backgroundColor: '#50E3C2',
-    borderRadius: 18,
+    borderRadius: 25,
     height: 70,
     shadowOffset: { width: 2, height: 6 },
     shadowColor: '#50E3C2',

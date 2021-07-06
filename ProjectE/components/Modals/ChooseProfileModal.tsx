@@ -88,10 +88,13 @@ export default function ChooseProfileModal() {
     })}
    
   </View>
-
+ 
+</View>
+<Text style={{color: '#4B6EF6', marginTop: 650, fontFamily:'Inter-ExtraBold', textDecorationLine: 'underline', fontSize: 17}}>
+     or choose your own
+   </Text>
 </View>
 
-</View>
             </View>
             <View onTouchStart={navigation.goBack} style={{ width, height, position: 'absolute' }} />
         </View>
@@ -101,7 +104,7 @@ export default function ChooseProfileModal() {
 
 const styles = StyleSheet.create({
     overallContainer: { //overall container
-      height: 675,
+      height: 705,
       width: 350,
       backgroundColor: '#fff',
       borderRadius: 40,
