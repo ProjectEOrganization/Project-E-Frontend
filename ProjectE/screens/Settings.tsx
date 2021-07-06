@@ -44,6 +44,7 @@ export default function Settings() {
   const auth = useAuth();
 
   const logout = async () => {
+    // console.log("halo");
     await store.dispatch(leaveQueue());
     setTimeout(() => {
       auth.signout()

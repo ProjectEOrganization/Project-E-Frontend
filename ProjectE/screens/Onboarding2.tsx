@@ -94,7 +94,7 @@ export default function TabThreeScreen() {
       colors={['#B3ECAE', '#00DBD0']}
       style={styles.yesButton3}
     >
-          <TouchableOpacity  onPress={() => navigation.navigate('Onboarding2')}>
+          <TouchableOpacity  onPress={() => navigation.navigate('Onboarding3')}>
       
             <Text style={styles.loginText3}>
               Let's Go!

@@ -61,16 +61,19 @@ export default function TabThreeScreen() {
       {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
 
 
-      <Text style={styles.title1}>CHOOSE</Text>
-      <Text style={styles.title2}>YOU</Text>
-      
+      <Text style={styles.title}>Choose your Profile Pic</Text>      
         <Image 
-        style={{
-        position: 'absolute',
-        top: 1260, 
-        left: 25,
-        width: 90,
-        height: 90}}
+          style={{
+            position: 'absolute',
+            top: 1260, 
+            left: 160,
+            borderRadius: 100,
+            borderWidth: 5,
+            borderColor: '#4B6EF6',
+            width: 120,
+            height: 120,
+            padding: 0,
+        }}
         source={photoURL? { uri:  photoURL} : require('../assets/images/Profile-Male-PNG.png')}
         />
 
@@ -79,7 +82,7 @@ export default function TabThreeScreen() {
               Change
             </Text>
         </TouchableOpacity>
-
+{/* 
         <View 
         style={{position: 'absolute',
         top: 1380, 
@@ -100,7 +103,7 @@ export default function TabThreeScreen() {
             <Text style={styles.loginText2}>
               Randomize
           </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <TouchableOpacity style={styles.yesButton3} onPress={anonymousSignin} >
             <Text style={styles.loginText3}>
@@ -151,7 +154,17 @@ const styles = StyleSheet.create({
     paddingLeft: 580,
     backgroundColor: '#FFFFFF'
   },
-  
+  title: {
+    position: 'absolute',
+    top: 1140, 
+    left: 40,
+    alignSelf: 'center',
+    fontSize: 28,
+    fontWeight: 'bold',
+    fontFamily: 'Inter-ExtraBold',
+    color: '#4957FF',
+    letterSpacing: 1,
+  },
   title1: { //Welcome to
     fontSize: 28,
     fontWeight: 'bold',
@@ -205,8 +218,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 190,
     position: 'absolute',
-    top: 1275, 
-    left: 160
+    top: 1400, 
+    left: 115
   },
 
   loginText: {
@@ -245,10 +258,10 @@ const styles = StyleSheet.create({
     shadowColor: '#50E3C2',
     shadowOpacity: 0.27,
     justifyContent: 'center',
-    width: 220,
+    width: 325,
     position: 'absolute',
     top: 1565, 
-    left: 90
+    left: 50
 
   },
   loginText3: {
@@ -266,7 +279,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     position: 'absolute',
     top: 1640, 
-    left: 45
+    left: 55
   },
 
   
