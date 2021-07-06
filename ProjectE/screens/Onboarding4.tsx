@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
+import { StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { useFonts } from 'expo-font';
 import SvgComponent from '../assets/svgComponent.js';
 import SvgComponent1 from '../assets/svgComponent1.js';
-import OnBoardingSvgComponent4 from '../assets/onBoardingSvgComponent4.js';
+import OnBoardingSvgComponent3 from '../assets/onBoardingSvgComponent3.js';
 import Navigation from '../navigation';
- import { LinearGradient } from 'expo-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { api } from '../services/api';
 import { useNavigation } from '@react-navigation/native';
@@ -23,60 +23,72 @@ import { createIconSetFromFontello } from '@expo/vector-icons';
 export default function TabThreeScreen() {
   const auth = useAuth();
 
-  // async function anonymousSignin() {
-  //   await auth.signInAnonymously();
-  //   var user = auth.user;
-  //   await user.updateProfile({
-  //     displayName: randomName,
-  //     photoURL: photoURL
-  //   }).then(data => {
-  //     console.log(data);
-  //   });
-  //   navigation.navigate('RandomChat');
-  // }
+  async function anonymousSignin() {
+    await auth.signInAnonymously();
+    var user = auth.user;
+    await user.updateProfile({
+      displayName: randomName,
+      photoURL: photoURL
+    }).then(data => {
+      console.log(data);
+    });
+    navigation.navigate('RandomChat');
+  }
 
-  // async function getRandomName() {
-  //   const newRandomName = await (await api.get("/generate_display_name")).data.name;
-  //   // const avatars = await (await api.get("avatars")).data.avatars;
-  //   // console.log("avatars: ", avatars);
-  //   setRandomName(newRandomName);
-  //   console.log(newRandomName);
-  //   console.log(photoURL);
-  // }
+  async function getRandomName() {
+    const newRandomName = await (await api.get("/generate_display_name")).data.name;
+    // const avatars = await (await api.get("avatars")).data.avatars;
+    // console.log("avatars: ", avatars);
+    setRandomName(newRandomName);
+    console.log(newRandomName);
+    console.log(photoURL);
+  }
 
   const navigation = useNavigation();
 
-  // const [randomName, setRandomName] = useState("Green Chinchilla");
-  // const [photoURL, setPhotoURL] = useState("https://rapid.nyc3.digitaloceanspaces.com/avatars/01-dog.png");
-  const [text, onChangeText] = React.useState("");
+  const [randomName, setRandomName] = useState("Green Chinchilla");
+  const [photoURL, setPhotoURL] = useState("https://rapid.nyc3.digitaloceanspaces.com/avatars/01-dog.png");
+
   return (
     <View style={styles.container}>
       
       {/* <Text style={styles.title2}>Rapid</Text> */}
       {/* <SvgComponent /> */}
 
-      <OnBoardingSvgComponent4 />
+      <OnBoardingSvgComponent3 />
       {/* <Text style={styles.title1}>ONBOARDING 2 {"\n"}TO RAPID</Text> */}
 
       {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
       {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
 
 
-      <Text style={styles.title1}>What should we call you?</Text>
-    
-      
-     
-     
-
-      <TextInput
-        style={styles.input}
-        keyboardType='default'
-        onChangeText={onChangeText}
-        value={text}
-        autoFocus
-      />
-        
-
+      <Text style={styles.title}>Choose your Profile Pic</Text>      
+      <View style={{
+          position: 'absolute',
+          top: 1260, 
+          left: 120,
+          borderRadius: 100,
+          borderWidth: 5,
+          borderColor: '#4B6EF6',}}>
+        <Image
+          style={{
+            margin: 20,
+            position: 'relative',
+            top: -5,
+            left: -3,
+            width: 120,
+            height: 120,
+            padding: 0,
+        }}
+        source={photoURL? { uri:  photoURL} : require('../assets/images/Profile-Male-PNG.png')}
+        />
+      </View>
+        <TouchableOpacity style={styles.yesButton} onPress={() => navigation.navigate('ChooseProfileModal', {changeProfilePicFunc: setPhotoURL})}>
+            <Text style={styles.loginText}>
+              Change
+            </Text>
+        </TouchableOpacity>
+{/* 
         <View 
         style={{position: 'absolute',
         top: 1380, 
@@ -84,26 +96,40 @@ export default function TabThreeScreen() {
        
         width: 400}}>
 
-         
+          <Text style={styles.title3}>
+            We'll call you
+          </Text>
+
+          <Text style={styles.title4}>
+            {randomName}
+          </Text>
           </View>
 
-         
-          <LinearGradient
+          <TouchableOpacity style={styles.yesButton2} onPress={getRandomName} >
+            <Text style={styles.loginText2}>
+              Randomize
+          </Text>
+          </TouchableOpacity> */}
+
+<LinearGradient
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 0 }}
       colors={['#B3ECAE', '#00DBD0']}
       style={styles.yesButton3}
     >
-          <TouchableOpacity  onPress={() => navigation.navigate('Onboarding4')}>
+          <TouchableOpacity  onPress={() => navigation.navigate('Onboarding3')}>
       
             <Text style={styles.loginText3}>
-              Next
+              Let's Go!
           </Text>
           
           </TouchableOpacity>
           </LinearGradient>
-
           
+
+          <Text style={styles.title5}>
+          By pressing on “Ready!”, you agree to our Terms of Service and {"\n"} acknowledge that you read our Privacy Policy
+          </Text>
 
 
       {/* <View style={styles.container2}>
@@ -139,34 +165,43 @@ const styles = StyleSheet.create({
   container: { // overall container
     flex: 1,
     alignItems: 'center',
-    marginTop:-990,
-    paddingRight: 200,
-    backgroundColor: '#FFFFFF',
-   
+    marginTop:-950,
+    paddingLeft: 80,
+    backgroundColor: '#FFFFFF'
   },
-  
-  title1: { //Welcome to
+  title: {
+    position: 'absolute',
+    top: 1180, 
+    left: 40,
+    alignSelf: 'center',
     fontSize: 25,
+    fontWeight: 'bold',
+    fontFamily: 'Inter-ExtraBold',
+    color: '#4957FF',
+    letterSpacing: 1,
+    
+  },
+  title1: { //Welcome to
+    fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'right',
     fontFamily: 'Inter-ExtraBold',
-    color: '#4B6EF6',
+    color: '#4957FF',
     letterSpacing: 1,
     position: 'absolute',
-    top: 1260, 
-    left: -35,
-    width: 400
+    top: 1100, 
+    left: 20
   },
   title2: { //Welcome to
     fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'right',
     fontFamily: 'Inter-ExtraBold',
-    color: '#4B6EF6',
+    color: '#4957FF',
     letterSpacing: 1,
     position: 'absolute',
-    top: 1120, 
-    left: 20
+    top: 1140, 
+    left: 110
   },
   title3: { //Welcome to
     fontSize: 22,
@@ -189,17 +224,6 @@ const styles = StyleSheet.create({
     // top: 1420, 
     // left: 0
   },
-  title6: { //Welcome to
-    fontSize: 23,
-    textAlign: 'center',
-    fontFamily: 'Inter-SemiBold',
-    color: '#6E6E6E',
-    letterSpacing: 0,
-    marginTop: 10,
-    position: 'absolute',
-    top: 1200,
-    left: 20
-  },
   yesButton: {
     backgroundColor: '#4957FF',
     borderRadius: 15,
@@ -210,8 +234,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 190,
     position: 'absolute',
-    top: 1275, 
-    left: 160
+    top: 1450, 
+    left: 115
   },
 
   loginText: {
@@ -250,19 +274,17 @@ const styles = StyleSheet.create({
     shadowColor: '#50E3C2',
     shadowOpacity: 0.27,
     justifyContent: 'center',
-    width: 280,
+    width: 325,
     position: 'absolute',
-    top: 1415, 
+    top: 1565, 
     left: 50
 
   },
   loginText3: {
-   
+    color: 'white',
     textAlign: 'center',
     fontSize: 25,
     fontFamily: 'Inter-ExtraBold',
-    color: 'white',
-    
   },
   title5: { 
     fontSize: 10,
@@ -273,23 +295,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     position: 'absolute',
     top: 1640, 
-    left: 45
+    left: 55
   },
-  input: {
-    height: 40,
-    margin: 12,
-    width: 340,
-    borderWidth: 2,
-    borderBottomColor: '#4B6EF6',
-    position: 'absolute',
-    top: 1320,
-    left: 10,
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 0,
-    fontSize: 26,
-    fontFamily: 'Inter-SemiBold',
-    textAlign: 'center'
-  },
+
   
 });

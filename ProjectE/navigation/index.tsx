@@ -19,6 +19,7 @@ import TheyNoAccountModal from '../components/Modals/TheyNoAccountModal'
 import Onboarding1 from '../screens/Onboarding1'
 import Onboarding2 from '../screens/Onboarding2'
 import Onboarding3 from '../screens/Onboarding3'
+import Onboarding4 from '../screens/Onboarding4'
 import ChooseProfileModal from '../components/Modals/ChooseProfileModal';
 import ReportBlockModal from '../components/Modals/ReportBlockModal'
 import ReportDetailModal from '../components/Modals/ReportDetailModal'
@@ -234,6 +235,7 @@ const Navigation = (props: { colorScheme: ColorSchemeName }) => {
         <Stack.Screen name="Root" component={BottomTabNavigator} />
         <Stack.Screen name="Onboarding2" component={Onboarding2} />
         <Stack.Screen name="Onboarding3" component={Onboarding3} />
+        <Stack.Screen name="Onboarding4" component={Onboarding4} />
         <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       </Stack.Navigator>
     </NavigationContainer>
