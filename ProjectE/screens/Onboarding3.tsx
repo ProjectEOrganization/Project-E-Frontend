@@ -62,21 +62,26 @@ export default function TabThreeScreen() {
 
 
       <Text style={styles.title}>Choose your Profile Pic</Text>      
-        <Image 
+      <View style={{
+          position: 'absolute',
+          top: 1220, 
+          left: 130,
+          borderRadius: 100,
+          borderWidth: 5,
+          borderColor: '#4B6EF6',}}>
+        <Image
           style={{
-            position: 'absolute',
-            top: 1260, 
-            left: 160,
-            borderRadius: 100,
-            borderWidth: 5,
-            borderColor: '#4B6EF6',
+            margin: 20,
+            position: 'relative',
+            top: -5,
+            left: -3,
             width: 120,
             height: 120,
             padding: 0,
         }}
         source={photoURL? { uri:  photoURL} : require('../assets/images/Profile-Male-PNG.png')}
         />
-
+      </View>
         <TouchableOpacity style={styles.yesButton} onPress={() => navigation.navigate('ChooseProfileModal', {changeProfilePicFunc: setPhotoURL})}>
             <Text style={styles.loginText}>
               Change
