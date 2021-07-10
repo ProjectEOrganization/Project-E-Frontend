@@ -66,19 +66,19 @@ export default function TabThreeScreen() {
       <Text style={styles.title2}>Your Account</Text>
       
      
-      <Text style={styles.title6}>What's your email?</Text>
+      <Text style={styles.title6}>Set a password</Text>
 
       <TextInput
         style={styles.input}
-        keyboardType='email-address'
+        keyboardType='default'
         onChangeText={onChangeText}
         value={text}
         autoFocus
         autoCapitalize={'none'}
-        autoCorrect={false}
-        secureTextEntry={false}
-        accessibilityElementsHidden={true}
-        contextMenuHidden={true}
+          autoCorrect={false}
+          secureTextEntry={true}
+          accessibilityElementsHidden={true}
+          contextMenuHidden={true}
       />
         
 
@@ -99,7 +99,7 @@ export default function TabThreeScreen() {
       colors={['#B3ECAE', '#00DBD0']}
       style={styles.yesButton3}
     >
-          <TouchableOpacity  onPress={() => navigation.navigate('Onboarding25')}>
+          <TouchableOpacity  onPress={() => navigation.navigate('Onboarding3')}>
       
             <Text style={styles.loginText3}>
               Let's Go!
