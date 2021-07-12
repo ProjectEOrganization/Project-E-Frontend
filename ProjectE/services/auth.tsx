@@ -59,6 +59,18 @@ function useProvideAuth() {
             });
     };
 
+    const signupWithPhoto = (email, password, displayName, photoURL) => {
+        return firebase
+            .auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then(response => {
+                setUser(response.user);
+                return response.user;
+            })
+            .then((user) => {
+                user.updateProfile({ displayName: displayName, photoURL: photoURL })
+            });
+    };
     const signout = () => {
         return firebase
             .auth()
@@ -130,6 +142,7 @@ function useProvideAuth() {
         signin,
         signInAnonymously,
         signup,
+        signupWithPhoto,
         signout,
         sendPasswordResetEmail,
         confirmPasswordReset,

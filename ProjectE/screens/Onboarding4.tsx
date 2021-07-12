@@ -11,7 +11,7 @@ import Navigation from '../navigation';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { api } from '../services/api';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import TabOneScreen from './FriendsScreen';
 import { useAuth } from '../services/auth';
 import { createIconSetFromFontello } from '@expo/vector-icons';
@@ -22,7 +22,7 @@ import { createIconSetFromFontello } from '@expo/vector-icons';
 
 export default function TabThreeScreen() {
   const auth = useAuth();
-
+  const { params } = useRoute();
   async function anonymousSignin() {
     await auth.signInAnonymously();
     var user = auth.user;
@@ -43,7 +43,13 @@ export default function TabThreeScreen() {
     console.log(newRandomName);
     console.log(photoURL);
   }
-
+  function register() {
+    auth.signupWithPhoto(params.email, params.password, params.displayName, photoURL)
+      // console.log(params)
+      .then(() => {
+        navigation.navigate('Friends');
+      })
+  }
   const navigation = useNavigation();
 
   const [randomName, setRandomName] = useState("Green Chinchilla");
@@ -117,7 +123,7 @@ export default function TabThreeScreen() {
       colors={['#B3ECAE', '#00DBD0']}
       style={styles.yesButton3}
     >
-          <TouchableOpacity  onPress={() => navigation.navigate('Onboarding3')}>
+          <TouchableOpacity  onPress={() => register()}>
       
             <Text style={styles.loginText3}>
               Let's Go!

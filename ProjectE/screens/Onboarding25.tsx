@@ -11,7 +11,7 @@ import Navigation from '../navigation';
  import { LinearGradient } from 'expo-linear-gradient';
 
 import { api } from '../services/api';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute} from '@react-navigation/native';
 import TabOneScreen from './FriendsScreen';
 import { useAuth } from '../services/auth';
 import { createIconSetFromFontello } from '@expo/vector-icons';
@@ -45,7 +45,7 @@ export default function TabThreeScreen() {
   // }
 
   const navigation = useNavigation();
-
+  const { params } = useRoute();
   // const [randomName, setRandomName] = useState("Green Chinchilla");
   // const [photoURL, setPhotoURL] = useState("https://rapid.nyc3.digitaloceanspaces.com/avatars/01-dog.png");
   const [text, onChangeText] = React.useState("");
@@ -99,7 +99,7 @@ export default function TabThreeScreen() {
       colors={['#B3ECAE', '#00DBD0']}
       style={styles.yesButton3}
     >
-          <TouchableOpacity  onPress={() => navigation.navigate('Onboarding3')}>
+          <TouchableOpacity  onPress={() => navigation.navigate('Onboarding3', {email: params.email, password: text})}>
       
             <Text style={styles.loginText3}>
               Let's Go!
