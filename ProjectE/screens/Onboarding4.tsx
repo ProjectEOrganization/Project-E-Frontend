@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, Image, Alert } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
@@ -48,11 +48,16 @@ export default function TabThreeScreen() {
       // console.log(params)
       .then(() => {
         navigation.navigate('Friends');
-      })
+      }).catch(() => {
+        setSuccess(false)
+        
+        
+      });
   }
   const navigation = useNavigation();
 
   const [randomName, setRandomName] = useState("Green Chinchilla");
+  const [success, setSuccess] = useState(true);
   const [photoURL, setPhotoURL] = useState("https://rapid.nyc3.digitaloceanspaces.com/avatars/01-dog.png");
 
   return (
@@ -94,6 +99,30 @@ export default function TabThreeScreen() {
               Change
             </Text>
         </TouchableOpacity>
+
+        {!success && (
+          <Text style={{
+            fontSize: 14,
+            fontFamily: 'Inter-Bold',
+            color: 'red',
+            textAlign: 'center',
+            lineHeight: 23,
+            position: 'absolute',
+            top: 1650,
+            left: 40
+          }}>
+            An account with this email has been created.
+          </Text>
+        )}
+
+{!success && (
+          <TouchableOpacity style={styles.yesButton4} onPress={() => navigation.navigate('ChooseProfileModal', {changeProfilePicFunc: setPhotoURL})}>
+          <Text style={styles.loginText}>
+            Go Back
+          </Text>
+      </TouchableOpacity>
+
+        )}
 {/* 
         <View 
         style={{position: 'absolute',
@@ -243,6 +272,19 @@ const styles = StyleSheet.create({
     top: 1450, 
     left: 115
   },
+  yesButton4: {
+    backgroundColor: '#4957FF',
+    borderRadius: 15,
+    height: 40,
+    shadowOffset: { width: 2, height: 6 },
+    shadowColor: '#4957FF',
+    shadowOpacity: 0.27,
+    justifyContent: 'center',
+    width: 140,
+    position: 'absolute',
+    top: 1680, 
+    left: 125
+  },
 
   loginText: {
     color: 'white',
@@ -300,7 +342,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     marginTop: 10,
     position: 'absolute',
-    top: 1640, 
+    top: 1720, 
     left: 55
   },
 
