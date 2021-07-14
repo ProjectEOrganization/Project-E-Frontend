@@ -43,12 +43,21 @@ export default function TabThreeScreen() {
   //   console.log(newRandomName);
   //   console.log(photoURL);
   // }
+  const onNext = async () => {
+    if (password !== '' && password.length >= 6) {
+      navigation.navigate('Onboarding3', {email: params.email, password: text})
+    } else {
+      setSuccess(false)
+    }
+  };
 
   const navigation = useNavigation();
   const { params } = useRoute();
   // const [randomName, setRandomName] = useState("Green Chinchilla");
   // const [photoURL, setPhotoURL] = useState("https://rapid.nyc3.digitaloceanspaces.com/avatars/01-dog.png");
   const [text, onChangeText] = React.useState("");
+  const [success, setSuccess] = useState(true);
+  const [password, setPassword] = useState('');
   return (
     <View style={styles.container}>
       
@@ -71,8 +80,8 @@ export default function TabThreeScreen() {
       <TextInput
         style={styles.input}
         keyboardType='default'
-        onChangeText={onChangeText}
-        value={text}
+        onChangeText={(text) => setPassword(text)}
+        // value={text}
         autoFocus
         autoCapitalize={'none'}
           autoCorrect={false}
@@ -80,7 +89,20 @@ export default function TabThreeScreen() {
           accessibilityElementsHidden={true}
           contextMenuHidden={true}
       />
-        
+         {!success && (
+          <Text style={{
+            fontSize: 14,
+            fontFamily: 'Inter-Medium',
+            color: 'red',
+            textAlign: 'center',
+            lineHeight: 23,
+            position: 'absolute',
+            top: 1300,
+            left: 20
+          }}>
+            Password must be at least 6 characters.
+          </Text>
+        )}
 
         <View 
         style={{position: 'absolute',
@@ -88,6 +110,8 @@ export default function TabThreeScreen() {
         left: 0,
        
         width: 400}}>
+
+       
 
          
           </View>
@@ -99,7 +123,7 @@ export default function TabThreeScreen() {
       colors={['#B3ECAE', '#00DBD0']}
       style={styles.yesButton3}
     >
-          <TouchableOpacity  onPress={() => navigation.navigate('Onboarding3', {email: params.email, password: text})}>
+          <TouchableOpacity  onPress={onNext}>
       
             <Text style={styles.loginText3}>
               Let's Go!

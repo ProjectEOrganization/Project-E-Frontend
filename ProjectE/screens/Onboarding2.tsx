@@ -46,9 +46,21 @@ export default function TabThreeScreen() {
 
   const navigation = useNavigation();
 
+
+  const onNext = async () => {
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (email !== '' && re.test(email) == true) {
+      navigation.navigate('Onboarding25', {email: text})
+    } else {
+      setSuccess(false)
+    }
+  };
+
   // const [randomName, setRandomName] = useState("Green Chinchilla");
   // const [photoURL, setPhotoURL] = useState("https://rapid.nyc3.digitaloceanspaces.com/avatars/01-dog.png");
   const [text, onChangeText] = React.useState("");
+  const [success, setSuccess] = useState(true);
+  const [email, setEmail] = useState('');
   return (
     <View style={styles.container}>
       
@@ -71,8 +83,8 @@ export default function TabThreeScreen() {
       <TextInput
         style={styles.input}
         keyboardType='email-address'
-        onChangeText={onChangeText}
-        value={text}
+        onChangeText={(text) => setEmail(text)}
+        // value={text}
         autoFocus
         autoCapitalize={'none'}
         autoCorrect={false}
@@ -80,7 +92,20 @@ export default function TabThreeScreen() {
         accessibilityElementsHidden={true}
         contextMenuHidden={true}
       />
-        
+        {!success && (
+          <Text style={{
+            fontSize: 14,
+            fontFamily: 'Inter-Medium',
+            color: 'red',
+            textAlign: 'center',
+            lineHeight: 23,
+            position: 'absolute',
+            top: 1300,
+            left: 20
+          }}>
+            Email is registered or wrong format.
+          </Text>
+        )}
 
         <View 
         style={{position: 'absolute',
@@ -99,7 +124,7 @@ export default function TabThreeScreen() {
       colors={['#B3ECAE', '#00DBD0']}
       style={styles.yesButton3}
     >
-          <TouchableOpacity  onPress={() => navigation.navigate('Onboarding25', {email: text})}>
+          <TouchableOpacity  onPress={onNext}>
       
             <Text style={styles.loginText3}>
               Let's Go!
