@@ -45,12 +45,20 @@ export default function TabThreeScreen() {
   // }
 
   const navigation = useNavigation();
-
+ 
 
   const onNext = async () => {
+    // const response = await (await api.get("/checkemail/" + email)).data;
+   
+    
     let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (email !== '' && re.test(email) == true) {
+      const response = await (await api.get("/checkemail/" + email)).data;
+      if(response["newEmail"] == true) {
       navigation.navigate('Onboarding25', {email: text})
+       }else{
+         setSuccess(false)
+       }
     } else {
       setSuccess(false)
     }
