@@ -10,12 +10,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import FriendsChat from "../components/Friends/FriendsChat";
 
 import { Text, View } from "../components/Themed";
-import BackArrowSvgComponent from "../assets/backArrowSvgComponent.js";
+import BackArrowSvgComponent from "../assets/discard/backArrowSvgComponent.js";
 import { useFonts } from "expo-font";
 import { useNavigation } from "@react-navigation/native";
 import FriendsPageSwitch from "../components/Friends/FriendsPageSwitch";
-import ThreeDotsSvg from "../assets/threeDotsSvg.js";
-import NotificationIcon from '../assets/notificationIcon.js'
+import ThreeDotsSvg from "../assets/discard/threeDotsSvg.js";
+import NotificationIcon from "../assets/notificationIcon.js";
 import { useAuth } from "../services/auth";
 import { api } from "../services/api";
 import { useSocket } from "../services/socket";
@@ -56,8 +56,8 @@ export default function FriendsScreen() {
     tooltipRef.current?.toggleTooltip();
   }, []);
 
-    return (
-      <View style={styles.container}>
+  return (
+    <View style={styles.container}>
       <View
         style={{
           marginTop: 65,
@@ -71,41 +71,37 @@ export default function FriendsScreen() {
         <TouchableOpacity
           onPress={() => navigation.navigate("FriendRequests")}
           style={{
-            backgroundColor: '#FAFCFF',
+            backgroundColor: "#FAFCFF",
             width: 40,
             height: 40,
             marginLeft: 40,
-            justifyContent: 'center',
-            alignItems: 'center',
+            justifyContent: "center",
+            alignItems: "center",
             borderRadius: 30,
             shadowOffset: { width: 0, height: 3 },
-            shadowColor: '#000000',
+            shadowColor: "#000000",
             shadowOpacity: 0.19,
-            shadowRadius: 15
+            shadowRadius: 15,
           }}
         >
-            
-           {testNotification > 0 && <View style={styles.notifications}>
-          
-        </View>}
-         <NotificationIcon />
-        
+          {testNotification > 0 && <View style={styles.notifications}></View>}
+          <NotificationIcon />
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={() => navigation.navigate("SendFriendRequestModal")}
           style={{
-            backgroundColor: '#FAFCFF',
+            backgroundColor: "#FAFCFF",
             width: 135,
             height: 43,
             marginLeft: 20,
-            justifyContent: 'center',
-            alignItems: 'center',
+            justifyContent: "center",
+            alignItems: "center",
             borderRadius: 30,
             shadowOffset: { width: 0, height: 3 },
-            shadowColor: '#000000',
+            shadowColor: "#000000",
             shadowOpacity: 0.19,
-            shadowRadius: 15
+            shadowRadius: 15,
           }}
         >
           <Text
@@ -113,7 +109,7 @@ export default function FriendsScreen() {
               marginLeft: 0,
               fontFamily: "Inter-Bold",
               color: "#85ACD6",
-              fontSize: 15
+              fontSize: 15,
             }}
           >
             Add Friend +
@@ -159,7 +155,6 @@ export default function FriendsScreen() {
               backgroundColor: "transparent",
               borderTopWidth: 0,
               borderBottomWidth: 0,
-              
             }}
             inputContainerStyle={{
               backgroundColor: "white",
@@ -168,11 +163,11 @@ export default function FriendsScreen() {
               borderWidth: 0.5,
               borderBottomWidth: 0.5,
               height: 45,
-              width: 330
+              width: 330,
             }}
             placeholderTextColor="#85ACD6"
             searchIcon={{
-              color: '#85ACD6'
+              color: "#85ACD6",
             }}
           />
         </View>
@@ -197,13 +192,13 @@ const styles = StyleSheet.create({
     height: 1,
   },
   notifications: {
-    backgroundColor: '#4EBFFF',
+    backgroundColor: "#4EBFFF",
     width: 15,
     height: 15,
     borderRadius: 10,
     top: 0,
     left: 28,
-  
-    position: 'absolute'
+
+    position: "absolute",
   },
 });

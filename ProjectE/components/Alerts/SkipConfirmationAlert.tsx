@@ -1,40 +1,49 @@
-import * as WebBrowser from 'expo-web-browser';
-import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import LoginSvgComponent from '../../assets/loginSvgComponent.js';
+import * as WebBrowser from "expo-web-browser";
+import React from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import LoginSvgComponent from "../../assets/discard/loginSvgComponent.js";
 
-import Colors from '../../constants/Colors';
-import { MonoText } from '../StyledText';
+import Colors from "../../constants/Colors";
+import { MonoText } from "../StyledText";
 // import { Text, View } from './Themed';
-import { useFonts } from 'expo-font';
-import { Text, View, TextInput } from 'react-native'
-import { navigationRef } from '../../navigation/index';
-import { joinQueue, leaveQueue, skip } from '../../store/reducers/chat';
-import { store } from '../../store/store';
-import { api } from '../../services/api';
+import { useFonts } from "expo-font";
+import { Text, View, TextInput } from "react-native";
+import { navigationRef } from "../../navigation/index";
+import { joinQueue, leaveQueue, skip } from "../../store/reducers/chat";
+import { store } from "../../store/store";
+import { api } from "../../services/api";
 
 export default function SkipConfirmationAlert({ path }: { path: string }) {
   const skipAction = () => {
-    navigationRef.current?.navigate('RandomChat');
-    store.dispatch(joinQueue())
-  }
+    navigationRef.current?.navigate("RandomChat");
+    store.dispatch(joinQueue());
+  };
 
   const dontSkip = () => {
-    navigationRef.current?.navigate('RandomChat');
-  }
+    navigationRef.current?.navigate("RandomChat");
+  };
 
   async function leaveQueueAction() {
-    store.dispatch(leaveQueue())
+    store.dispatch(leaveQueue());
     navigationRef.current?.goBack();
   }
-  <Text onPress={leaveQueueAction} style={{ fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 140, fontSize: 16 }}> Leave Queue </Text>
+  <Text
+    onPress={leaveQueueAction}
+    style={{
+      fontFamily: "Inter-SemiBold",
+      color: "#250D4F",
+      marginTop: 140,
+      fontSize: 16,
+    }}
+  >
+    {" "}
+    Leave Queue{" "}
+  </Text>;
 
   return (
     <View style={styles.overallContainer}>
-
-
       <LoginSvgComponent />
-      <View style={{ width: 260, paddingTop: 30, alignItems: 'center' }}>
+      <View style={{ width: 260, paddingTop: 30, alignItems: "center" }}>
         <Text style={styles.firstText}>
           Are you sure you{"\n"}want to skip?
         </Text>
@@ -44,101 +53,92 @@ export default function SkipConfirmationAlert({ path }: { path: string }) {
           You will probably never talk to this person ever again.
         </Text>
 
-        <View style={{ flex: 1, flexDirection: 'row' }}>
-
+        <View style={{ flex: 1, flexDirection: "row" }}>
           <TouchableOpacity onPress={skipAction} style={styles.yesButton}>
-            <Text style={styles.loginText} >
-              Yup
-          </Text>
+            <Text style={styles.loginText}>Yup</Text>
           </TouchableOpacity>
-
 
           <TouchableOpacity onPress={dontSkip} style={styles.noButton}>
-            <Text style={styles.loginText} >
-              Nah
-          </Text>
+            <Text style={styles.loginText}>Nah</Text>
           </TouchableOpacity>
-
-
         </View>
-
-
-
       </View>
-      <Text onPress={leaveQueueAction} style={{ fontFamily: 'Inter-SemiBold', color: '#250D4F', marginTop: 140, fontSize: 16 }}> Leave Queue </Text>
-
-
-     
-
+      <Text
+        onPress={leaveQueueAction}
+        style={{
+          fontFamily: "Inter-SemiBold",
+          color: "#250D4F",
+          marginTop: 140,
+          fontSize: 16,
+        }}
+      >
+        {" "}
+        Leave Queue{" "}
+      </Text>
     </View>
   );
 }
 
 function handleHelpPress() {
   WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet'
+    "https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet"
   );
 }
 
 const styles = StyleSheet.create({
-  overallContainer: { //overall container
+  overallContainer: {
+    //overall container
     height: 335,
     width: 330,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 40,
-    alignItems: 'center',
+    alignItems: "center",
     shadowOffset: { width: 0, height: 1 },
-    shadowColor: '#000000',
+    shadowColor: "#000000",
     shadowOpacity: 0.05,
   },
   firstText: {
     fontSize: 22,
-    fontFamily: 'Inter-ExtraBold',
-    color: '#4957FF',
-    textAlign: 'center',
-    lineHeight: 30
+    fontFamily: "Inter-ExtraBold",
+    color: "#4957FF",
+    textAlign: "center",
+    lineHeight: 30,
   },
   secondText: {
     fontSize: 14,
-    fontFamily: 'Inter-Medium',
-    color: '#A9ACB0',
+    fontFamily: "Inter-Medium",
+    color: "#A9ACB0",
     paddingTop: 15,
     lineHeight: 23,
-    textAlign: 'center'
+    textAlign: "center",
   },
   yesButton: {
-    backgroundColor: '#3CDF7C',
+    backgroundColor: "#3CDF7C",
     borderRadius: 6,
     height: 75,
     marginTop: 35,
     shadowOffset: { width: 2, height: 6 },
-    shadowColor: '#3CDF7C',
+    shadowColor: "#3CDF7C",
     shadowOpacity: 0.27,
-    justifyContent: 'center',
+    justifyContent: "center",
     width: 110,
-    marginRight: 30
-
+    marginRight: 30,
   },
   noButton: {
-    backgroundColor: '#F24646',
+    backgroundColor: "#F24646",
     borderRadius: 6,
     height: 75,
     marginTop: 35,
     shadowOffset: { width: 2, height: 6 },
-    shadowColor: '#F24646',
+    shadowColor: "#F24646",
     shadowOpacity: 0.27,
-    justifyContent: 'center',
-    width: 110
-
+    justifyContent: "center",
+    width: 110,
   },
   loginText: {
-    color: 'white',
-    textAlign: 'center',
+    color: "white",
+    textAlign: "center",
     fontSize: 20,
-    fontFamily: 'Inter-Bold',
-
-  }
-
-
-
+    fontFamily: "Inter-Bold",
+  },
 });

@@ -1,25 +1,25 @@
-import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import * as React from "react";
+import { StyleSheet } from "react-native";
 
-import EditScreenInfo from '../components/EditScreenInfo';
+import EditScreenInfo from "../components/EditScreenInfo";
 // import FriendReulert from '../components/Alerts/TheyHadToGoAlert';
-import { Text, View } from '../components/Themed';
-import { Image, TouchableOpacity } from 'react-native';
-import { useFonts } from 'expo-font';
-import BackArrowSvgComponent from '../assets/backArrowSvgComponent.js';
-import Navigation from '../navigation';
+import { Text, View } from "../components/Themed";
+import { Image, TouchableOpacity } from "react-native";
+import { useFonts } from "expo-font";
+import BackArrowSvgComponent from "../assets/discard/backArrowSvgComponent.js";
+import Navigation from "../navigation";
 
-import { useNavigation } from '@react-navigation/native';
-import FriendsPageSwitch from '../components/Friends/FriendsPageSwitch';
+import { useNavigation } from "@react-navigation/native";
+import FriendsPageSwitch from "../components/Friends/FriendsPageSwitch";
 
 // import * as yourModuleName from 'module-name';
 
 export default function RegisterTesting() {
   let [fontsLoaded] = useFonts({
-    'Inter-Medium': require('../assets/fonts/Inter/Inter-Medium.ttf'),
-    'Inter-Bold': require('../assets/fonts/Inter/Inter-Bold.ttf'),
-    'Inter-Regular': require('../assets/fonts/Inter/Inter-Regular.ttf'),
-    'Inter-SemiBold': require('../assets/fonts/Inter/Inter-SemiBold.ttf'),
+    "Inter-Medium": require("../assets/fonts/Inter/Inter-Medium.ttf"),
+    "Inter-Bold": require("../assets/fonts/Inter/Inter-Bold.ttf"),
+    "Inter-Regular": require("../assets/fonts/Inter/Inter-Regular.ttf"),
+    "Inter-SemiBold": require("../assets/fonts/Inter/Inter-SemiBold.ttf"),
   });
 
   const navigation = useNavigation();
@@ -59,7 +59,7 @@ export default function RegisterTesting() {
       </View> */}
 
         {/* <SvgComponent1 /> */}
-        <View style={{ backgroundColor: 'transparent', marginTop: 50 }}>
+        <View style={{ backgroundColor: "transparent", marginTop: 50 }}>
           {/* <FriendRequestReceivedAlert /> */}
         </View>
 
@@ -80,70 +80,70 @@ const styles = StyleSheet.create({
   container: {
     // overall container
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
 
-    backgroundColor: '#F1F6FC',
+    backgroundColor: "#F1F6FC",
   },
   container2: {
     //text part
     flex: 1,
     width: 300,
 
-    justifyContent: 'center',
-    paddingTop: '13%',
+    justifyContent: "center",
+    paddingTop: "13%",
 
-    backgroundColor: '#F5F7F9',
-    flexDirection: 'row',
+    backgroundColor: "#F5F7F9",
+    flexDirection: "row",
   },
   container3: {
     //bottom login text part
     flex: 1,
     width: 300,
 
-    justifyContent: 'center',
+    justifyContent: "center",
 
-    backgroundColor: '#F5F7F9',
-    flexDirection: 'row',
+    backgroundColor: "#F5F7F9",
+    flexDirection: "row",
   },
   title1: {
     //Welcome to
     fontSize: 20,
-    fontWeight: 'bold',
-    fontFamily: 'Inter-Medium',
-    color: '#414750',
+    fontWeight: "bold",
+    fontFamily: "Inter-Medium",
+    color: "#414750",
     letterSpacing: 1.5,
     marginTop: 200,
   },
   title2: {
     //Rapid
     fontSize: 30,
-    fontWeight: 'bold',
-    fontFamily: 'Inter-Bold',
-    color: '#414750',
+    fontWeight: "bold",
+    fontFamily: "Inter-Bold",
+    color: "#414750",
     letterSpacing: 1.7,
-    shadowColor: '#4A2EFF',
+    shadowColor: "#4A2EFF",
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
     shadowOpacity: 1,
-    paddingTop: '2%',
+    paddingTop: "2%",
   },
   title3: {
     //chat with random people
     fontSize: 18,
-    fontFamily: 'Inter-Regular',
-    color: '#636E7E',
+    fontFamily: "Inter-Regular",
+    color: "#636E7E",
     lineHeight: 24,
   },
   title4: {
     //login text part
     fontSize: 15,
-    fontFamily: 'Inter-Medium',
-    color: '#A9ACB0',
+    fontFamily: "Inter-Medium",
+    color: "#A9ACB0",
   },
 
   separator: {
     marginVertical: 30,
     height: 1,
-    width: '80%',
+    width: "80%",
   },
 });

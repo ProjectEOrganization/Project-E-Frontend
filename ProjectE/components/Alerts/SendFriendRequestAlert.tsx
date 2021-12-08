@@ -1,33 +1,33 @@
-import * as WebBrowser from 'expo-web-browser';
-import React, { useState } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import LoginSvgComponent from '../../assets/loginSvgComponent.js';
+import * as WebBrowser from "expo-web-browser";
+import React, { useState } from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import LoginSvgComponent from "../../assets/discard/loginSvgComponent.js";
 
-import Colors from '../../constants/Colors';
-import { MonoText } from '../StyledText';
+import Colors from "../../constants/Colors";
+import { MonoText } from "../StyledText";
 // import { Text, View } from './Themed';
-import { useFonts } from 'expo-font';
-import { api } from '../../services/api';
-import { useRoute } from '@react-navigation/native';
+import { useFonts } from "expo-font";
+import { api } from "../../services/api";
+import { useRoute } from "@react-navigation/native";
 
-import { Text, View, TextInput } from 'react-native'
-import { navigationRef } from '../../navigation';
+import { Text, View, TextInput } from "react-native";
+import { navigationRef } from "../../navigation";
 
 export default function SendFriendRequestAlertId() {
-
   async function sendRequest() {
-    navigationRef.current?.goBack()
-    const friendId = await (await api.get(`/friends/getFriendId/${email}`)).data
-    await api.post('/friends/add/' + friendId);
+    navigationRef.current?.goBack();
+    const friendId = await (
+      await api.get(`/friends/getFriendId/${email}`)
+    ).data;
+    await api.post("/friends/add/" + friendId);
   }
 
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState("");
 
   return (
     <View style={styles.overallContainer}>
-
       <LoginSvgComponent />
-      <View style={{ width: 260, paddingTop: 30, alignItems: 'center' }}>
+      <View style={{ width: 260, paddingTop: 30, alignItems: "center" }}>
         <Text style={styles.firstText}>
           What's the email of the user that you want to be friends with?
         </Text>
@@ -37,13 +37,30 @@ export default function SendFriendRequestAlertId() {
           Enter their email to send them a friend request
         </Text>
 
-        <View style={{ alignItems: 'center' }}>
-
-          <TextInput onChangeText={setEmail} autoCapitalize="none" autoCorrect={false} value={email} placeholder='Email' style={{ backgroundColor: '#F1F6FC', height: 48, width: 270, borderWidth: 0, shadowOffset: { width: 0, height: 2 }, shadowColor: 'black', shadowOpacity: 0.16, borderRadius: 6, fontSize: 15, paddingHorizontal: 20, textAlign: 'left', marginTop: 35, }} />
+        <View style={{ alignItems: "center" }}>
+          <TextInput
+            onChangeText={setEmail}
+            autoCapitalize="none"
+            autoCorrect={false}
+            value={email}
+            placeholder="Email"
+            style={{
+              backgroundColor: "#F1F6FC",
+              height: 48,
+              width: 270,
+              borderWidth: 0,
+              shadowOffset: { width: 0, height: 2 },
+              shadowColor: "black",
+              shadowOpacity: 0.16,
+              borderRadius: 6,
+              fontSize: 15,
+              paddingHorizontal: 20,
+              textAlign: "left",
+              marginTop: 35,
+            }}
+          />
           <TouchableOpacity onPress={sendRequest} style={styles.yesButton}>
-            <Text style={styles.loginText}>
-              SEND
-          </Text>
+            <Text style={styles.loginText}>SEND</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -51,73 +68,65 @@ export default function SendFriendRequestAlertId() {
   );
 }
 
-
-
 function handleHelpPress() {
   WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet'
+    "https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet"
   );
 }
 
 const styles = StyleSheet.create({
-  overallContainer: { //overall container
+  overallContainer: {
+    //overall container
     paddingBottom: 50,
     width: 330,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 40,
-    alignItems: 'center',
+    alignItems: "center",
     shadowOffset: { width: 0, height: 1 },
-    shadowColor: '#000000',
+    shadowColor: "#000000",
     shadowOpacity: 0.05,
   },
   firstText: {
     fontSize: 22,
-    fontFamily: 'Inter-ExtraBold',
-    color: '#4957FF',
-    textAlign: 'center',
-    lineHeight: 30
+    fontFamily: "Inter-ExtraBold",
+    color: "#4957FF",
+    textAlign: "center",
+    lineHeight: 30,
   },
   secondText: {
     fontSize: 14,
-    fontFamily: 'Inter-Medium',
-    color: '#A9ACB0',
+    fontFamily: "Inter-Medium",
+    color: "#A9ACB0",
     paddingTop: 15,
     lineHeight: 23,
-    textAlign: 'center'
+    textAlign: "center",
   },
   yesButton: {
-    backgroundColor: '#3CDF7C',
+    backgroundColor: "#3CDF7C",
     borderRadius: 6,
     height: 75,
     marginTop: 35,
     shadowOffset: { width: 2, height: 6 },
-    shadowColor: '#3CDF7C',
+    shadowColor: "#3CDF7C",
     shadowOpacity: 0.27,
-    justifyContent: 'center',
+    justifyContent: "center",
     width: 110,
-
   },
   noButton: {
-    backgroundColor: '#F24646',
+    backgroundColor: "#F24646",
     borderRadius: 6,
     height: 75,
     marginTop: 35,
     shadowOffset: { width: 2, height: 6 },
-    shadowColor: '#F24646',
+    shadowColor: "#F24646",
     shadowOpacity: 0.27,
-    justifyContent: 'center',
-    width: 110
-
+    justifyContent: "center",
+    width: 110,
   },
   loginText: {
-
-    color: 'white',
-    textAlign: 'center',
+    color: "white",
+    textAlign: "center",
     fontSize: 20,
-    fontFamily: 'Inter-Bold',
-
-  }
-
-
-
+    fontFamily: "Inter-Bold",
+  },
 });

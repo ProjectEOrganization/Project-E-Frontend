@@ -1,36 +1,34 @@
-import * as WebBrowser from 'expo-web-browser';
-import React, { useState, useEffect, useContext, useRef } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import LoginSvgComponent from '../../assets/loginSvgComponent.js';
-import Colors from '../../constants/Colors';
-import { MonoText } from '../StyledText';
+import * as WebBrowser from "expo-web-browser";
+import React, { useState, useEffect, useContext, useRef } from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import LoginSvgComponent from "../../assets/discard/loginSvgComponent.js";
+import Colors from "../../constants/Colors";
+import { MonoText } from "../StyledText";
 // import { Text, View } from './Themed';
-import { useFonts } from 'expo-font';
-import { Text, View, TextInput } from 'react-native';
-import { useAuth } from '../../services/auth';
-import { api } from '../../services/api';
-import { useSocket } from '../../services/socket';
-import { useNavigation } from '@react-navigation/core';
-import ChillzoneModal from '../Modals/ChillzoneModal.js';
+import { useFonts } from "expo-font";
+import { Text, View, TextInput } from "react-native";
+import { useAuth } from "../../services/auth";
+import { api } from "../../services/api";
+import { useSocket } from "../../services/socket";
+import { useNavigation } from "@react-navigation/core";
+import ChillzoneModal from "../Modals/ChillzoneModal.js";
 export default function Referral({ path }: { path?: string }) {
   const auth = useAuth();
   const navigation = useNavigation();
 
-  const [input, setInput] = useState('');
-
+  const [input, setInput] = useState("");
 
   const onCheck = () => {
     if (input === "chillzone") {
       navigation.goBack();
       setTimeout(() => {
-        navigation.navigate('ChillzoneModal')
-      }, 300)
-      console.log('ok')
+        navigation.navigate("ChillzoneModal");
+      }, 300);
+      console.log("ok");
     } else {
-      console.log('notok')
+      console.log("notok");
       //display error message to user
     }
-
   };
   return (
     <View style={styles.overallContainer}>
@@ -46,41 +44,38 @@ export default function Referral({ path }: { path?: string }) {
           // onFocus={() => setFocused({ email: false, password: true })}
           //need to add ability to paste
           onChangeText={(text) => setInput(text)}
-          autoCapitalize={'none'}
+          autoCapitalize={"none"}
           autoCorrect={false}
           secureTextEntry={false}
           accessibilityElementsHidden={true}
           selectTextOnFocus={true}
           contextMenuHidden={true}
-          placeholder='Code'
-          placeholderTextColor='#85ACD6'
+          placeholder="Code"
+          placeholderTextColor="#85ACD6"
           style={{
             // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
             // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
-            backgroundColor: '#F1F6FC',
+            backgroundColor: "#F1F6FC",
 
             height: 48,
             // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
             borderWidth: 0,
             shadowOffset: { width: 0, height: 2 },
-            shadowColor: 'black',
+            shadowColor: "black",
             shadowOpacity: 0.16,
             // height: 44,
-            width: '100%',
+            width: "100%",
             borderRadius: 6,
             fontSize: 15,
             paddingHorizontal: 20,
-            textAlign: 'left',
+            textAlign: "left",
             marginTop: 35,
           }}
         />
 
-
-
         <TouchableOpacity onPress={onCheck} style={styles.loginButton}>
           {/* IF input === chillzone, then onPress goes to () => navigation.navigate('ChillzoneModal') */}
           <Text style={styles.loginText}>Activate</Text>
-
         </TouchableOpacity>
       </View>
 
@@ -109,7 +104,7 @@ export default function Referral({ path }: { path?: string }) {
 
 function handleHelpPress() {
   WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet'
+    "https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet"
   );
 }
 
@@ -118,39 +113,39 @@ const styles = StyleSheet.create({
     //overall container
     height: 330,
     width: 330,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 40,
-    alignItems: 'center',
+    alignItems: "center",
     shadowOffset: { width: 0, height: 1 },
-    shadowColor: '#000000',
+    shadowColor: "#000000",
     shadowOpacity: 0.05,
   },
   firstText: {
     fontSize: 22,
-    fontFamily: 'Inter-ExtraBold',
-    color: '#4957FF',
+    fontFamily: "Inter-ExtraBold",
+    color: "#4957FF",
   },
   secondText: {
     fontSize: 17,
-    fontFamily: 'Inter-Medium',
-    color: '#A9ACB0',
+    fontFamily: "Inter-Medium",
+    color: "#A9ACB0",
     paddingTop: 15,
     lineHeight: 23,
   },
   loginButton: {
-    backgroundColor: '#4B00FF',
+    backgroundColor: "#4B00FF",
     borderRadius: 6,
     height: 50,
     marginTop: 40,
     shadowOffset: { width: 0, height: 2 },
-    shadowColor: '#4B00FF',
+    shadowColor: "#4B00FF",
     shadowOpacity: 0.27,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   loginText: {
-    color: 'white',
-    textAlign: 'center',
+    color: "white",
+    textAlign: "center",
     fontSize: 18,
-    fontFamily: 'Inter-Bold',
+    fontFamily: "Inter-Bold",
   },
 });

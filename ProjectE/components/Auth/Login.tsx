@@ -1,24 +1,30 @@
-import * as WebBrowser from 'expo-web-browser';
-import React, { useState, useEffect, useContext, useRef } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import LoginSvgComponent from '../../assets/loginSvgComponent.js';
-import Colors from '../../constants/Colors';
-import { MonoText } from '../StyledText';
+import * as WebBrowser from "expo-web-browser";
+import React, { useState, useEffect, useContext, useRef } from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import LoginSvgComponent from "../../assets/discard/loginSvgComponent.js";
+import Colors from "../../constants/Colors";
+import { MonoText } from "../StyledText";
 // import { Text, View } from './Themed';
-import { useFonts } from 'expo-font';
-import { Text, View, TextInput } from 'react-native';
-import { useAuth } from '../../services/auth';
-import { api } from '../../services/api';
-import { useSocket } from '../../services/socket';
-import { useNavigation } from '@react-navigation/core';
-import { store } from '../../store/store';
-import { addChat, makeFriends } from '../../store/reducers/chat';
-import { addFriend } from '../../store/reducers/friends';
-export default function Login({ path, actionAfter }: { path?: string, actionAfter?: any }) {
+import { useFonts } from "expo-font";
+import { Text, View, TextInput } from "react-native";
+import { useAuth } from "../../services/auth";
+import { api } from "../../services/api";
+import { useSocket } from "../../services/socket";
+import { useNavigation } from "@react-navigation/core";
+import { store } from "../../store/store";
+import { addChat, makeFriends } from "../../store/reducers/chat";
+import { addFriend } from "../../store/reducers/friends";
+export default function Login({
+  path,
+  actionAfter,
+}: {
+  path?: string;
+  actionAfter?: any;
+}) {
   const auth = useAuth();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const [success, setSuccess] = useState(true);
 
@@ -26,42 +32,43 @@ export default function Login({ path, actionAfter }: { path?: string, actionAfte
     auth
       .signin(email, password)
       .then(() => {
-        if (actionAfter?.name === 'accept_friends_request') {
+        if (actionAfter?.name === "accept_friends_request") {
           const friendId = actionAfter.data?.uid;
-          api.post('/friends/accept/' + friendId).then((res) => {
-            store.dispatch(addChat(res.data.chat))
-            store.dispatch(makeFriends())
-            store.dispatch(addFriend(friendId))
+          api.post("/friends/accept/" + friendId).then((res) => {
+            store.dispatch(addChat(res.data.chat));
+            store.dispatch(makeFriends());
+            store.dispatch(addFriend(friendId));
           });
         }
       })
       .then(() => {
-        navigation.goBack()
+        navigation.goBack();
         setTimeout(() => {
-          navigation.navigate('Root', {
-            screen: 'Friends', params: {
-              screen: 'RandomChat'
-            }
-          })
-        }, 400)
+          navigation.navigate("Root", {
+            screen: "Friends",
+            params: {
+              screen: "RandomChat",
+            },
+          });
+        }, 400);
         setSuccess(true);
         console.log(
           email,
           password,
-          'Account is found. You are now authenticated.'
+          "Account is found. You are now authenticated."
         );
       })
       .catch(() => {
-        setSuccess(false)
-        console.log(email, password, 'Account is not found. NOT authenticated');
+        setSuccess(false);
+        console.log(email, password, "Account is not found. NOT authenticated");
       });
   };
 
   const navigation = useNavigation();
 
   const navigateRegister = () => {
-    navigation.navigate('RegisterModal');
-  }
+    navigation.navigate("RegisterModal");
+  };
 
   return (
     <View style={styles.overallContainer}>
@@ -73,36 +80,34 @@ export default function Login({ path, actionAfter }: { path?: string, actionAfte
           Login to continue chatting with your friends
         </Text>
 
-
-
         <TextInput
           // onBlur={() => setFocused({ email: false, password: false })}
           // onFocus={() => setFocused({ email: false, password: true })}
           onChangeText={(text) => setEmail(text)}
-          autoCapitalize={'none'}
+          autoCapitalize={"none"}
           autoCorrect={false}
           secureTextEntry={false}
           accessibilityElementsHidden={true}
           contextMenuHidden={true}
-          placeholder='Email'
-          placeholderTextColor='#85ACD6'
+          placeholder="Email"
+          placeholderTextColor="#85ACD6"
           style={{
             // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
             // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
-            backgroundColor: '#F1F6FC',
+            backgroundColor: "#F1F6FC",
 
             height: 48,
             // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
             borderWidth: 0,
             shadowOffset: { width: 0, height: 2 },
-            shadowColor: 'black',
+            shadowColor: "black",
             shadowOpacity: 0.16,
             // height: 44,
-            width: '100%',
+            width: "100%",
             borderRadius: 6,
             fontSize: 15,
             paddingHorizontal: 20,
-            textAlign: 'left',
+            textAlign: "left",
             marginTop: 20,
           }}
         />
@@ -111,45 +116,45 @@ export default function Login({ path, actionAfter }: { path?: string, actionAfte
           // onBlur={() => setFocused({ email: false, password: false })}
           // onFocus={() => setFocused({ email: false, password: true })}
           onChangeText={(text) => setPassword(text)}
-          autoCapitalize={'none'}
+          autoCapitalize={"none"}
           autoCorrect={false}
           secureTextEntry={true}
           accessibilityElementsHidden={true}
           contextMenuHidden={true}
-          placeholder='Password'
-          placeholderTextColor='#85ACD6'
+          placeholder="Password"
+          placeholderTextColor="#85ACD6"
           style={{
             // borderColor: isAuth == false ? 'red' : isAuth === true ? 'green' : 'transparent',
             // borderWidth: isAuth == false ? 2 : isAuth === true ? 2 : 0,
-            backgroundColor: '#F1F6FC',
+            backgroundColor: "#F1F6FC",
 
             height: 48,
             // borderBottomColor: focused.password ? '#4F3FEB' : 'rgba(0,0,0,.06)',
             borderWidth: 0,
             shadowOffset: { width: 0, height: 2 },
-            shadowColor: 'black',
+            shadowColor: "black",
             shadowOpacity: 0.16,
             // height: 44,
-            width: '100%',
+            width: "100%",
             borderRadius: 6,
             fontSize: 15,
             paddingHorizontal: 20,
-            textAlign: 'left',
+            textAlign: "left",
             marginTop: 25,
-            marginBottom: 20
-
-
+            marginBottom: 20,
           }}
         />
 
         {!success && (
-          <Text style={{
-            fontSize: 14,
-            fontFamily: 'Inter-Medium',
-            color: 'red',
-            textAlign: 'center',
-            lineHeight: 23,
-          }}>
+          <Text
+            style={{
+              fontSize: 14,
+              fontFamily: "Inter-Medium",
+              color: "red",
+              textAlign: "center",
+              lineHeight: 23,
+            }}
+          >
             Sorry, the email or password you entered was incorrect.
           </Text>
         )}
@@ -162,18 +167,18 @@ export default function Login({ path, actionAfter }: { path?: string, actionAfte
             onPress={() => {
               navigation.goBack();
               setTimeout(() => {
-                navigation.navigate('RegisterModal')
-              }, 300)
+                navigation.navigate("RegisterModal");
+              }, 300);
             }}
             style={{
               fontSize: 15,
-              color: '#A9ACB0',
+              color: "#A9ACB0",
               marginLeft: 10,
-              fontFamily: 'Inter-Medium',
+              fontFamily: "Inter-Medium",
             }}
           >
-            Don't have an account?{' '}
-            <Text style={{ color: '#4B00FF', fontFamily: 'Inter-SemiBold' }}>
+            Don't have an account?{" "}
+            <Text style={{ color: "#4B00FF", fontFamily: "Inter-SemiBold" }}>
               Register
             </Text>
           </Text>
@@ -205,7 +210,7 @@ export default function Login({ path, actionAfter }: { path?: string, actionAfte
 
 function handleHelpPress() {
   WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet'
+    "https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet"
   );
 }
 
@@ -214,40 +219,40 @@ const styles = StyleSheet.create({
     //overall container
     minHeight: 430,
     width: 330,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 40,
-    alignItems: 'center',
+    alignItems: "center",
     shadowOffset: { width: 0, height: 1 },
-    shadowColor: '#000000',
+    shadowColor: "#000000",
     shadowOpacity: 0.05,
   },
   firstText: {
     fontSize: 22,
-    fontFamily: 'Inter-ExtraBold',
-    color: '#4957FF',
+    fontFamily: "Inter-ExtraBold",
+    color: "#4957FF",
   },
   secondText: {
     fontSize: 17,
-    fontFamily: 'Inter-Medium',
-    color: '#A9ACB0',
+    fontFamily: "Inter-Medium",
+    color: "#A9ACB0",
     paddingTop: 15,
     lineHeight: 23,
-    paddingBottom: 15
+    paddingBottom: 15,
   },
   loginButton: {
-    backgroundColor: '#4B00FF',
+    backgroundColor: "#4B00FF",
     borderRadius: 6,
     height: 50,
     marginTop: 20,
     shadowOffset: { width: 0, height: 2 },
-    shadowColor: '#4B00FF',
+    shadowColor: "#4B00FF",
     shadowOpacity: 0.27,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   loginText: {
-    color: 'white',
-    textAlign: 'center',
+    color: "white",
+    textAlign: "center",
     fontSize: 18,
-    fontFamily: 'Inter-Bold',
+    fontFamily: "Inter-Bold",
   },
 });
